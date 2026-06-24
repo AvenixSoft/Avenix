@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avenix — Construction and Design</title>
+  <title>Avenix — Software Development & Design Studio</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -34,10 +34,36 @@
       background-color: var(--void);
       color: var(--text-primary);
       overflow-x: hidden;
-      transition: font-family 0.2s;
     }
 
     html[dir="rtl"] body { letter-spacing: 0 !important; }
+
+    /* letter-spacing & transform resets for Persian script */
+    html[dir="rtl"] .hero-eyebrow,
+    html[dir="rtl"] .section-eyebrow,
+    html[dir="rtl"] .nav-links a,
+    html[dir="rtl"] .mobile-link,
+    html[dir="rtl"] .lang-btn,
+    html[dir="rtl"] .btn-glow,
+    html[dir="rtl"] .btn-ghost,
+    html[dir="rtl"] .pricing-tier,
+    html[dir="rtl"] .pricing-period,
+    html[dir="rtl"] .pricing-badge,
+    html[dir="rtl"] .pricing-cta,
+    html[dir="rtl"] .stat-label,
+    html[dir="rtl"] .form-label,
+    html[dir="rtl"] .marquee-track span,
+    html[dir="rtl"] .nav-cta,
+    html[dir="rtl"] .scroll-hint span,
+    html[dir="rtl"] .tech-pill,
+    html[dir="rtl"] .nav-logo,
+    html[dir="rtl"] .footer-logo,
+    html[dir="rtl"] .process-num,
+    html[dir="rtl"] .faq-question,
+    html[dir="rtl"] .hero-title .accent,
+    html[dir="rtl"] .newsletter-btn {
+      letter-spacing: 0;
+    }
 
     /* ── GRADIENT CANVAS ── */
     .bg-canvas {
@@ -73,7 +99,7 @@
       position: fixed;
       top: 0;
       width: 100%;
-      z-index: 100;
+      z-index: 200;
       padding: 1.1rem 2rem;
       display: flex;
       align-items: center;
@@ -96,13 +122,13 @@
       text-decoration: none;
     }
 
-    .nav-right { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
 
-    .nav-links { display: flex; gap: 2.2rem; }
+    .nav-links { display: flex; gap: 1.7rem; }
 
     .nav-links a {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-muted);
       text-decoration: none;
@@ -123,6 +149,9 @@
       transition: background 0.25s, border-color 0.25s;
       white-space: nowrap;
       flex-shrink: 0;
+      background: transparent;
+      cursor: pointer;
+      display: inline-block;
     }
     .nav-cta:hover {
       background: rgba(224,38,58,0.1);
@@ -177,6 +206,8 @@
       cursor: pointer;
       flex-shrink: 0;
       padding: 0;
+      position: relative;
+      z-index: 210;
     }
 
     .nav-toggle span {
@@ -193,31 +224,43 @@
     .nav-toggle.open span:nth-child(2) { opacity: 0; }
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+    html[dir="rtl"] .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(-45deg); }
+    html[dir="rtl"] .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(45deg); }
+
     /* ── MOBILE MENU PANEL ── */
     .mobile-menu {
       position: fixed;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
-      max-height: 0;
-      overflow: hidden;
-      z-index: 99;
-      background: rgba(8,9,13,0.97);
+      height: 100%;
+      z-index: 190;
+      background: rgba(8,9,13,0.98);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(224,38,58,0.12);
-      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
       display: flex;
       flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-12px);
+      transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
+      overflow-y: auto;
     }
 
-    .mobile-menu.open { max-height: 100vh; overflow-y: auto; }
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
     .mobile-menu-inner {
-      padding: 5.5rem 2rem 2.5rem;
+      padding: 6.5rem 2rem 3rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.35rem;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
     }
 
     .mobile-menu a.mobile-link {
@@ -226,10 +269,22 @@
       letter-spacing: 0.04em;
       color: var(--text-primary);
       text-decoration: none;
-      padding: 1rem 0;
+      padding: 0.95rem 0;
       border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: color 0.25s;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: color 0.25s, opacity 0.4s ease, transform 0.4s ease;
     }
+
+    .mobile-menu.open a.mobile-link { opacity: 1; transform: translateY(0); }
+    .mobile-menu.open a.mobile-link:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-menu.open a.mobile-link:nth-child(2) { transition-delay: 0.09s; }
+    .mobile-menu.open a.mobile-link:nth-child(3) { transition-delay: 0.13s; }
+    .mobile-menu.open a.mobile-link:nth-child(4) { transition-delay: 0.17s; }
+    .mobile-menu.open a.mobile-link:nth-child(5) { transition-delay: 0.21s; }
+    .mobile-menu.open a.mobile-link:nth-child(6) { transition-delay: 0.25s; }
+    .mobile-menu.open a.mobile-link:nth-child(7) { transition-delay: 0.29s; }
 
     .mobile-menu a.mobile-link:hover { color: var(--red-light); }
 
@@ -242,6 +297,8 @@
       margin-top: 1.5rem;
       align-self: flex-start;
     }
+
+    html[dir="rtl"] .mobile-menu .lang-switch { align-self: flex-end; }
 
     body.menu-open { overflow: hidden; }
 
@@ -268,11 +325,11 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3.2rem, 8vw, 7rem);
+      font-size: clamp(3rem, 8vw, 6.6rem);
       font-weight: 800;
-      line-height: 1.0;
+      line-height: 1.05;
       letter-spacing: -0.02em;
-      max-width: 820px;
+      max-width: 880px;
       opacity: 0;
       animation: fadeUp 0.9s 0.4s ease forwards;
     }
@@ -288,7 +345,7 @@
       margin-top: 1.8rem;
       font-size: 1.05rem;
       color: var(--text-muted);
-      max-width: 520px;
+      max-width: 560px;
       line-height: 1.7;
       font-weight: 300;
       opacity: 0;
@@ -412,7 +469,7 @@
       font-size: clamp(2rem, 4vw, 3.2rem);
       font-weight: 800;
       line-height: 1.1;
-      max-width: 580px;
+      max-width: 620px;
     }
 
     .section-sub {
@@ -420,7 +477,15 @@
       color: var(--text-muted);
       font-size: 0.95rem;
       line-height: 1.75;
-      max-width: 500px;
+      max-width: 520px;
+    }
+
+    .section-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1.5rem;
     }
 
     /* ── GLASSMORPHISM CARD ── */
@@ -437,6 +502,7 @@
                   background 0.35s ease;
       transform-style: preserve-3d;
       cursor: default;
+      height: 100%;
     }
 
     .glass-card:hover {
@@ -448,8 +514,8 @@
         inset 0 1px 0 rgba(255,255,255,0.06);
     }
 
-    /* ── FEATURES ── */
-    #features .grid {
+    /* ── FEATURES / SERVICES ── */
+    #services .grid {
       margin-top: 4rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -476,6 +542,8 @@
       letter-spacing: 0.02em;
       margin-bottom: 0.6rem;
     }
+
+    html[dir="rtl"] .feature-title { letter-spacing: 0; }
 
     .feature-desc {
       font-size: 0.875rem;
@@ -516,6 +584,216 @@
       to   { transform: translateX(-50%); }
     }
 
+    /* ── ABOUT ── */
+    .about-wrap {
+      margin-top: 3.5rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-copy p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .about-value {
+      padding: 1.1rem 1.2rem;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .about-value-num {
+      font-family: var(--font-display);
+      color: var(--red-light);
+      font-weight: 800;
+      font-size: 1.6rem;
+    }
+
+    .about-value-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.3rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── WHY CHOOSE US ── */
+    #why .grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .why-card { display: flex; gap: 1rem; align-items: flex-start; }
+
+    .why-icon {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(224,38,58,0.1);
+      color: var(--red-light);
+      font-size: 1rem;
+    }
+
+    .why-title { font-family: var(--font-display); font-weight: 700; font-size: 0.98rem; margin-bottom: 0.4rem; }
+    .why-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── TECHNOLOGIES ── */
+    .tech-groups {
+      margin-top: 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .tech-group-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+
+    .tech-pill {
+      padding: 0.55rem 1.1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .tech-pill:hover {
+      border-color: var(--red-dim);
+      color: var(--red-light);
+      background: rgba(224,38,58,0.06);
+    }
+
+    /* ── PROCESS ── */
+    .process-list {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      align-items: start;
+    }
+    .process-step:last-child { border-bottom: none; }
+
+    .process-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(224,38,58,0.55);
+    }
+
+    .process-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .process-desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.75; max-width: 600px; }
+
+    /* ── PORTFOLIO ── */
+    #portfolio .grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .portfolio-card { overflow: hidden; padding: 0; }
+
+    .portfolio-thumb {
+      height: 180px;
+      width: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(224,38,58,0.22), transparent 60%),
+        linear-gradient(135deg, #15171f, #0c0d12);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .portfolio-thumb svg { width: 46px; height: 46px; color: rgba(224,38,58,0.65); }
+
+    .portfolio-body { padding: 1.6rem 1.8rem 1.8rem; }
+
+    .portfolio-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--red-light);
+      border: 1px solid var(--red-dim);
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      margin-bottom: 0.9rem;
+    }
+
+    .portfolio-title { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .portfolio-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials .grid {
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .testimonial-quote {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: #d8d5cf;
+      margin-bottom: 1.6rem;
+    }
+    .testimonial-quote::before { content: '\201C'; color: var(--red); }
+    .testimonial-quote::after { content: '\201D'; color: var(--red); }
+
+    .testimonial-person { display: flex; align-items: center; gap: 0.9rem; }
+
+    .testimonial-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--red-light), var(--red-dim));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .testimonial-name { font-weight: 600; font-size: 0.9rem; }
+    .testimonial-role { font-size: 0.78rem; color: var(--text-muted); }
+
     /* ── PRICING ── */
     #pricing .cards {
       margin-top: 4rem;
@@ -546,6 +824,8 @@
       padding: 0.3rem 0.8rem;
       font-weight: 700;
     }
+
+    html[dir="rtl"] .pricing-badge { right: auto; left: 1.5rem; }
 
     .pricing-tier {
       font-size: 0.72rem;
@@ -616,11 +896,15 @@
       font-weight: 600;
       text-decoration: none;
       transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+      font-family: var(--font-body);
     }
 
     .pricing-cta.outline {
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--text-primary);
+      background: transparent;
     }
 
     .pricing-cta.outline:hover {
@@ -638,9 +922,65 @@
       opacity: 0.88;
     }
 
+    /* ── FAQ ── */
+    .faq-list { margin-top: 3.5rem; max-width: 760px; }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 1.4rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    html[dir="rtl"] .faq-question { text-align: right; }
+
+    .faq-question .faq-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--red-dim);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--red-light);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .faq-answer-inner {
+      padding-bottom: 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      max-width: 640px;
+    }
+
     /* ── CONTACT ── */
     #contact {
-      max-width: 700px;
+      max-width: 800px;
     }
 
     .form-group {
@@ -686,31 +1026,157 @@
 
     @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 
+    .form-note {
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: none;
+    }
+    .form-note.visible { display: block; color: var(--red-light); }
+
+    /* ── NEWSLETTER ── */
+    #newsletter { max-width: 1200px; }
+
+    .newsletter-card {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      padding: 3rem;
+    }
+
+    .newsletter-copy { max-width: 460px; }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.7rem;
+      flex: 1 1 360px;
+      max-width: 440px;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 0.85rem 1.1rem;
+      outline: none;
+      border-radius: 2px;
+    }
+    .newsletter-input:focus { border-color: var(--red-dim); }
+    .newsletter-input::placeholder { color: rgba(107,110,122,0.6); }
+
+    .newsletter-btn {
+      padding: 0.85rem 1.6rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 640px) {
+      .newsletter-form { flex-direction: column; max-width: 100%; }
+    }
+
     /* ── FOOTER ── */
     footer {
       border-top: 1px solid rgba(255,255,255,0.05);
-      padding: 2.5rem 2rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: space-between;
-      align-items: center;
+      padding: 4rem 2rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
 
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+      gap: 2.5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
     .footer-logo {
       font-family: var(--font-display);
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 800;
       letter-spacing: 0.2em;
-      color: var(--red);
+      color: var(--red-light);
+      text-decoration: none;
+    }
+
+    .footer-blurb {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-socials { display: flex; gap: 0.7rem; margin-top: 1.4rem; }
+
+    .footer-social {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .footer-social:hover {
+      border-color: var(--red-dim);
+      color: var(--red-light);
+      background: rgba(224,38,58,0.06);
+    }
+
+    .footer-col-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 0.8rem;
+      transition: color 0.25s;
+    }
+    .footer-col a:hover { color: var(--red-light); }
+
+    .footer-contact-item {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+      line-height: 1.6;
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-top: 1.75rem;
     }
 
     .footer-copy {
       font-size: 0.75rem;
       color: var(--text-muted);
     }
+
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: 0.75rem; color: var(--text-muted); text-decoration: none; }
+    .footer-legal a:hover { color: var(--red-light); }
 
     /* ── FADE-IN ON SCROLL ── */
     .reveal {
@@ -733,6 +1199,7 @@
     /* ── 3D CARD TILT ── */
     .tilt-wrap {
       perspective: 900px;
+      height: 100%;
     }
 
     /* ── STAT ROW ── */
@@ -764,11 +1231,13 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
-      .nav-links { gap: 1.5rem; }
+      .nav-links { gap: 1.2rem; }
       section { padding: 5rem 1.75rem; }
+      .about-wrap { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .nav-links,
       nav > .nav-right > .lang-switch,
       nav > .nav-right > .nav-cta {
@@ -778,7 +1247,10 @@
     }
 
     @media (max-width: 768px) {
-      #features .grid { grid-template-columns: 1fr; }
+      #services .grid,
+      #why .grid,
+      #portfolio .grid,
+      #testimonials .grid { grid-template-columns: 1fr; }
       #pricing .cards { grid-template-columns: 1fr; }
       .stat-row { gap: 2rem 2.5rem; }
       .form-row { grid-template-columns: 1fr; }
@@ -786,7 +1258,12 @@
       #hero { padding: 7rem 1.5rem 4rem; }
       .hero-actions { width: 100%; }
       .hero-actions a { flex: 1 1 auto; text-align: center; }
-      footer { flex-direction: column; text-align: center; gap: 1.25rem; }
+      .process-step { grid-template-columns: 1fr; gap: 0.5rem; }
+      .about-values { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .newsletter-card { padding: 2.2rem 1.6rem; flex-direction: column; align-items: flex-start; }
+      .newsletter-form { width: 100%; max-width: 100%; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
 
     @media (max-width: 600px) {
@@ -808,14 +1285,6 @@
       .stat-row { flex-direction: column; gap: 1.5rem; }
       .lang-switch { padding: 0.2rem; }
     }
-
-    /* ── RTL ── */
-    html[dir="rtl"] .hero-title .accent,
-    html[dir="rtl"] .nav-links a,
-    html[dir="rtl"] body { letter-spacing: 0; }
-
-    html[dir="rtl"] .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(-45deg); }
-    html[dir="rtl"] .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(45deg); }
   </style>
 </head>
 <body>
@@ -828,15 +1297,18 @@
   <a href="#hero" class="nav-logo">AVENIX</a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="#features" data-i18n="nav.features">Features</a>
+      <a href="#services" data-i18n="nav.services">Services</a>
+      <a href="#process" data-i18n="nav.process">Process</a>
+      <a href="#portfolio" data-i18n="nav.portfolio">Portfolio</a>
       <a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+      <a href="#faq" data-i18n="nav.faq">FAQ</a>
       <a href="#contact" data-i18n="nav.contact">Contact</a>
     </div>
     <div class="lang-switch" role="group" aria-label="Language switch">
       <button type="button" class="lang-btn" data-lang="en">EN</button>
-      <button type="button" class="lang-btn" data-lang="fa">فا</button>
+      <button type="button" class="lang-btn" data-lang="fa">FA</button>
     </div>
-    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get Access</a>
+    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Start a Project</a>
     <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
       <span></span><span></span><span></span>
     </button>
@@ -846,14 +1318,21 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-inner">
-    <a href="#features" class="mobile-link" data-i18n="nav.features">Features</a>
+    <a href="#services" class="mobile-link" data-i18n="nav.services">Services</a>
+    <a href="#about" class="mobile-link" data-i18n="nav.about">About</a>
+    <a href="#why" class="mobile-link" data-i18n="nav.why">Why Us</a>
+    <a href="#technologies" class="mobile-link" data-i18n="nav.technologies">Technologies</a>
+    <a href="#process" class="mobile-link" data-i18n="nav.process">Process</a>
+    <a href="#portfolio" class="mobile-link" data-i18n="nav.portfolio">Portfolio</a>
+    <a href="#testimonials" class="mobile-link" data-i18n="nav.testimonials">Testimonials</a>
     <a href="#pricing" class="mobile-link" data-i18n="nav.pricing">Pricing</a>
+    <a href="#faq" class="mobile-link" data-i18n="nav.faq">FAQ</a>
     <a href="#contact" class="mobile-link" data-i18n="nav.contact">Contact</a>
     <div class="lang-switch" role="group" aria-label="Language switch">
       <button type="button" class="lang-btn" data-lang="en">EN</button>
-      <button type="button" class="lang-btn" data-lang="fa">فا</button>
+      <button type="button" class="lang-btn" data-lang="fa">FA</button>
     </div>
-    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Get Access</a>
+    <a href="#contact" class="nav-cta" data-i18n="nav.cta">Start a Project</a>
   </div>
 </div>
 
@@ -861,18 +1340,18 @@
 
   <!-- HERO -->
   <section id="hero" style="max-width:100%; padding-left:2rem; padding-right:2rem;">
-    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Introducing Avenix 3.0 — Now Available</p>
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Software Development & Design Studio</p>
     <h1 class="hero-title">
-      <span data-i18n="hero.line1">Intelligence</span><br/>
-      <span class="accent" data-i18n="hero.accent">Engineered</span><br/>
-      <span data-i18n="hero.line2">for the Edge</span>
+      <span data-i18n="hero.line1">We Build</span><br/>
+      <span class="accent" data-i18n="hero.accent">Software</span><br/>
+      <span data-i18n="hero.line2">That Moves Business</span>
     </h1>
     <p class="hero-sub" data-i18n="hero.sub">
-      A new class of AI infrastructure. Built for teams who move fast, think clearly, and refuse to compromise on precision.
+      AVENIX is a full-cycle software development and design studio. We design, build, and ship web platforms, mobile apps, and brand experiences for startups and enterprises that refuse to settle for average.
     </p>
     <div class="hero-actions">
-      <a href="#features" class="btn-glow" data-i18n="hero.cta1">Begin your mission</a>
-      <a href="#pricing" class="btn-ghost" data-i18n="hero.cta2">See Pricing</a>
+      <a href="#contact" class="btn-glow" data-i18n="hero.cta1">Start a project</a>
+      <a href="#portfolio" class="btn-ghost" data-i18n="hero.cta2">See our work</a>
     </div>
     <div class="scroll-hint">
       <span data-i18n="hero.scroll">Scroll</span>
@@ -883,39 +1362,39 @@
   <!-- MARQUEE -->
   <div class="marquee-wrap">
     <div class="marquee-track" id="marquee">
-      <span data-i18n="marquee.1">Autonomous Inference</span>
+      <span data-i18n="marquee.1">Web Development</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.2">Quantum-Grade Security</span>
+      <span data-i18n="marquee.2">UI/UX Design</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.3">Edge Deployment</span>
+      <span data-i18n="marquee.3">Mobile Apps</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.4">Sub-10ms Latency</span>
+      <span data-i18n="marquee.4">Cloud & DevOps</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.5">Zero-Knowledge Architecture</span>
+      <span data-i18n="marquee.5">Brand Identity</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.6">Neural Mesh Routing</span>
+      <span data-i18n="marquee.6">Product Strategy</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.1">Autonomous Inference</span>
+      <span data-i18n="marquee.1">Web Development</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.2">Quantum-Grade Security</span>
+      <span data-i18n="marquee.2">UI/UX Design</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.3">Edge Deployment</span>
+      <span data-i18n="marquee.3">Mobile Apps</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.4">Sub-10ms Latency</span>
+      <span data-i18n="marquee.4">Cloud & DevOps</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.5">Zero-Knowledge Architecture</span>
+      <span data-i18n="marquee.5">Brand Identity</span>
       <span class="dot">◆</span>
-      <span data-i18n="marquee.6">Neural Mesh Routing</span>
+      <span data-i18n="marquee.6">Product Strategy</span>
       <span class="dot">◆</span>
     </div>
   </div>
 
-  <!-- FEATURES -->
-  <section id="features">
+  <!-- SERVICES -->
+  <section id="services">
     <div class="reveal">
-      <p class="section-eyebrow">What we built</p>
-      <h2 class="section-title">Designed for decisions that matter.</h2>
-      <p class="section-sub">Every component in Nexus was rethought from first principles — no legacy trade-offs, no artificial limits.</p>
+      <p class="section-eyebrow" data-i18n="services.eyebrow">What we do</p>
+      <h2 class="section-title" data-i18n="services.title">Full-cycle software & design services</h2>
+      <p class="section-sub" data-i18n="services.sub">From the first sketch to production deployment — one team, one roadmap, zero handoff friction.</p>
     </div>
 
     <div class="grid">
@@ -923,60 +1402,60 @@
       <div class="tilt-wrap reveal">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           </div>
-          <h3 class="feature-title">Neural Mesh Engine</h3>
-          <p class="feature-desc">Distributed inference across a self-healing node network. Seamless failover with zero cold-start latency.</p>
+          <h3 class="feature-title" data-i18n="services.s1.title">Web Application Development</h3>
+          <p class="feature-desc" data-i18n="services.s1.desc">Scalable, secure web apps built with modern frameworks like React, Next.js, and Node.js — engineered for performance and growth.</p>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.1s">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
           </div>
-          <h3 class="feature-title">Zero-Knowledge Core</h3>
-          <p class="feature-desc">Your data never trains our models. Cryptographic proof at every layer — verifiable, not just promised.</p>
+          <h3 class="feature-title" data-i18n="services.s2.title">UI/UX Design</h3>
+          <p class="feature-desc" data-i18n="services.s2.desc">Human-centered interfaces backed by research, wireframing, and prototyping that turn complex workflows into intuitive products.</p>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.2s">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18"/></svg>
           </div>
-          <h3 class="feature-title">Edge Fabric Routing</h3>
-          <p class="feature-desc">Requests are routed to the nearest inference node in under 3ms. Built for global teams without the global overhead.</p>
+          <h3 class="feature-title" data-i18n="services.s3.title">Mobile App Development</h3>
+          <p class="feature-desc" data-i18n="services.s3.desc">Native and cross-platform apps for iOS and Android, built once and shipped everywhere with React Native and Flutter.</p>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.05s">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><path d="M3 9h18M9 21V9"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
           </div>
-          <h3 class="feature-title">Adaptive Context Windows</h3>
-          <p class="feature-desc">Dynamic token allocation based on task complexity. No wasted compute, no truncated reasoning chains.</p>
+          <h3 class="feature-title" data-i18n="services.s4.title">Cloud & DevOps</h3>
+          <p class="feature-desc" data-i18n="services.s4.desc">CI/CD pipelines, containerized infrastructure, and cloud architecture on AWS, GCP, and Azure that scale with your users.</p>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.15s">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
           </div>
-          <h3 class="feature-title">Precision Analytics</h3>
-          <p class="feature-desc">Token-level cost attribution, latency heatmaps, and model drift alerts — visibility you can actually act on.</p>
+          <h3 class="feature-title" data-i18n="services.s5.title">Branding & Identity</h3>
+          <p class="feature-desc" data-i18n="services.s5.desc">Visual identity systems — logos, design language, and style guides — that make your product instantly recognizable.</p>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.25s">
         <div class="glass-card" data-tilt>
           <div class="feature-icon">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12" y2="17"/></svg>
           </div>
-          <h3 class="feature-title">Live Model Updates</h3>
-          <p class="feature-desc">Models update silently without downtime. Your pipeline keeps running while we push improvements in the background.</p>
+          <h3 class="feature-title" data-i18n="services.s6.title">Product Strategy & Consulting</h3>
+          <p class="feature-desc" data-i18n="services.s6.desc">Technical audits, MVP roadmaps, and architecture reviews that de-risk your next release before a line of code ships.</p>
         </div>
       </div>
 
@@ -985,20 +1464,361 @@
     <!-- STATS -->
     <div class="stat-row reveal">
       <div class="stat-item">
-        <div class="stat-num">99.99<span style="font-size:1.4rem;color:var(--text-muted)">%</span></div>
-        <div class="stat-label">Uptime SLA</div>
+        <div class="stat-num">250<span style="font-size:1.4rem;color:var(--text-muted)">+</span></div>
+        <div class="stat-label" data-i18n="stats.projects">Projects Delivered</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">&lt;8<span style="font-size:1.4rem;color:var(--text-muted)">ms</span></div>
-        <div class="stat-label">Median Latency</div>
+        <div class="stat-num">98<span style="font-size:1.4rem;color:var(--text-muted)">%</span></div>
+        <div class="stat-label" data-i18n="stats.satisfaction">Client Satisfaction</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">1.4<span style="font-size:1.4rem;color:var(--text-muted)">B+</span></div>
-        <div class="stat-label">Daily Inferences</div>
+        <div class="stat-num">9<span style="font-size:1.4rem;color:var(--text-muted)">+</span></div>
+        <div class="stat-label" data-i18n="stats.years">Years of Experience</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">48<span style="font-size:1.4rem;color:var(--text-muted)"> regions</span></div>
-        <div class="stat-label">Global Edge Nodes</div>
+        <div class="stat-num">40<span style="font-size:1.4rem;color:var(--text-muted)">+</span></div>
+        <div class="stat-label" data-i18n="stats.team">Team Members</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="about.eyebrow">Who we are</p>
+      <h2 class="section-title" data-i18n="about.title">A studio built by engineers and designers</h2>
+    </div>
+
+    <div class="about-wrap reveal">
+      <div class="about-copy">
+        <p data-i18n="about.p1">AVENIX was founded by a small team of engineers and designers who were tired of watching good ideas die in handoffs between agencies, freelancers, and in-house teams. So we built a studio where design and engineering sit at the same table from day one.</p>
+        <p data-i18n="about.p2">Today we partner with founders and enterprise teams across fintech, healthcare, e-commerce, and SaaS — shipping products that are fast, accessible, and built to scale, not just to demo well.</p>
+        <p data-i18n="about.p3">Every engagement is staffed by senior engineers and designers, never a rotating cast of juniors. You talk to the people actually writing the code.</p>
+      </div>
+      <div class="tilt-wrap">
+        <div class="glass-card" data-tilt style="padding:2.2rem;">
+          <div class="about-values">
+            <div class="about-value">
+              <div class="about-value-num">120+</div>
+              <div class="about-value-label" data-i18n="about.v1">Web & mobile apps shipped</div>
+            </div>
+            <div class="about-value">
+              <div class="about-value-num">35+</div>
+              <div class="about-value-label" data-i18n="about.v2">Industries served</div>
+            </div>
+            <div class="about-value">
+              <div class="about-value-num">18</div>
+              <div class="about-value-label" data-i18n="about.v3">Countries with clients</div>
+            </div>
+            <div class="about-value">
+              <div class="about-value-num">24/7</div>
+              <div class="about-value-label" data-i18n="about.v4">Production monitoring</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section id="why">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="why.eyebrow">Why Avenix</p>
+      <h2 class="section-title" data-i18n="why.title">Built different, delivered better</h2>
+      <p class="section-sub" data-i18n="why.sub">We're not the agency that disappears after the contract is signed. Here's what working with us actually looks like.</p>
+    </div>
+
+    <div class="grid">
+      <div class="reveal">
+        <div class="glass-card why-card">
+          <div class="why-icon">★</div>
+          <div>
+            <div class="why-title" data-i18n="why.w1.title">Senior team, no juniors-in-training</div>
+            <div class="why-desc" data-i18n="why.w1.desc">Every project is staffed by engineers and designers with 5+ years of production experience.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.05s">
+        <div class="glass-card why-card">
+          <div class="why-icon">◷</div>
+          <div>
+            <div class="why-title" data-i18n="why.w2.title">Transparent, fixed-scope pricing</div>
+            <div class="why-desc" data-i18n="why.w2.desc">You get a detailed quote before we start — no surprise invoices, no scope creep without sign-off.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <div class="glass-card why-card">
+          <div class="why-icon">⇄</div>
+          <div>
+            <div class="why-title" data-i18n="why.w3.title">Agile delivery with weekly demos</div>
+            <div class="why-desc" data-i18n="why.w3.desc">You see working software every week, not a slide deck every quarter.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="glass-card why-card">
+          <div class="why-icon">⛨</div>
+          <div>
+            <div class="why-title" data-i18n="why.w4.title">Security-first engineering</div>
+            <div class="why-desc" data-i18n="why.w4.desc">Code reviews, automated testing, and security audits are part of the process, not an add-on.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="glass-card why-card">
+          <div class="why-icon">♥</div>
+          <div>
+            <div class="why-title" data-i18n="why.w5.title">Support after launch</div>
+            <div class="why-desc" data-i18n="why.w5.desc">Every project ships with a support window — bug fixes and monitoring included, not billed separately.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.25s">
+        <div class="glass-card why-card">
+          <div class="why-icon">⏱</div>
+          <div>
+            <div class="why-title" data-i18n="why.w6.title">On-time, on-budget delivery</div>
+            <div class="why-desc" data-i18n="why.w6.desc">Clear milestones and proactive communication mean no last-minute scrambling.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGIES -->
+  <section id="technologies">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="tech.eyebrow">Our toolkit</p>
+      <h2 class="section-title" data-i18n="tech.title">Technologies we use</h2>
+      <p class="section-sub" data-i18n="tech.sub">We pick the right tool for the job, not the trendiest one. Here's what's usually in the stack.</p>
+    </div>
+
+    <div class="tech-groups reveal">
+      <div>
+        <div class="tech-group-label" data-i18n="tech.frontend">Frontend</div>
+        <div class="tech-pills">
+          <span class="tech-pill">React</span>
+          <span class="tech-pill">Next.js</span>
+          <span class="tech-pill">Vue.js</span>
+          <span class="tech-pill">TypeScript</span>
+          <span class="tech-pill">Tailwind CSS</span>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label" data-i18n="tech.backend">Backend</div>
+        <div class="tech-pills">
+          <span class="tech-pill">Node.js</span>
+          <span class="tech-pill">Python / Django</span>
+          <span class="tech-pill">Go</span>
+          <span class="tech-pill">GraphQL</span>
+          <span class="tech-pill">PostgreSQL</span>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label" data-i18n="tech.mobile">Mobile</div>
+        <div class="tech-pills">
+          <span class="tech-pill">React Native</span>
+          <span class="tech-pill">Flutter</span>
+          <span class="tech-pill">Swift</span>
+          <span class="tech-pill">Kotlin</span>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label" data-i18n="tech.cloud">Cloud & DevOps</div>
+        <div class="tech-pills">
+          <span class="tech-pill">AWS</span>
+          <span class="tech-pill">Google Cloud</span>
+          <span class="tech-pill">Docker</span>
+          <span class="tech-pill">Kubernetes</span>
+          <span class="tech-pill">GitHub Actions</span>
+        </div>
+      </div>
+      <div>
+        <div class="tech-group-label" data-i18n="tech.design">Design</div>
+        <div class="tech-pills">
+          <span class="tech-pill">Figma</span>
+          <span class="tech-pill">Adobe Creative Cloud</span>
+          <span class="tech-pill">Framer</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="process.eyebrow">How we work</p>
+      <h2 class="section-title" data-i18n="process.title">Our process</h2>
+      <p class="section-sub" data-i18n="process.sub">A clear, repeatable path from idea to production — refined across hundreds of projects.</p>
+    </div>
+
+    <div class="process-list reveal">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <div>
+          <div class="process-title" data-i18n="process.p1.title">Discovery & Strategy</div>
+          <div class="process-desc" data-i18n="process.p1.desc">We dig into your goals, users, and constraints to define scope, success metrics, and a realistic timeline before any design work starts.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <div>
+          <div class="process-title" data-i18n="process.p2.title">UX/UI Design</div>
+          <div class="process-desc" data-i18n="process.p2.desc">Wireframes, prototypes, and high-fidelity designs that you can click through and test before a single line of code is written.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <div>
+          <div class="process-title" data-i18n="process.p3.title">Development</div>
+          <div class="process-desc" data-i18n="process.p3.desc">Agile sprints with weekly demos. You watch the product come together in real time, not at the very end.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <div>
+          <div class="process-title" data-i18n="process.p4.title">Testing & QA</div>
+          <div class="process-desc" data-i18n="process.p4.desc">Automated and manual testing across devices and browsers, plus security and performance audits before launch.</div>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="process-num">05</div>
+        <div>
+          <div class="process-title" data-i18n="process.p5.title">Launch & Support</div>
+          <div class="process-desc" data-i18n="process.p5.desc">We deploy, monitor, and stay on for a support window — handling fixes, updates, and scaling as real users arrive.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="portfolio.eyebrow">Selected work</p>
+      <h2 class="section-title" data-i18n="portfolio.title">Projects we're proud of</h2>
+      <p class="section-sub" data-i18n="portfolio.sub">A few examples of products our team has designed, built, and shipped to production.</p>
+    </div>
+
+    <div class="grid">
+      <div class="reveal">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t1.tag">Fintech</span>
+            <div class="portfolio-title" data-i18n="portfolio.t1.title">Real-time trading dashboard</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t1.desc">A web platform processing thousands of live data points per second with sub-100ms chart updates.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 14c1.5-1.5 1.5-4-1-5.5C16.7 5 13.5 5 12 7c-1.5-2-4.7-2-6 1.5-1.5 1.5-1.5 4 0 5.5l6 6 6-6z"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t2.tag">Healthcare</span>
+            <div class="portfolio-title" data-i18n="portfolio.t2.title">Patient care mobile app</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t2.desc">A HIPAA-aware cross-platform app connecting patients with care teams, with offline-first sync.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t3.tag">E-commerce</span>
+            <div class="portfolio-title" data-i18n="portfolio.t3.title">Headless commerce platform</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t3.desc">A composable storefront serving 12 regional brands from one codebase, cutting release time by 70%.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.05s">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t4.tag">SaaS</span>
+            <div class="portfolio-title" data-i18n="portfolio.t4.title">Analytics & reporting suite</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t4.desc">A self-serve analytics product with custom dashboards, used daily by over 50,000 active users.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t5.tag">Logistics</span>
+            <div class="portfolio-title" data-i18n="portfolio.t5.title">Fleet management system</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t5.desc">Live GPS tracking and route optimization for a 400-vehicle delivery fleet, built on a custom cloud backend.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.25s">
+        <div class="glass-card portfolio-card">
+          <div class="portfolio-thumb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <div class="portfolio-body">
+            <span class="portfolio-tag" data-i18n="portfolio.t6.tag">EdTech</span>
+            <div class="portfolio-title" data-i18n="portfolio.t6.title">Interactive learning platform</div>
+            <div class="portfolio-desc" data-i18n="portfolio.t6.desc">A gamified e-learning web app with live classrooms, used by 200+ schools across three countries.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="testimonials.eyebrow">Client voices</p>
+      <h2 class="section-title" data-i18n="testimonials.title">What our clients say</h2>
+    </div>
+
+    <div class="grid">
+      <div class="reveal">
+        <div class="glass-card">
+          <p class="testimonial-quote" data-i18n="testimonials.r1.quote">Avenix rebuilt our platform from the ground up in twelve weeks. The weekly demos meant we always knew exactly where things stood — no surprises at launch.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">SM</div>
+            <div>
+              <div class="testimonial-name" data-i18n="testimonials.r1.name">Sara Madani</div>
+              <div class="testimonial-role" data-i18n="testimonials.r1.role">CEO, Fintech Startup</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.1s">
+        <div class="glass-card">
+          <p class="testimonial-quote" data-i18n="testimonials.r2.quote">The design team understood our users better than we did. Engagement on the new app jumped 40% in the first month after launch.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">DK</div>
+            <div>
+              <div class="testimonial-name" data-i18n="testimonials.r2.name">David Klein</div>
+              <div class="testimonial-role" data-i18n="testimonials.r2.role">Head of Product, HealthCo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:0.2s">
+        <div class="glass-card">
+          <p class="testimonial-quote" data-i18n="testimonials.r3.quote">We've worked with three agencies before Avenix. This is the first time the code we received was actually maintainable after handoff.</p>
+          <div class="testimonial-person">
+            <div class="testimonial-avatar">RA</div>
+            <div>
+              <div class="testimonial-name" data-i18n="testimonials.r3.name">Rana Ahmadi</div>
+              <div class="testimonial-role" data-i18n="testimonials.r3.role">CTO, RetailStack</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1006,224 +1826,668 @@
   <!-- PRICING -->
   <section id="pricing" style="max-width:1200px; margin:0 auto;">
     <div class="reveal">
-      <p class="section-eyebrow">Transparent pricing</p>
-      <h2 class="section-title">Start fast. Scale without limits.</h2>
-      <p class="section-sub">Every plan includes core Nexus infrastructure. No lock-in, cancel any time.</p>
+      <p class="section-eyebrow" data-i18n="pricing.eyebrow">Transparent pricing</p>
+      <h2 class="section-title" data-i18n="pricing.title">Start fast. Scale without limits.</h2>
+      <p class="section-sub" data-i18n="pricing.sub">Every plan includes a dedicated team and source-code ownership. No lock-in, cancel any time.</p>
     </div>
 
     <div class="cards">
 
       <div class="tilt-wrap reveal">
         <div class="glass-card pricing-card" data-tilt>
-          <div class="pricing-tier">Explorer</div>
-          <div class="pricing-price"><sup>$</sup>0</div>
-          <div class="pricing-period">Free forever</div>
+          <div class="pricing-tier" data-i18n="pricing.starter.tier">Starter</div>
+          <div class="pricing-price"><sup>$</sup>4,900</div>
+          <div class="pricing-period" data-i18n="pricing.starter.period">One-time, MVP build</div>
           <div class="pricing-divider"></div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>5M tokens / month</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>1 deployment region</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Community support</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Public API access</div>
-          <a href="#contact" class="pricing-cta outline">Get started free</a>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.starter.f1">Up to 6 weeks delivery</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.starter.f2">UI/UX design included</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.starter.f3">1 platform (web or mobile)</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.starter.f4">30-day post-launch support</span></div>
+          <a href="#contact" class="pricing-cta outline" data-i18n="pricing.starter.cta">Get started</a>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.1s">
         <div class="glass-card pricing-card featured" data-tilt>
-          <div class="pricing-badge">Most Popular</div>
-          <div class="pricing-tier">Operator</div>
-          <div class="pricing-price"><sup>$</sup>149</div>
-          <div class="pricing-period">per seat / month</div>
+          <div class="pricing-badge" data-i18n="pricing.growth.badge">Most Popular</div>
+          <div class="pricing-tier" data-i18n="pricing.growth.tier">Growth</div>
+          <div class="pricing-price"><sup>$</sup>12,500</div>
+          <div class="pricing-period" data-i18n="pricing.growth.period">Per project, full team</div>
           <div class="pricing-divider"></div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>200M tokens / month</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>All 48 edge regions</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Priority SLA &lt;4hr</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Zero-knowledge mode</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Advanced analytics</div>
-          <a href="#contact" class="pricing-cta solid btn-glow">Start Operator trial</a>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.growth.f1">Dedicated design + dev team</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.growth.f2">Web & mobile platforms</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.growth.f3">Weekly sprint demos</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.growth.f4">CI/CD & cloud setup included</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.growth.f5">90-day post-launch support</span></div>
+          <a href="#contact" class="pricing-cta solid btn-glow" data-i18n="pricing.growth.cta">Start your project</a>
         </div>
       </div>
 
       <div class="tilt-wrap reveal" style="transition-delay:0.2s">
         <div class="glass-card pricing-card" data-tilt>
-          <div class="pricing-tier">Sovereign</div>
-          <div class="pricing-price" style="font-size:1.8rem; padding-top:0.4rem;">Custom</div>
-          <div class="pricing-period">Enterprise agreement</div>
+          <div class="pricing-tier" data-i18n="pricing.enterprise.tier">Enterprise</div>
+          <div class="pricing-price" style="font-size:1.8rem; padding-top:0.4rem;" data-i18n="pricing.enterprise.price">Custom</div>
+          <div class="pricing-period" data-i18n="pricing.enterprise.period">Ongoing partnership</div>
           <div class="pricing-divider"></div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Unlimited tokens</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Dedicated infrastructure</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>99.99% uptime SLA</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>On-prem deployment</div>
-          <div class="pricing-feature"><div class="pricing-check">✓</div>Dedicated success team</div>
-          <a href="#contact" class="pricing-cta outline">Contact sales</a>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.enterprise.f1">Multiple dedicated squads</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.enterprise.f2">Architecture & security audits</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.enterprise.f3">SLA-backed delivery</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.enterprise.f4">Dedicated account manager</span></div>
+          <div class="pricing-feature"><div class="pricing-check">✓</div><span data-i18n="pricing.enterprise.f5">Continuous support & scaling</span></div>
+          <a href="#contact" class="pricing-cta outline" data-i18n="pricing.enterprise.cta">Contact sales</a>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="reveal">
+      <p class="section-eyebrow" data-i18n="faq.eyebrow">Common questions</p>
+      <h2 class="section-title" data-i18n="faq.title">Frequently asked questions</h2>
+    </div>
+
+    <div class="faq-list reveal" id="faqList">
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q1.q">How long does a typical project take?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q1.a">It depends on scope — a simple MVP can ship in 4–6 weeks, while a full multi-platform product usually takes 3–6 months. We give you a firm timeline after the discovery phase.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q2.q">Who owns the code after the project ends?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q2.a">You do, fully. Once final payment is made, all source code, designs, and assets are transferred to you with no licensing strings attached.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q3.q">Do you sign NDAs?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q3.a">Yes. We sign an NDA before any detailed discussion of your product, and confidentiality terms are built into every contract.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q4.q">Can you work with our in-house team?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q4.a">Absolutely. We regularly embed with in-house engineering and design teams, plugging into your existing tools, repos, and sprint cycles.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q5.q">What happens after launch?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q5.a">Every plan includes a post-launch support window for bug fixes and monitoring. After that, you can choose a retainer for ongoing updates or scaling work.</div>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button type="button" class="faq-question">
+          <span data-i18n="faq.q6.q">How is pricing determined?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          <div class="faq-answer-inner" data-i18n="faq.q6.a">We scope every project individually after discovery and provide a fixed quote, so you know the full cost before any work begins.</div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- CONTACT -->
   <section id="contact" style="max-width:800px; margin:0 auto;">
     <div class="reveal">
-      <p class="section-eyebrow">Get in touch</p>
-      <h2 class="section-title">Ready to deploy intelligence?</h2>
-      <p class="section-sub">Tell us about your use case. Our team responds within one business day.</p>
+      <p class="section-eyebrow" data-i18n="contact.eyebrow">Get in touch</p>
+      <h2 class="section-title" data-i18n="contact.title">Ready to build something great?</h2>
+      <p class="section-sub" data-i18n="contact.sub">Tell us about your project. Our team responds within one business day.</p>
     </div>
 
     <div class="tilt-wrap reveal" style="margin-top:3rem;">
       <div class="glass-card" style="padding: 2.5rem;">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First name</label>
-            <input type="text" placeholder="Ada" class="form-input" />
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="contact.first">First name</label>
+              <input type="text" placeholder="Ada" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="contact.last">Last name</label>
+              <input type="text" placeholder="Lovelace" class="form-input" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" data-i18n="contact.email">Work email</label>
+              <input type="email" placeholder="ada@company.io" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" data-i18n="contact.company">Company</label>
+              <input type="text" placeholder="Acme Corp" class="form-input" />
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Last name</label>
-            <input type="text" placeholder="Lovelace" class="form-input" />
+            <label class="form-label" data-i18n="contact.usecase">Tell us about your project</label>
+            <textarea class="form-input" placeholder="What are you building?" data-i18n-placeholder="contact.usecasePlaceholder"></textarea>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">Work email</label>
-            <input type="email" placeholder="ada@company.io" class="form-input" />
+          <div style="margin-top:1.5rem;">
+            <button type="submit" class="btn-glow" style="display:inline-block;" data-i18n="contact.send">Send message</button>
+            <div class="form-note" id="formNote" data-i18n="contact.sent">Thanks! We'll be in touch within one business day.</div>
           </div>
-          <div class="form-group">
-            <label class="form-label">Company</label>
-            <input type="text" placeholder="Acme Corp" class="form-input" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Use case</label>
-          <textarea class="form-input" placeholder="Describe what you're building…"></textarea>
-        </div>
-        <div style="margin-top:1.5rem;">
-          <a href="#" class="btn-glow" style="display:inline-block;">Send message</a>
-        </div>
+        </form>
       </div>
     </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter">
+    <div class="tilt-wrap reveal">
+      <div class="glass-card newsletter-card" data-tilt>
+        <div class="newsletter-copy">
+          <p class="section-eyebrow" style="margin-bottom:0.6rem;" data-i18n="newsletter.eyebrow">Stay in the loop</p>
+          <h3 class="font-display" style="font-size:1.5rem; font-weight:800;" data-i18n="newsletter.title">Get design & engineering insights</h3>
+          <p class="section-sub" style="margin-top:0.6rem;" data-i18n="newsletter.sub">One email a month. No fluff — practical notes on product, design, and engineering.</p>
+        </div>
+        <form class="newsletter-form" id="newsletterForm">
+          <input type="email" class="newsletter-input" placeholder="you@email.com" data-i18n-placeholder="newsletter.placeholder" required />
+          <button type="submit" class="btn-glow newsletter-btn" data-i18n="newsletter.cta">Subscribe</button>
+        </form>
+      </div>
+    </div>
+    <div class="form-note" id="newsletterNote" style="text-align:center; margin-top:1rem;" data-i18n="newsletter.thanks">Thanks for subscribing!</div>
   </section>
 
 </main>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">NEXUS</div>
-  <div class="footer-copy">© 2026 Nexus Systems Inc. All rights reserved.</div>
-  <div style="display:flex; gap:1.5rem;">
-    <a href="#" style="font-size:0.75rem; color:var(--text-muted); text-decoration:none;">Privacy</a>
-    <a href="#" style="font-size:0.75rem; color:var(--text-muted); text-decoration:none;">Terms</a>
-    <a href="#" style="font-size:0.75rem; color:var(--text-muted); text-decoration:none;">Status</a>
+  <div class="footer-grid">
+    <div>
+      <a href="#hero" class="footer-logo">AVENIX</a>
+      <p class="footer-blurb" data-i18n="footer.blurb">A software development and design studio building web platforms, mobile apps, and brand experiences for ambitious teams.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social" aria-label="X / Twitter">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.2 8.2L23 22h-6.8l-5.3-6.9L4.8 22H1.7l7.7-8.8L1 2h6.9l4.8 6.4L18.9 2z"/></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="LinkedIn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.25h4V23h-4V8.25zM8.5 8.25h3.83v2.01h.05c.53-1 1.84-2.05 3.79-2.05 4.06 0 4.81 2.67 4.81 6.14V23h-4v-6.78c0-1.62-.03-3.7-2.26-3.7-2.26 0-2.6 1.77-2.6 3.59V23h-4V8.25z"/></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 4.93 3.2 9.11 7.64 10.59.56.1.76-.24.76-.54v-2.1c-3.11.68-3.77-1.32-3.77-1.32-.51-1.3-1.24-1.64-1.24-1.64-1.02-.7.08-.68.08-.68 1.12.08 1.71 1.15 1.71 1.15 1 1.71 2.62 1.22 3.26.93.1-.72.4-1.22.72-1.5-2.49-.28-5.1-1.24-5.1-5.54 0-1.22.44-2.22 1.15-3-.12-.28-.5-1.42.11-2.96 0 0 .94-.3 3.08 1.15a10.6 10.6 0 0 1 5.6 0c2.14-1.45 3.08-1.15 3.08-1.15.61 1.54.23 2.68.11 2.96.72.78 1.15 1.78 1.15 3 0 4.31-2.62 5.26-5.12 5.54.41.35.76 1.04.76 2.1v3.1c0 .31.2.65.77.54 4.43-1.48 7.63-5.66 7.63-10.59C23.02 5.24 18.27.5 12 .5z"/></svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="Dribbble">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm9.9 11.1c-.3-.1-2.6-.8-5.3-.4-.1-.3-.2-.5-.4-.8-.1-.3-.3-.6-.5-.9 2.8-1.1 4-2.8 4.1-3 1.4 1.6 2.1 3.7 2.1 5.1zm-3.4-6.3c-.1.2-1.2 1.8-3.9 2.8-1.2-2.2-2.6-4-2.8-4.3 1-.4 2.2-.6 3.3-.6 1.3.1 2.4.5 3.4 2.1zM7.4 1.3c.2.3 1.6 2.1 2.8 4.2-3.6 1-6.7 1-7 1C3.7 4.4 5.3 2.6 7.4 1.3zM1.3 8.7c.3 0 3.9.1 7.7-1.1.2.4.4.9.6 1.3-.1 0-.2.1-.3.1-4 1.3-5.5 3.9-5.6 4.1-1.4-1.5-2.3-3.5-2.4-5.6.1.1 0 .9 0 1.2zm2.7 6.8c.1-.2 1.3-2.6 5.7-4 0 0 .1 0 .1.1 1.1 2.8 1.6 5.2 1.7 5.8-2.5 1-5.2.6-7-.7.2.1-.4-.6-.5-1.2zm9.4 1.4c-.1-.5-.5-2.8-1.6-5.5 2.5-.4 4.6.2 4.9.3-.4 2.2-1.6 4.1-3.3 5.2z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title" data-i18n="footer.company">Company</div>
+      <a href="#about" data-i18n="footer.about">About Us</a>
+      <a href="#why" data-i18n="footer.why">Why Choose Us</a>
+      <a href="#portfolio" data-i18n="footer.portfolio">Portfolio</a>
+      <a href="#" data-i18n="footer.careers">Careers</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title" data-i18n="footer.services">Services</div>
+      <a href="#services" data-i18n="footer.webdev">Web Development</a>
+      <a href="#services" data-i18n="footer.uiux">UI/UX Design</a>
+      <a href="#services" data-i18n="footer.mobile">Mobile Apps</a>
+      <a href="#services" data-i18n="footer.cloud">Cloud & DevOps</a>
+    </div>
+
+    <div class="footer-col">
+      <div class="footer-col-title" data-i18n="footer.contactTitle">Contact</div>
+      <div class="footer-contact-item">hello@avenix.dev</div>
+      <div class="footer-contact-item">+1 (415) 555-0182</div>
+      <div class="footer-contact-item" data-i18n="footer.address">142 Market Street, San Francisco, CA</div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy" data-i18n="footer.copyright">© 2026 Avenix Studio. All rights reserved.</div>
+    <div class="footer-legal">
+      <a href="#" data-i18n="footer.privacy">Privacy</a>
+      <a href="#" data-i18n="footer.terms">Terms</a>
+      <a href="#" data-i18n="footer.status">Status</a>
+    </div>
   </div>
 </footer>
 
 <script>
-  /* ── SCROLL REVEAL ── */
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  reveals.forEach(el => observer.observe(el));
-
-  /* ── 3D TILT EFFECT ── */
-  const tiltCards = document.querySelectorAll('[data-tilt]');
-
-  tiltCards.forEach(card => {
-    const wrap = card.closest('.tilt-wrap') || card;
-
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / (rect.width / 2);
-      const dy = (e.clientY - cy) / (rect.height / 2);
-
-      const rotX = -dy * 10;
-      const rotY =  dx * 10;
-      const tz   =  8;
-
-      card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${tz}px)`;
-      card.style.boxShadow = `
-        ${-dx * 12}px ${-dy * 12}px 40px rgba(0,0,0,0.45),
-        0 0 0 1px rgba(224,38,58,${0.06 + Math.abs(dx) * 0.08 + Math.abs(dy) * 0.08}),
-        inset 0 1px 0 rgba(255,255,255,0.06)
-      `;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.boxShadow = '';
-    });
-  });
-
-  /* ── NAV SCROLL STYLE ── */
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      nav.style.background = 'rgba(8,9,13,0.92)';
-    } else {
-      nav.style.background = 'rgba(8,9,13,0.6)';
+/* ════════════════════════════════════════════════
+   I18N DICTIONARY
+   ════════════════════════════════════════════════ */
+const translations = {
+  en: {
+    nav: { services:"Services", about:"About", why:"Why Us", technologies:"Technologies", process:"Process", portfolio:"Portfolio", testimonials:"Testimonials", pricing:"Pricing", faq:"FAQ", contact:"Contact", cta:"Start a Project" },
+    hero: {
+      eyebrow:"Software Development & Design Studio",
+      line1:"We Build", accent:"Software", line2:"That Moves Business",
+      sub:"AVENIX is a full-cycle software development and design studio. We design, build, and ship web platforms, mobile apps, and brand experiences for startups and enterprises that refuse to settle for average.",
+      cta1:"Start a project", cta2:"See our work", scroll:"Scroll"
+    },
+    marquee: { 1:"Web Development", 2:"UI/UX Design", 3:"Mobile Apps", 4:"Cloud & DevOps", 5:"Brand Identity", 6:"Product Strategy" },
+    services: {
+      eyebrow:"What we do", title:"Full-cycle software & design services",
+      sub:"From the first sketch to production deployment — one team, one roadmap, zero handoff friction.",
+      s1:{title:"Web Application Development", desc:"Scalable, secure web apps built with modern frameworks like React, Next.js, and Node.js — engineered for performance and growth."},
+      s2:{title:"UI/UX Design", desc:"Human-centered interfaces backed by research, wireframing, and prototyping that turn complex workflows into intuitive products."},
+      s3:{title:"Mobile App Development", desc:"Native and cross-platform apps for iOS and Android, built once and shipped everywhere with React Native and Flutter."},
+      s4:{title:"Cloud & DevOps", desc:"CI/CD pipelines, containerized infrastructure, and cloud architecture on AWS, GCP, and Azure that scale with your users."},
+      s5:{title:"Branding & Identity", desc:"Visual identity systems — logos, design language, and style guides — that make your product instantly recognizable."},
+      s6:{title:"Product Strategy & Consulting", desc:"Technical audits, MVP roadmaps, and architecture reviews that de-risk your next release before a line of code ships."}
+    },
+    stats: { projects:"Projects Delivered", satisfaction:"Client Satisfaction", years:"Years of Experience", team:"Team Members" },
+    about: {
+      eyebrow:"Who we are", title:"A studio built by engineers and designers",
+      p1:"AVENIX was founded by a small team of engineers and designers who were tired of watching good ideas die in handoffs between agencies, freelancers, and in-house teams. So we built a studio where design and engineering sit at the same table from day one.",
+      p2:"Today we partner with founders and enterprise teams across fintech, healthcare, e-commerce, and SaaS — shipping products that are fast, accessible, and built to scale, not just to demo well.",
+      p3:"Every engagement is staffed by senior engineers and designers, never a rotating cast of juniors. You talk to the people actually writing the code.",
+      v1:"Web & mobile apps shipped", v2:"Industries served", v3:"Countries with clients", v4:"Production monitoring"
+    },
+    why: {
+      eyebrow:"Why Avenix", title:"Built different, delivered better",
+      sub:"We're not the agency that disappears after the contract is signed. Here's what working with us actually looks like.",
+      w1:{title:"Senior team, no juniors-in-training", desc:"Every project is staffed by engineers and designers with 5+ years of production experience."},
+      w2:{title:"Transparent, fixed-scope pricing", desc:"You get a detailed quote before we start — no surprise invoices, no scope creep without sign-off."},
+      w3:{title:"Agile delivery with weekly demos", desc:"You see working software every week, not a slide deck every quarter."},
+      w4:{title:"Security-first engineering", desc:"Code reviews, automated testing, and security audits are part of the process, not an add-on."},
+      w5:{title:"Support after launch", desc:"Every project ships with a support window — bug fixes and monitoring included, not billed separately."},
+      w6:{title:"On-time, on-budget delivery", desc:"Clear milestones and proactive communication mean no last-minute scrambling."}
+    },
+    tech: {
+      eyebrow:"Our toolkit", title:"Technologies we use",
+      sub:"We pick the right tool for the job, not the trendiest one. Here's what's usually in the stack.",
+      frontend:"Frontend", backend:"Backend", mobile:"Mobile", cloud:"Cloud & DevOps", design:"Design"
+    },
+    process: {
+      eyebrow:"How we work", title:"Our process",
+      sub:"A clear, repeatable path from idea to production — refined across hundreds of projects.",
+      p1:{title:"Discovery & Strategy", desc:"We dig into your goals, users, and constraints to define scope, success metrics, and a realistic timeline before any design work starts."},
+      p2:{title:"UX/UI Design", desc:"Wireframes, prototypes, and high-fidelity designs that you can click through and test before a single line of code is written."},
+      p3:{title:"Development", desc:"Agile sprints with weekly demos. You watch the product come together in real time, not at the very end."},
+      p4:{title:"Testing & QA", desc:"Automated and manual testing across devices and browsers, plus security and performance audits before launch."},
+      p5:{title:"Launch & Support", desc:"We deploy, monitor, and stay on for a support window — handling fixes, updates, and scaling as real users arrive."}
+    },
+    portfolio: {
+      eyebrow:"Selected work", title:"Projects we're proud of",
+      sub:"A few examples of products our team has designed, built, and shipped to production.",
+      t1:{tag:"Fintech", title:"Real-time trading dashboard", desc:"A web platform processing thousands of live data points per second with sub-100ms chart updates."},
+      t2:{tag:"Healthcare", title:"Patient care mobile app", desc:"A HIPAA-aware cross-platform app connecting patients with care teams, with offline-first sync."},
+      t3:{tag:"E-commerce", title:"Headless commerce platform", desc:"A composable storefront serving 12 regional brands from one codebase, cutting release time by 70%."},
+      t4:{tag:"SaaS", title:"Analytics & reporting suite", desc:"A self-serve analytics product with custom dashboards, used daily by over 50,000 active users."},
+      t5:{tag:"Logistics", title:"Fleet management system", desc:"Live GPS tracking and route optimization for a 400-vehicle delivery fleet, built on a custom cloud backend."},
+      t6:{tag:"EdTech", title:"Interactive learning platform", desc:"A gamified e-learning web app with live classrooms, used by 200+ schools across three countries."}
+    },
+    testimonials: {
+      eyebrow:"Client voices", title:"What our clients say",
+      r1:{quote:"Avenix rebuilt our platform from the ground up in twelve weeks. The weekly demos meant we always knew exactly where things stood — no surprises at launch.", name:"Sara Madani", role:"CEO, Fintech Startup"},
+      r2:{quote:"The design team understood our users better than we did. Engagement on the new app jumped 40% in the first month after launch.", name:"David Klein", role:"Head of Product, HealthCo"},
+      r3:{quote:"We've worked with three agencies before Avenix. This is the first time the code we received was actually maintainable after handoff.", name:"Rana Ahmadi", role:"CTO, RetailStack"}
+    },
+    pricing: {
+      eyebrow:"Transparent pricing", title:"Start fast. Scale without limits.",
+      sub:"Every plan includes a dedicated team and source-code ownership. No lock-in, cancel any time.",
+      starter:{tier:"Starter", period:"One-time, MVP build", f1:"Up to 6 weeks delivery", f2:"UI/UX design included", f3:"1 platform (web or mobile)", f4:"30-day post-launch support", cta:"Get started"},
+      growth:{badge:"Most Popular", tier:"Growth", period:"Per project, full team", f1:"Dedicated design + dev team", f2:"Web & mobile platforms", f3:"Weekly sprint demos", f4:"CI/CD & cloud setup included", f5:"90-day post-launch support", cta:"Start your project"},
+      enterprise:{tier:"Enterprise", price:"Custom", period:"Ongoing partnership", f1:"Multiple dedicated squads", f2:"Architecture & security audits", f3:"SLA-backed delivery", f4:"Dedicated account manager", f5:"Continuous support & scaling", cta:"Contact sales"}
+    },
+    faq: {
+      eyebrow:"Common questions", title:"Frequently asked questions",
+      q1:{q:"How long does a typical project take?", a:"It depends on scope — a simple MVP can ship in 4–6 weeks, while a full multi-platform product usually takes 3–6 months. We give you a firm timeline after the discovery phase."},
+      q2:{q:"Who owns the code after the project ends?", a:"You do, fully. Once final payment is made, all source code, designs, and assets are transferred to you with no licensing strings attached."},
+      q3:{q:"Do you sign NDAs?", a:"Yes. We sign an NDA before any detailed discussion of your product, and confidentiality terms are built into every contract."},
+      q4:{q:"Can you work with our in-house team?", a:"Absolutely. We regularly embed with in-house engineering and design teams, plugging into your existing tools, repos, and sprint cycles."},
+      q5:{q:"What happens after launch?", a:"Every plan includes a post-launch support window for bug fixes and monitoring. After that, you can choose a retainer for ongoing updates or scaling work."},
+      q6:{q:"How is pricing determined?", a:"We scope every project individually after discovery and provide a fixed quote, so you know the full cost before any work begins."}
+    },
+    contact: {
+      eyebrow:"Get in touch", title:"Ready to build something great?",
+      sub:"Tell us about your project. Our team responds within one business day.",
+      first:"First name", last:"Last name", email:"Work email", company:"Company",
+      usecase:"Tell us about your project", usecasePlaceholder:"What are you building?",
+      send:"Send message", sent:"Thanks! We'll be in touch within one business day."
+    },
+    newsletter: {
+      eyebrow:"Stay in the loop", title:"Get design & engineering insights",
+      sub:"One email a month. No fluff — practical notes on product, design, and engineering.",
+      placeholder:"you@email.com", cta:"Subscribe", thanks:"Thanks for subscribing!"
+    },
+    footer: {
+      blurb:"A software development and design studio building web platforms, mobile apps, and brand experiences for ambitious teams.",
+      company:"Company", about:"About Us", why:"Why Choose Us", portfolio:"Portfolio", careers:"Careers",
+      services:"Services", webdev:"Web Development", uiux:"UI/UX Design", mobile:"Mobile Apps", cloud:"Cloud & DevOps",
+      contactTitle:"Contact", address:"142 Market Street, San Francisco, CA",
+      copyright:"© 2026 Avenix Studio. All rights reserved.", privacy:"Privacy", terms:"Terms", status:"Status"
     }
-  });
-
-  /* ── PARALLAX HERO TITLE ── */
-  window.addEventListener('scroll', () => {
-    const hero = document.querySelector('#hero');
-    const y = window.scrollY;
-    if (hero) {
-      hero.style.transform = `translateY(${y * 0.18}px)`;
-      hero.style.opacity = 1 - (y / 500);
+  },
+  fa: {
+    nav: { services:"خدمات", about:"درباره ما", why:"چرا ما", technologies:"تکنولوژی‌ها", process:"فرآیند", portfolio:"نمونه‌کارها", testimonials:"نظرات مشتریان", pricing:"تعرفه‌ها", faq:"سوالات متداول", contact:"تماس با ما", cta:"شروع پروژه" },
+    hero: {
+      eyebrow:"استودیوی طراحی و توسعه نرم‌افزار",
+      line1:"ما نرم‌افزار", accent:"می‌سازیم", line2:"که کسب‌وکار را پیش می‌برد",
+      sub:"اونیکس یک استودیوی تمام‌چرخه‌ی طراحی و توسعه نرم‌افزار است. ما پلتفرم‌های وب، اپلیکیشن‌های موبایل و تجربه‌های برند را برای استارتاپ‌ها و سازمان‌هایی طراحی، می‌سازیم و عرضه می‌کنیم که به میانگین راضی نیستند.",
+      cta1:"شروع پروژه", cta2:"مشاهده نمونه‌کارها", scroll:"اسکرول کنید"
+    },
+    marquee: { 1:"توسعه وب", 2:"طراحی UI/UX", 3:"اپلیکیشن موبایل", 4:"کلود و DevOps", 5:"هویت برند", 6:"استراتژی محصول" },
+    services: {
+      eyebrow:"کارهای ما", title:"خدمات تمام‌چرخه‌ی نرم‌افزار و طراحی",
+      sub:"از اولین طرح اولیه تا استقرار نهایی — یک تیم، یک نقشه راه، بدون اصطکاک در تحویل.",
+      s1:{title:"توسعه اپلیکیشن وب", desc:"اپلیکیشن‌های وب مقیاس‌پذیر و امن با فریم‌ورک‌های مدرن مانند React، Next.js و Node.js — طراحی‌شده برای عملکرد و رشد."},
+      s2:{title:"طراحی UI/UX", desc:"رابط‌های کاربری انسان‌محور مبتنی بر تحقیق، وایرفریم و پروتوتایپ که فرآیندهای پیچیده را به محصولاتی شهودی تبدیل می‌کنند."},
+      s3:{title:"توسعه اپلیکیشن موبایل", desc:"اپلیکیشن‌های بومی و چندسکویی برای iOS و اندروید، یک‌بار ساخته‌شده و قابل عرضه در همه‌جا با React Native و Flutter."},
+      s4:{title:"کلود و DevOps", desc:"خط‌لوله‌های CI/CD، زیرساخت کانتینری و معماری ابری روی AWS، GCP و Azure که هم‌گام با رشد کاربران شما مقیاس می‌گیرد."},
+      s5:{title:"برندسازی و هویت بصری", desc:"سیستم‌های هویت بصری — لوگو، زبان طراحی و راهنمای سبک — که محصول شما را فوراً قابل‌شناسایی می‌کند."},
+      s6:{title:"استراتژی محصول و مشاوره", desc:"بازبینی فنی، نقشه راه MVP و بررسی معماری که ریسک نسخه بعدی شما را پیش از نوشتن یک خط کد کاهش می‌دهد."}
+    },
+    stats: { projects:"پروژه تکمیل‌شده", satisfaction:"رضایت مشتری", years:"سال تجربه", team:"عضو تیم" },
+    about: {
+      eyebrow:"ما کی هستیم", title:"استودیویی ساخته‌شده توسط مهندسان و طراحان",
+      p1:"اونیکس توسط تیمی کوچک از مهندسان و طراحانی تأسیس شد که از دیدن مرگ ایده‌های خوب در تحویل‌های میان آژانس‌ها، فریلنسرها و تیم‌های داخلی خسته شده بودند. به همین دلیل استودیویی ساختیم که طراحی و مهندسی از روز اول دور یک میز می‌نشینند.",
+      p2:"امروز ما با بنیان‌گذاران و تیم‌های سازمانی در حوزه‌های فین‌تک، سلامت، تجارت الکترونیک و SaaS همکاری می‌کنیم — محصولاتی سریع، در دسترس و آماده برای مقیاس‌گیری، نه فقط برای دمو خوب.",
+      p3:"هر پروژه توسط مهندسان و طراحان ارشد انجام می‌شود، نه گروهی متغیر از کارآموزان. شما با کسانی صحبت می‌کنید که واقعاً کد را می‌نویسند.",
+      v1:"اپلیکیشن وب و موبایل عرضه‌شده", v2:"صنعت تحت پوشش", v3:"کشور دارای مشتری", v4:"نظارت تولید ۲۴ ساعته"
+    },
+    why: {
+      eyebrow:"چرا اونیکس", title:"ساختاری متفاوت، تحویل بهتر",
+      sub:"ما آژانسی نیستیم که بعد از امضای قرارداد ناپدید شود. این‌طور با ما کار می‌کنید.",
+      w1:{title:"تیم ارشد، بدون کارآموز", desc:"هر پروژه توسط مهندسان و طراحانی با بیش از ۵ سال تجربه واقعی اجرا می‌شود."},
+      w2:{title:"قیمت‌گذاری شفاف و ثابت", desc:"پیش از شروع، برآورد دقیق دریافت می‌کنید — بدون فاکتور غیرمنتظره و بدون افزایش دامنه بدون تأیید."},
+      w3:{title:"تحویل چابک با دموی هفتگی", desc:"هر هفته نرم‌افزار واقعی را می‌بینید، نه یک ارائه‌ی فصلی."},
+      w4:{title:"مهندسی امنیت‌محور", desc:"بازبینی کد، تست خودکار و ارزیابی امنیتی بخشی از فرآیند است، نه یک افزونه."},
+      w5:{title:"پشتیبانی پس از عرضه", desc:"هر پروژه با یک دوره پشتیبانی همراه است — رفع باگ و نظارت بدون هزینه جداگانه."},
+      w6:{title:"تحویل به‌موقع و در بودجه", desc:"نقاط عطف شفاف و ارتباط فعال یعنی هیچ هول‌شدگی در لحظه آخر."}
+    },
+    tech: {
+      eyebrow:"ابزارهای ما", title:"تکنولوژی‌هایی که استفاده می‌کنیم",
+      sub:"ما ابزار درست را برای کار انتخاب می‌کنیم، نه پرطرفدارترین آن. این‌هاست معمولاً در استک ما.",
+      frontend:"فرانت‌اند", backend:"بک‌اند", mobile:"موبایل", cloud:"کلود و DevOps", design:"طراحی"
+    },
+    process: {
+      eyebrow:"روش کار ما", title:"فرآیند کار ما",
+      sub:"مسیری شفاف و تکرارپذیر از ایده تا تولید — تکامل‌یافته در صدها پروژه.",
+      p1:{title:"کشف و استراتژی", desc:"ما به اهداف، کاربران و محدودیت‌های شما می‌پردازیم تا دامنه، معیارهای موفقیت و زمان‌بندی واقعی را پیش از هر کار طراحی تعیین کنیم."},
+      p2:{title:"طراحی UX/UI", desc:"وایرفریم، پروتوتایپ و طراحی نهایی که می‌توانید پیش از نوشتن حتی یک خط کد، آن را کلیک‌کنید و تست کنید."},
+      p3:{title:"توسعه", desc:"اسپرینت‌های چابک با دموی هفتگی. شما محصول را به‌صورت زنده در حال شکل‌گیری می‌بینید، نه فقط در پایان کار."},
+      p4:{title:"تست و کنترل کیفیت", desc:"تست خودکار و دستی روی دستگاه‌ها و مرورگرهای مختلف، به‌همراه ارزیابی امنیت و عملکرد پیش از عرضه."},
+      p5:{title:"عرضه و پشتیبانی", desc:"ما استقرار می‌دهیم، نظارت می‌کنیم و در طول دوره پشتیبانی، رفع اشکال، به‌روزرسانی و مقیاس‌گیری را با ورود کاربران واقعی انجام می‌دهیم."}
+    },
+    portfolio: {
+      eyebrow:"نمونه‌کارهای منتخب", title:"پروژه‌هایی که به آن‌ها افتخار می‌کنیم",
+      sub:"چند نمونه از محصولاتی که تیم ما طراحی، ساخته و به تولید رسانده است.",
+      t1:{tag:"فین‌تک", title:"داشبورد معاملات لحظه‌ای", desc:"پلتفرم وبی که هزاران داده لحظه‌ای را در ثانیه پردازش می‌کند با به‌روزرسانی نمودار زیر ۱۰۰ میلی‌ثانیه."},
+      t2:{tag:"سلامت", title:"اپلیکیشن موبایل مراقبت از بیمار", desc:"اپلیکیشن چندسکویی هماهنگ با استانداردهای حریم خصوصی سلامت که بیماران را به تیم درمانی متصل می‌کند با همگام‌سازی آفلاین."},
+      t3:{tag:"تجارت الکترونیک", title:"پلتفرم تجارت هدلس", desc:"فروشگاهی ترکیبی که ۱۲ برند منطقه‌ای را از یک کدبیس سرویس می‌دهد و زمان عرضه را ۷۰٪ کاهش داده است."},
+      t4:{tag:"SaaS", title:"مجموعه تحلیل و گزارش‌دهی", desc:"محصول تحلیل خودسرویس با داشبوردهای سفارشی که روزانه توسط بیش از ۵۰٬۰۰۰ کاربر فعال استفاده می‌شود."},
+      t5:{tag:"لجستیک", title:"سیستم مدیریت ناوگان", desc:"ردیابی GPS لحظه‌ای و بهینه‌سازی مسیر برای ناوگان تحویل ۴۰۰ خودرویی، روی یک بک‌اند ابری سفارشی."},
+      t6:{tag:"فناوری آموزشی", title:"پلتفرم یادگیری تعاملی", desc:"اپلیکیشن وب یادگیری گیمیفه‌شده با کلاس‌های زنده، استفاده‌شده در بیش از ۲۰۰ مدرسه در سه کشور."}
+    },
+    testimonials: {
+      eyebrow:"صدای مشتریان", title:"مشتریان ما چه می‌گویند",
+      r1:{quote:"اونیکس پلتفرم ما را در دوازده هفته از پایه بازسازی کرد. دموهای هفتگی باعث شد همیشه دقیقاً بدانیم کار در چه مرحله‌ای است — بدون هیچ سورپرایزی در زمان عرضه.", name:"سارا مدنی", role:"مدیرعامل، استارتاپ فین‌تک"},
+      r2:{quote:"تیم طراحی کاربران ما را بهتر از خودمان می‌شناخت. تعامل کاربران در اپلیکیشن جدید در ماه اول ۴۰٪ افزایش یافت.", name:"دیوید کلاین", role:"مدیر محصول، HealthCo"},
+      r3:{quote:"ما پیش از اونیکس با سه آژانس کار کرده بودیم. این اولین باری بود که کدی که دریافت کردیم واقعاً پس از تحویل قابل نگهداری بود.", name:"رعنا احمدی", role:"مدیر فنی، RetailStack"}
+    },
+    pricing: {
+      eyebrow:"قیمت‌گذاری شفاف", title:"شروع سریع. مقیاس بدون محدودیت.",
+      sub:"هر طرح شامل یک تیم اختصاصی و مالکیت کامل کد منبع است. بدون قرارداد طولانی‌مدت، هر زمان قابل لغو.",
+      starter:{tier:"استارتر", period:"یک‌بار، ساخت MVP", f1:"تحویل تا ۶ هفته", f2:"شامل طراحی UI/UX", f3:"یک پلتفرم (وب یا موبایل)", f4:"۳۰ روز پشتیبانی پس از عرضه", cta:"شروع کنید"},
+      growth:{badge:"پرطرفدارترین", tier:"گرونث", period:"به ازای هر پروژه، تیم کامل", f1:"تیم اختصاصی طراحی و توسعه", f2:"پلتفرم وب و موبایل", f3:"دموی اسپرینت هفتگی", f4:"شامل راه‌اندازی CI/CD و کلود", f5:"۹۰ روز پشتیبانی پس از عرضه", cta:"شروع پروژه"},
+      enterprise:{tier:"سازمانی", price:"سفارشی", period:"همکاری بلندمدت", f1:"چند تیم اختصاصی", f2:"بازبینی معماری و امنیت", f3:"تحویل با تضمین SLA", f4:"مدیر حساب اختصاصی", f5:"پشتیبانی و مقیاس‌گیری مستمر", cta:"تماس با فروش"}
+    },
+    faq: {
+      eyebrow:"سوالات پرتکرار", title:"سوالات متداول",
+      q1:{q:"یک پروژه معمولی چقدر زمان می‌برد؟", a:"بستگی به دامنه دارد — یک MVP ساده در ۴ تا ۶ هفته عرضه می‌شود، در حالی‌که یک محصول چندسکویی کامل معمولاً ۳ تا ۶ ماه طول می‌کشد. ما پس از مرحله کشف، زمان‌بندی قطعی ارائه می‌دهیم."},
+      q2:{q:"پس از پایان پروژه، کد متعلق به کیست؟", a:"کاملاً متعلق به شماست. پس از پرداخت نهایی، تمام کد منبع، طراحی‌ها و فایل‌ها بدون هیچ محدودیت مجوزی به شما منتقل می‌شود."},
+      q3:{q:"آیا قرارداد عدم افشا (NDA) امضا می‌کنید؟", a:"بله. ما پیش از هر بحث جزئی درباره محصول شما، NDA امضا می‌کنیم و شرایط محرمانگی در هر قرارداد لحاظ شده است."},
+      q4:{q:"آیا می‌توانید با تیم داخلی ما همکاری کنید؟", a:"قطعاً. ما به‌طور منظم با تیم‌های مهندسی و طراحی داخلی همکاری می‌کنیم و در ابزارها، مخازن و چرخه‌های اسپرینت موجود شما ادغام می‌شویم."},
+      q5:{q:"بعد از عرضه چه اتفاقی می‌افتد؟", a:"هر طرح شامل یک دوره پشتیبانی پس از عرضه برای رفع باگ و نظارت است. پس از آن می‌توانید برای به‌روزرسانی یا مقیاس‌گیری مستمر، قرارداد نگهداری انتخاب کنید."},
+      q6:{q:"قیمت‌گذاری چگونه تعیین می‌شود؟", a:"ما هر پروژه را به‌صورت جداگانه پس از مرحله کشف ارزیابی می‌کنیم و قیمت ثابتی ارائه می‌دهیم تا پیش از شروع کار، هزینه کامل را بدانید."}
+    },
+    contact: {
+      eyebrow:"در تماس باشید", title:"آماده‌اید چیز بزرگی بسازید؟",
+      sub:"درباره پروژه‌تان به ما بگویید. تیم ما ظرف یک روز کاری پاسخ می‌دهد.",
+      first:"نام", last:"نام خانوادگی", email:"ایمیل کاری", company:"شرکت",
+      usecase:"درباره پروژه‌تان بگویید", usecasePlaceholder:"چه چیزی می‌سازید؟",
+      send:"ارسال پیام", sent:"متشکریم! ظرف یک روز کاری با شما در ارتباط خواهیم بود."
+    },
+    newsletter: {
+      eyebrow:"در جریان بمانید", title:"دریافت بینش‌های طراحی و مهندسی",
+      sub:"یک ایمیل در ماه. بدون حاشیه — نکات کاربردی درباره محصول، طراحی و مهندسی.",
+      placeholder:"you@email.com", cta:"عضویت", thanks:"از عضویت شما متشکریم!"
+    },
+    footer: {
+      blurb:"استودیوی طراحی و توسعه نرم‌افزار که پلتفرم‌های وب، اپلیکیشن‌های موبایل و تجربه‌های برند را برای تیم‌های بزرگ‌اندیش می‌سازد.",
+      company:"شرکت", about:"درباره ما", why:"چرا ما را انتخاب کنید", portfolio:"نمونه‌کارها", careers:"فرصت‌های شغلی",
+      services:"خدمات", webdev:"توسعه وب", uiux:"طراحی UI/UX", mobile:"اپلیکیشن موبایل", cloud:"کلود و DevOps",
+      contactTitle:"تماس", address:"خیابان مارکت ۱۴۲، سان‌فرانسیسکو، کالیفرنیا",
+      copyright:"© ۲۰۲۶ استودیوی اونیکس. تمامی حقوق محفوظ است.", privacy:"حریم خصوصی", terms:"شرایط استفاده", status:"وضعیت سرویس"
     }
-  });
-
-  /* ── ANIMATED COUNTER (stats) ── */
-  function animateValue(el, start, end, duration, suffix) {
-    let startTime = null;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const val = Math.floor(progress * (end - start) + start);
-      el.textContent = val + suffix;
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
   }
+};
 
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const numEl = e.target.querySelector('.stat-num');
-        const label = e.target.querySelector('.stat-label').textContent;
-        if (label.includes('Uptime')) {
-          numEl.innerHTML = '99.99<span style="font-size:1.4rem;color:var(--text-muted)">%</span>';
-        } else if (label.includes('Latency')) {
-          numEl.innerHTML = '&lt;8<span style="font-size:1.4rem;color:var(--text-muted)">ms</span>';
-        } else if (label.includes('Inferences')) {
-          numEl.innerHTML = '1.4<span style="font-size:1.4rem;color:var(--text-muted)">B+</span>';
-        } else if (label.includes('regions') || label.includes('Nodes')) {
-          numEl.innerHTML = '48<span style="font-size:1.4rem;color:var(--text-muted)"> regions</span>';
-        }
-        statsObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
+function getNested(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
+}
 
-  document.querySelectorAll('.stat-item').forEach(el => statsObserver.observe(el));
+function applyLanguage(lang) {
+  const dict = translations[lang] || translations.en;
 
-  /* ── SMOOTH ANCHOR SCROLL ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
+  document.documentElement.lang = lang === 'fa' ? 'fa' : 'en';
+  document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = getNested(dict, key);
+    if (val !== undefined) el.textContent = val;
   });
+
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    const val = getNested(dict, key);
+    if (val !== undefined) el.setAttribute('placeholder', val);
+  });
+
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+  });
+
+  try { localStorage.setItem('avenix-lang', lang); } catch (e) {}
+}
+
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    applyLanguage(btn.getAttribute('data-lang'));
+  });
+});
+
+let savedLang = 'en';
+try { savedLang = localStorage.getItem('avenix-lang') || 'en'; } catch (e) {}
+applyLanguage(savedLang);
+
+/* ════════════════════════════════════════════════
+   MOBILE MENU
+   ════════════════════════════════════════════════ */
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function openMobileMenu() {
+  navToggle.classList.add('open');
+  mobileMenu.classList.add('open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  document.body.classList.add('menu-open');
+}
+
+function closeMobileMenu() {
+  navToggle.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.classList.remove('menu-open');
+}
+
+navToggle.addEventListener('click', () => {
+  if (mobileMenu.classList.contains('open')) {
+    closeMobileMenu();
+  } else {
+    openMobileMenu();
+  }
+});
+
+mobileMenu.querySelectorAll('a.mobile-link, a.nav-cta').forEach(link => {
+  link.addEventListener('click', closeMobileMenu);
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900 && mobileMenu.classList.contains('open')) {
+    closeMobileMenu();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
+});
+
+/* ════════════════════════════════════════════════
+   FAQ ACCORDION
+   ════════════════════════════════════════════════ */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const question = item.querySelector('.faq-question');
+  const answer = item.querySelector('.faq-answer');
+
+  question.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+
+    document.querySelectorAll('.faq-item.open').forEach(openItem => {
+      if (openItem !== item) {
+        openItem.classList.remove('open');
+        openItem.querySelector('.faq-answer').style.maxHeight = null;
+      }
+    });
+
+    if (isOpen) {
+      item.classList.remove('open');
+      answer.style.maxHeight = null;
+    } else {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
+});
+
+/* ════════════════════════════════════════════════
+   CONTACT FORM
+   ════════════════════════════════════════════════ */
+const contactForm = document.getElementById('contactForm');
+const formNote = document.getElementById('formNote');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    formNote.classList.add('visible');
+    contactForm.reset();
+  });
+}
+
+/* ════════════════════════════════════════════════
+   NEWSLETTER FORM
+   ════════════════════════════════════════════════ */
+const newsletterForm = document.getElementById('newsletterForm');
+const newsletterNote = document.getElementById('newsletterNote');
+if (newsletterForm) {
+  newsletterForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    newsletterNote.classList.add('visible');
+    newsletterForm.reset();
+  });
+}
+
+/* ── SCROLL REVEAL ── */
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+reveals.forEach(el => observer.observe(el));
+
+/* ── 3D TILT EFFECT ── */
+const tiltCards = document.querySelectorAll('[data-tilt]');
+
+tiltCards.forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+
+    const rotX = -dy * 8;
+    const rotY =  dx * 8;
+    const tz   =  6;
+
+    card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(${tz}px)`;
+    card.style.boxShadow = `
+      ${-dx * 12}px ${-dy * 12}px 40px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(224,38,58,${0.06 + Math.abs(dx) * 0.08 + Math.abs(dy) * 0.08}),
+      inset 0 1px 0 rgba(255,255,255,0.06)
+    `;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.boxShadow = '';
+  });
+});
+
+/* ── NAV SCROLL STYLE ── */
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(8,9,13,0.92)';
+  } else {
+    nav.style.background = 'rgba(8,9,13,0.6)';
+  }
+});
+
+/* ── PARALLAX HERO TITLE ── */
+window.addEventListener('scroll', () => {
+  const hero = document.querySelector('#hero');
+  const y = window.scrollY;
+  if (hero && y < 600) {
+    hero.style.transform = `translateY(${y * 0.18}px)`;
+    hero.style.opacity = 1 - (y / 500);
+  }
+});
+
+/* ── SMOOTH ANCHOR SCROLL ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href.length < 2) return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      closeMobileMenu();
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), mobileMenu.classList.contains('open') ? 0 : 0);
+    }
+  });
+});
 </script>
 </body>
 </html>
