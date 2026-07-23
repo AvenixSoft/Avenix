@@ -79,11 +79,110 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
   .custom-cursor__dot,.custom-cursor__ring{transition:none!important}
 }
 
+
+/* --- AUTH SYSTEM --- */
+.auth-btn{border:1px solid #111;background:#111;color:#fff;padding:8px 14px;font:12px Vazirmatn;cursor:pointer;transition:.2s;white-space:nowrap}
+.auth-btn.outline{background:transparent;color:#111;border-color:#a8afae}
+.auth-btn:hover{background:#2a3331;border-color:#2a3331;color:#fff}
+.nav-auth{display:flex;gap:8px;align-items:center}
+.user-chip{display:flex;align-items:center;gap:10px;border:1px solid #aeb6b4;padding:6px 10px;background:#f0f3f1;max-width:200px}
+.user-chip .dot{width:7px;height:7px;border-radius:50%;background:#15a07b;animation:blink 1.2s infinite;flex:none}
+.user-chip span{font:10px 'DM Mono';direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#1a2220}
+.logout-btn{border:0;background:transparent;font:10px 'DM Mono';cursor:pointer;color:#5a6561;text-decoration:underline;padding:0}
+.auth-modal{position:fixed;z-index:210;inset:0;background:#101212c8;backdrop-filter:blur(16px);display:grid;place-items:start center;padding-top:min(10vh,80px);padding-inline:14px;opacity:0;visibility:hidden;transition:.28s}
+.auth-modal.open{opacity:1;visibility:visible}
+.auth-card{width:min(480px,100%);background:#f3f5f4;border:1px solid #c4cdca;box-shadow:0 28px 80px #0009;transform:translateY(-16px);transition:.42s cubic-bezier(.16,1,.3,1)}
+.auth-modal.open .auth-card{transform:none}
+.auth-card-head{padding:26px 26px 18px;border-bottom:1px solid #c9d1ce;display:flex;justify-content:space-between;align-items:start;gap:16px}
+.auth-card-head h3{margin:0;font-size:24px;font-weight:500;letter-spacing:-.04em;line-height:1.2}
+.auth-card-head p{margin:8px 0 0;font-size:11px;color:#6b7472;line-height:1.9;max-width:260px}
+.auth-close{border:1px solid #b5bfbc;background:transparent;width:34px;height:34px;display:grid;place-items:center;cursor:pointer;flex:none;transition:.2s}
+.auth-close:hover{background:#151717;color:#fff;border-color:#151717}
+.auth-tabs{display:flex;gap:1px;background:#c9d1ce;padding:1px;margin:18px 26px 0}
+.auth-tab{flex:1;border:0;background:#e8edeb;padding:12px;font-family:Vazirmatn;font-size:13px;cursor:pointer;transition:.22s}
+.auth-tab.active{background:#151717;color:#f2f6f4}
+.auth-body{padding:22px 26px 26px;display:grid;gap:14px}
+.auth-field{display:grid;gap:7px}
+.auth-field label{font:9px 'DM Mono';color:#5f6a67;direction:ltr;letter-spacing:.04em}
+.auth-field input{width:100%;background:#fff;border:0;border-bottom:1px solid #aeb8b4;padding:11px 0 11px 2px;font-family:Vazirmatn;outline:0;font-size:14px;transition:.2s;border-radius:0}
+.auth-field input:focus{border-color:#111;background:#fafcfb}
+.auth-error{min-height:18px;font-size:11px;color:#b42318;line-height:1.8}
+.auth-success{background:#151717;color:#d7e0dd;padding:12px 14px;font:11px 'DM Mono';display:none;line-height:1.8;direction:ltr}
+.auth-success.show{display:block}
+.auth-actions{display:grid;gap:10px;margin-top:6px}
+.auth-submit{border:0;background:#151717;color:#fff;padding:13px 14px;font-family:Vazirmatn;cursor:pointer;font-size:13px;transition:.25s}
+.auth-submit:hover{background:#3a4542}
+.auth-submit[disabled]{opacity:.6;cursor:wait}
+.auth-divider{display:flex;align-items:center;gap:12px;color:#7c8583;font:10px 'DM Mono';margin:6px 0}
+.auth-divider:before,.auth-divider:after{content:'';flex:1;height:1px;background:#c9d1ce}
+.auth-google{border:1px solid #b9c4c0;background:#fff;padding:11px;font-family:Vazirmatn;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:8px;font-size:12px;transition:.2s}
+.auth-google:hover{background:#ecefed}
+.auth-foot{font-size:11px;color:#6d7774;text-align:center;margin-top:8px;line-height:1.8}
+.auth-foot button{border:0;background:transparent;text-decoration:underline;cursor:pointer;font-family:Vazirmatn;color:#151717;padding:0}
+@media(max-width:720px){
+  .nav-auth .auth-btn{padding:6px 10px;font-size:11px}
+  .user-chip{max-width:120px;padding:5px 8px}
+  .auth-card-head{padding:20px}
+  .auth-card-head h3{font-size:20px}
+  .auth-tabs{margin:14px 20px 0}
+  .auth-body{padding:18px 20px 20px}
+}
+
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">پرش به محتوای اصلی</a><aside class="view-tools" aria-label="تنظیمات نمایش"><span class="tool-label">VIEW</span><button id="font-toggle" title="بزرگ‌کردن متن">A+</button><button id="contrast-toggle" title="کنتراست بیشتر">◐</button><button id="motion-toggle" title="کاهش حرکت">≋</button></aside><button class="to-top" id="to-top" aria-label="بازگشت به بالا">↑</button>
 <div id="loader"><div class="loader-line"></div><div class="load-word"><b>AVENIX</b></div><div class="loader-progress"><i></i><span>SYSTEM READY</span></div></div><div class="command-palette" id="command-palette"><div class="command-box"><input class="command-search" id="command-search" placeholder="Search a destination…" autocomplete="off"><div class="command-list"><small>QUICK NAVIGATION</small><button class="command-item" data-go="#top">خانه <kbd>01</kbd></button><button class="command-item" data-go="#services">خدمات <kbd>02</kbd></button><button class="command-item" data-go="#work">نمونه‌کارها <kbd>03</kbd></button><button class="command-item" data-go="#lab">Engineering Lab <kbd>04</kbd></button><button class="command-item" data-go="#contact">شروع همکاری <kbd>05</kbd></button></div></div></div><div class="scroll-progress" aria-hidden="true"><i></i></div>
-<nav><a class="brand" href="#top" aria-label="Avenix"><img src="3.png" alt="Avenix"></a><div class="navlinks"><a href="#method">رویکرد</a><a href="#services">خدمات</a><a href="#work">پروژه‌ها</a><a href="#contact">تماس</a></div><div style="display:flex;gap:8px;align-items:center"><button class="cmd-open" id="cmd-open">⌘ K</button><button class="lang" id="lang">EN</button></div></nav>
+<nav><a class="brand" href="#top" aria-label="Avenix"><img src="3.png" alt="Avenix"></a><div class="navlinks"><a href="#method">رویکرد</a><a href="#services">خدمات</a><a href="#work">پروژه‌ها</a><a href="#contact">تماس</a></div><div style="display:flex;gap:8px;align-items:center">
+<div class="nav-auth" id="nav-auth">
+<button class="auth-btn" id="auth-open">ورود / ثبت‌نام</button>
+<div class="user-chip" id="user-chip" style="display:none"><i class="dot"></i><span id="user-email"></span><button class="logout-btn" id="logout-btn">خروج</button></div>
+</div>
+<button class="cmd-open" id="cmd-open">⌘ K</button><button class="lang" id="lang">EN</button></div></nav>
+
+<div class="auth-modal" id="auth-modal" aria-hidden="true">
+  <div class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="auth-card-head">
+      <div>
+        <h3 id="auth-title" data-fa="ورود به Avenix" data-en="Sign in to Avenix">ورود به Avenix</h3>
+        <p data-fa="برای ذخیره پروژه‌ها، ارسال درخواست و دسترسی به داشبورد شخصی‌ات وارد شو." data-en="Sign in to save projects, send inquiries and access your personal dashboard.">برای ذخیره پروژه‌ها، ارسال درخواست و دسترسی به داشبورد شخصی‌ات وارد شو.</p>
+      </div>
+      <button class="auth-close" id="auth-close" aria-label="بستن">✕</button>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login" data-fa="ورود" data-en="Login">ورود</button>
+      <button class="auth-tab" data-tab="signup" data-fa="ثبت‌نام" data-en="Sign up">ثبت‌نام</button>
+    </div>
+    <form class="auth-body" id="auth-form">
+      <div class="auth-field">
+        <label for="auth-email">EMAIL</label>
+        <input id="auth-email" type="email" required autocomplete="email" placeholder="name@company.com" dir="ltr">
+      </div>
+      <div class="auth-field">
+        <label for="auth-password">PASSWORD</label>
+        <input id="auth-password" type="password" required autocomplete="current-password" placeholder="••••••••" dir="ltr">
+      </div>
+      <div class="auth-field" id="confirm-field" style="display:none">
+        <label for="auth-confirm">CONFIRM PASSWORD</label>
+        <input id="auth-confirm" type="password" autocomplete="new-password" placeholder="••••••••" dir="ltr">
+      </div>
+      <div class="auth-error" id="auth-error"></div>
+      <div class="auth-success" id="auth-success"></div>
+      <div class="auth-actions">
+        <button class="auth-submit" type="submit" id="auth-submit" data-fa="ادامه" data-en="Continue">ادامه</button>
+        <div class="auth-divider">OR</div>
+        <button class="auth-google" type="button" id="google-btn">
+          <span style="font-size:16px">G</span>
+          <span data-fa="ورود با گوگل" data-en="Continue with Google">ورود با گوگل</span>
+        </button>
+      </div>
+      <div class="auth-foot">
+        <span data-fa="رمز را فراموش کردی؟" data-en="Forgot your password?">رمز را فراموش کردی؟</span>
+        <button type="button" id="reset-btn" data-fa="بازیابی رمز" data-en="Reset password">بازیابی رمز</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <main id="main-content">
 <section class="hero" id="top"><div class="hero-copy"><div class="eyebrow"><i></i><span data-fa="استودیوی توسعه محصول دیجیتال" data-en="DIGITAL PRODUCT DEVELOPMENT STUDIO">استودیوی توسعه محصول دیجیتال</span></div><h1><span><em data-fa="از ایده‌های مبهم،" data-en="FROM UNCLEAR IDEAS,">از ایده‌های مبهم،</em></span><span><em class="chrome" data-fa="چیزهای روشن می‌سازیم." data-en="WE BUILD CLARITY.">چیزهای روشن می‌سازیم.</em></span></h1><p data-fa="آونیکس شریک فنی تیم‌هایی است که می‌خواهند یک مسئله‌ی واقعی را با محصولی دقیق، سریع و ماندگار حل کنند." data-en="Avenix is the technical partner for teams solving real problems with precise, fast and enduring products.">آونیکس شریک فنی تیم‌هایی است که می‌خواهند یک مسئله‌ی واقعی را با محصولی دقیق، سریع و ماندگار حل کنند.</p><div class="hero-meta"><span class="mono">AVX / EST. 2021</span><span data-fa="محصولات دیجیتال، با دقت انسانی" data-en="DIGITAL PRODUCTS, HUMANLY PRECISE">محصولات دیجیتال، با دقت انسانی</span></div><div class="hero-actions"><a class="circle-arrow" href="#contact">↙</a><a class="plain-link" href="#work" data-fa="دیدن پروژه‌های منتخب" data-en="VIEW SELECTED WORK">دیدن پروژه‌های منتخب</a></div></div><div class="hero-art"><div class="art-coords">38°N / 35°E</div><div class="grid-lines"></div><div class="logo-stage"><img class="hero-logo" src="avenix-logo.png" alt="Avenix"><i class="scan"></i></div></div></section>
 <section class="manifesto" id="method"><div class="index mono">( 01 — PRINCIPLE )</div><h2 class="split-words" data-fa="ما به دنبال افزودنِ امکانات نیستیم؛ به دنبال حذفِ فاصله میان یک مسئله و راه‌حلِ درست هستیم." data-en="WE DO NOT CHASE MORE FEATURES. WE REMOVE THE DISTANCE BETWEEN A PROBLEM AND ITS RIGHT ANSWER.">ما به دنبال افزودنِ امکانات نیستیم؛ به دنبال حذفِ فاصله میان یک مسئله و راه‌حلِ درست هستیم.</h2><aside data-fa="از نخستین گفت‌وگو تا انتشار و رشد، یک تیمِ متمرکز کنار شما می‌ماند؛ نه فقط برای تحویل کد، برای ساختن نتیجه." data-en="From first conversation to release and growth, one focused team stays beside you—not just to deliver code, but to build an outcome.">از نخستین گفت‌وگو تا انتشار و رشد، یک تیمِ متمرکز کنار شما می‌ماند؛ نه فقط برای تحویل کد، برای ساختن نتیجه.</aside></section>
@@ -186,4 +285,251 @@ const topBtn=document.querySelector('#to-top'),fontToggle=document.querySelector
 })();
 
 document.querySelector('#project-form').addEventListener('submit',e=>{e.preventDefault();const f=e.currentTarget,msg=f.querySelector('.form-message');msg.textContent=en?'Thank you — your inquiry is ready to send. We will be in touch shortly.':'سپاس! درخواست شما ثبت شد. به‌زودی با شما تماس می‌گیریم.';f.reset()});
-</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4a96dcd1d5187',t:'MTc4NDc0NjU0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4b1f6095f5187',t:'MTc4NDc0Njg5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4a96dcd1d5187',t:'MTc4NDc0NjU0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4b1f6095f5187',t:'MTc4NDc0Njg5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script type="module">
+// Firebase Auth Integration for Avenix
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// =====================================================
+// 1. اینجا تنظیمات Firebase خودت رو بذار
+//    از کنسول Firebase > Project Settings > SDK
+// =====================================================
+const firebaseConfig = {
+  apiKey: "AIzaSyD9g-cOk2t8vPbDYb3FlEkFkRTHVNSRKqw",
+  authDomain: "avenix-bf4ab.firebaseapp.com",
+  projectId: "avenix-bf4ab",
+  storageBucket: "avenix-bf4ab.firebasestorage.app",
+  messagingSenderId: "75406978772",
+  appId: "1:75406978772:web:eba453991d70a3123d9541"
+};
+// چک: اگر کانفیگ پر نشده، هشدار بده
+const isConfigured = !firebaseConfig.apiKey.includes("YOUR_");
+if(!isConfigured){
+  console.warn("⚠️ Firebase config هنوز پر نشده! فایل README رو بخون.");
+}
+
+// Init
+let app, auth;
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+} catch(e){
+  console.error("Firebase init error:", e);
+}
+
+const authModal = document.getElementById('auth-modal');
+const authOpen = document.getElementById('auth-open');
+const authClose = document.getElementById('auth-close');
+const authForm = document.getElementById('auth-form');
+const emailInput = document.getElementById('auth-email');
+const passInput = document.getElementById('auth-password');
+const confirmInput = document.getElementById('auth-confirm');
+const confirmField = document.getElementById('confirm-field');
+const errorBox = document.getElementById('auth-error');
+const successBox = document.getElementById('auth-success');
+const submitBtn = document.getElementById('auth-submit');
+const googleBtn = document.getElementById('google-btn');
+const resetBtn = document.getElementById('reset-btn');
+const userChip = document.getElementById('user-chip');
+const userEmailSpan = document.getElementById('user-email');
+const logoutBtn = document.getElementById('logout-btn');
+const tabs = document.querySelectorAll('.auth-tab');
+const authTitle = document.getElementById('auth-title');
+
+let currentMode = 'login'; // login | signup
+let isEn = false;
+
+// حالت زبان سایت رو تشخیص بده
+const langBtn = document.getElementById('lang');
+const observerLang = new MutationObserver(()=>{
+  isEn = document.documentElement.lang === 'en';
+  updateAuthTexts();
+});
+observerLang.observe(document.documentElement, {attributes:true, attributeFilter:['lang']});
+
+function updateAuthTexts(){
+  if(currentMode==='login'){
+    authTitle.textContent = isEn ? 'Sign in to Avenix' : 'ورود به Avenix';
+  } else {
+    authTitle.textContent = isEn ? 'Create your account' : 'ساخت حساب در Avenix';
+  }
+}
+
+function openAuth(mode='login'){
+  currentMode = mode;
+  setTab(mode);
+  authModal.classList.add('open');
+  authModal.setAttribute('aria-hidden','false');
+  setTimeout(()=>emailInput.focus(), 120);
+  errorBox.textContent='';
+  successBox.textContent='';
+  successBox.classList.remove('show');
+}
+function closeAuth(){
+  authModal.classList.remove('open');
+  authModal.setAttribute('aria-hidden','true');
+}
+function setTab(mode){
+  currentMode = mode;
+  tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===mode));
+  if(mode==='signup'){
+    confirmField.style.display='grid';
+    confirmInput.required=true;
+    submitBtn.textContent = isEn ? 'Create account' : 'ساخت حساب';
+  } else {
+    confirmField.style.display='none';
+    confirmInput.required=false;
+    submitBtn.textContent = isEn ? 'Continue' : 'ورود';
+  }
+  updateAuthTexts();
+}
+
+// Events
+authOpen?.addEventListener('click', ()=>openAuth('login'));
+authClose?.addEventListener('click', closeAuth);
+authModal?.addEventListener('click', e=>{ if(e.target===authModal) closeAuth(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeAuth(); });
+
+tabs.forEach(btn=>{
+  btn.addEventListener('click', ()=> setTab(btn.dataset.tab));
+});
+
+function showError(msg){
+  errorBox.textContent = msg;
+  successBox.classList.remove('show');
+}
+function showSuccess(msg){
+  successBox.textContent = msg;
+  successBox.classList.add('show');
+  errorBox.textContent='';
+}
+
+function getFriendlyError(code){
+  const map = {
+    'auth/invalid-email': isEn ? 'Invalid email address.' : 'ایمیل نامعتبر است.',
+    'auth/missing-password': isEn ? 'Please enter password.' : 'رمز را وارد کن.',
+    'auth/weak-password': isEn ? 'Password should be at least 6 characters.' : 'رمز باید حداقل ۶ کاراکتر باشد.',
+    'auth/email-already-in-use': isEn ? 'Email is already registered. Please login.' : 'این ایمیل قبلا ثبت شده، لطفا وارد شو.',
+    'auth/user-not-found': isEn ? 'User not found.' : 'کاربری با این ایمیل پیدا نشد.',
+    'auth/wrong-password': isEn ? 'Wrong password.' : 'رمز اشتباه است.',
+    'auth/invalid-credential': isEn ? 'Invalid email or password.' : 'ایمیل یا رمز اشتباه است.',
+    'auth/too-many-requests': isEn ? 'Too many attempts, try later.' : 'تلاش زیاد بود، کمی بعد امتحان کن.',
+    'auth/popup-closed-by-user': isEn ? 'Popup closed.' : 'پنجره گوگل بسته شد.'
+  };
+  return map[code] || (isEn ? 'Something went wrong: ' + code : 'خطایی پیش آمد: ' + code);
+}
+
+// Form submit
+authForm?.addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  if(!auth){
+    showError(isEn ? 'Firebase not configured yet. See guide.' : 'فایربیس هنوز تنظیم نشده. راهنما را ببین.');
+    return;
+  }
+  const email = emailInput.value.trim();
+  const pass = passInput.value;
+  const confirm = confirmInput.value;
+
+  if(currentMode==='signup' && pass !== confirm){
+    showError(isEn ? 'Passwords do not match.' : 'رمزها یکسان نیستند.');
+    return;
+  }
+  submitBtn.disabled = true;
+  submitBtn.textContent = isEn ? 'Please wait...' : 'لطفا صبر کن...';
+  errorBox.textContent='';
+
+  try{
+    if(currentMode==='signup'){
+      await createUserWithEmailAndPassword(auth, email, pass);
+      showSuccess(isEn ? 'Account created! Welcome.' : 'حساب ساخته شد! خوش آمدی.');
+      setTimeout(closeAuth, 1200);
+    } else {
+      await signInWithEmailAndPassword(auth, email, pass);
+      showSuccess(isEn ? 'Welcome back!' : 'خوش برگشتی!');
+      setTimeout(closeAuth, 800);
+    }
+  }catch(err){
+    showError(getFriendlyError(err.code));
+  }finally{
+    submitBtn.disabled=false;
+    setTab(currentMode);
+  }
+});
+
+// Google Login
+googleBtn?.addEventListener('click', async ()=>{
+  if(!auth){
+    showError(isEn ? 'Firebase not configured.' : 'فایربیس تنظیم نشده.');
+    return;
+  }
+  try{
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+    showSuccess(isEn ? 'Signed in with Google!' : 'با گوگل وارد شدی!');
+    setTimeout(closeAuth, 800);
+  }catch(err){
+    showError(getFriendlyError(err.code));
+  }
+});
+
+// Reset password
+resetBtn?.addEventListener('click', async ()=>{
+  const email = emailInput.value.trim();
+  if(!email){
+    showError(isEn ? 'Please enter your email first.' : 'اول ایمیل را وارد کن.');
+    return;
+  }
+  if(!auth){ showError('Firebase not configured.'); return; }
+  try{
+    await sendPasswordResetEmail(auth, email);
+    showSuccess(isEn ? 'Reset link sent to your email.' : 'لینک بازیابی به ایمیل‌ات فرستاده شد.');
+  }catch(err){
+    showError(getFriendlyError(err.code));
+  }
+});
+
+// Logout
+logoutBtn?.addEventListener('click', async ()=>{
+  try{ await signOut(auth); }catch(e){ console.error(e); }
+});
+
+// Auth State Observer - قلب سیستم
+if(auth){
+  onAuthStateChanged(auth, (user)=>{
+    if(user){
+      // لاگین است
+      if(authOpen) authOpen.style.display='none';
+      if(userChip) userChip.style.display='flex';
+      if(userEmailSpan) userEmailSpan.textContent = user.email || user.displayName || 'USER';
+      // می‌تونی اینجا کارهای دیگه بکنی: نمایش داشبورد، فعال‌سازی فرم‌ها
+      document.body.classList.add('is-authenticated');
+      // مثال: پر کردن خودکار فرم تماس
+      const emailField = document.querySelector('#project-form input[type="email"]');
+      if(emailField && !emailField.value) emailField.value = user.email || '';
+    }else{
+      // لاگ‌اوت است
+      if(authOpen) authOpen.style.display='inline-block';
+      if(userChip) userChip.style.display='none';
+      document.body.classList.remove('is-authenticated');
+    }
+  });
+}
+
+// دکمه‌های مخفی برای توسعه‌دهنده: در کنسول بنویس openAuth('signup')
+window.openAuth = openAuth;
+window.closeAuth = closeAuth;
+
+// نمایش بنر راهنما اگه کانفیگ نیست
+if(!isConfigured){
+  setTimeout(()=>{
+    const warn = document.createElement('div');
+    warn.style.cssText='position:fixed;bottom:14px;right:14px;left:14px;z-index:300;background:#fff3cd;border:1px solid #ffe69c;padding:12px 14px;font:11px Monospace;color:#664d03;direction:ltr;text-align:left';
+    warn.innerHTML='⚠️ Firebase config is empty. Open index.html and replace firebaseConfig with your own values. See FIREBASE_GUIDE.md';
+    document.body.appendChild(warn);
+    setTimeout(()=>warn.remove(), 12000);
+  }, 2500);
+}
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1fc252adc9b6c71',t:'MTc4NDgyNTAxOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
