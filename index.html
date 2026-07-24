@@ -1836,7 +1836,16 @@ if(!isConfigured){
 
       const isChromeVPN = (org && /vpn|proxy|hosting|cloudflare|datacenter|akamai|fastly|amazon|google/i.test(org));
 
-      if (isVPN || isChromeVPN) {
+      // === New Logic: Explicit Iran check ===
+      if (country === 'ایران' || country === 'IR' || (ipapi && ipapi.country_code === 'IR')) {
+        // IP is from Iran → VPN is NOT active
+        icon.style.background = '#dc2626';
+        icon.innerHTML = '✕';
+        text.textContent = 'فیلترشکن روشن نیست';
+        text.style.color = '#991b1b';
+        sub.textContent = `IP: ${ip} • ایران • لطفاً VPN را روشن کنید`;
+        box.style.borderColor = '#fecaca';
+      } else if (isVPN || isChromeVPN) {
         icon.style.background = '#16a34a';
         icon.innerHTML = '✓';
         text.textContent = 'فیلترشکن فعال است';
@@ -1844,12 +1853,12 @@ if(!isConfigured){
         sub.textContent = `IP: ${ip} • ${country}`;
         box.style.borderColor = '#bbf7d0';
       } else {
-        icon.style.background = '#dc2626';
-        icon.innerHTML = '✕';
-        text.textContent = 'فیلترشکن شناسایی نشد';
-        text.style.color = '#991b1b';
-        sub.textContent = `IP: ${ip} • ${country} • VPN را روشن کنید`;
-        box.style.borderColor = '#fecaca';
+        icon.style.background = '#f59e0b';
+        icon.innerHTML = '?';
+        text.textContent = 'وضعیت نامشخص';
+        text.style.color = '#92400e';
+        sub.textContent = `IP: ${ip} • ${country} • VPN را بررسی کنید`;
+        box.style.borderColor = '#fed7aa';
       }
     } catch (e) {
       icon.style.background = '#f59e0b';
@@ -1900,4 +1909,4 @@ if(!isConfigured){
     }
   });
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a20332093c4292dc',t:'MTc4NDg5ODk0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a20347c2f977d6dc',t:'MTc4NDg5OTgzNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
