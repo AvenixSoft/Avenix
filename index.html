@@ -129,23 +129,62 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 }
 
 
-/* --- DASHBOARD (Integrated) --- */
-.dashboard{display:none;background:#0f1211;color:#e8eeeb;border-top:1px solid #1f2826}
-.dashboard.open{display:block;animation:fadeIn .3s ease}
-.dashboard-shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
-.dashboard-sidebar{background:#111414;border-left:1px solid #1e2825;padding:24px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:26px;z-index:2}
-.dash-user{display:flex;gap:12px;align-items:center;padding:14px 12px;background:#161b1a;border:1px solid #242e2b}
-.dash-avatar{width:38px;height:38px;background:#e6eeeb;color:#111;display:grid;place-items:center;font:12px 'DM Mono';flex:none;border-radius:2px}
+/* --- DASHBOARD (Integrated / Full-Page Overlay) --- */
+.dashboard{position:fixed;inset:0;z-index:150;background:#0b0d0c;color:#e8eeeb;visibility:hidden;opacity:0;pointer-events:none;transform:translateY(26px) scale(.984);transition:opacity .48s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1),visibility 0s .55s;overflow-y:auto;overscroll-behavior:contain;background-image:radial-gradient(rgba(255,255,255,.035) .55px,transparent .7px);background-size:6px 6px}
+.dashboard.open{visibility:visible;opacity:1;pointer-events:auto;transform:none;transition:opacity .48s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+body.dash-locked{overflow:hidden}
+.dash-loadbar{position:fixed;top:0;right:0;left:0;height:2px;background:linear-gradient(90deg,#e8eeeb,#7ac8a9,#e8eeeb);z-index:160;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.65,0,.35,1)}
+.dashboard.open .dash-loadbar{animation:dashLoad .6s cubic-bezier(.65,0,.35,1) forwards}
+@keyframes dashLoad{0%{transform:scaleX(0);transform-origin:right}60%{transform:scaleX(1);transform-origin:right}100%{transform:scaleX(1);transform-origin:right;opacity:0}}
+.dashboard-shell{display:grid;grid-template-columns:272px 1fr;min-height:100vh;transition:grid-template-columns .3s ease}
+.dashboard.collapsed .dashboard-shell{grid-template-columns:78px 1fr}
+.dashboard-sidebar{background:#111414;border-left:1px solid #1e2825;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;overflow-x:hidden;display:flex;flex-direction:column;gap:22px;z-index:2;transition:padding .3s ease}
+.dashboard.collapsed .dashboard-sidebar{padding:20px 10px}
+.dash-brandrow{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px}
+.dash-brandrow b{font:13px 'DM Mono';letter-spacing:-.02em;color:#e8eeeb;white-space:nowrap;overflow:hidden}
+.dashboard.collapsed .dash-brandrow b{display:none}
+.dash-collapse-btn{border:1px solid #2f3a37;background:transparent;color:#9aa7a3;width:26px;height:26px;display:grid;place-items:center;cursor:pointer;flex:none;transition:.2s;border-radius:3px}
+.dash-collapse-btn:hover{background:#1c2421;color:#fff}
+.dash-collapse-btn svg{transition:transform .3s ease}
+.dashboard.collapsed .dash-collapse-btn svg{transform:rotate(180deg)}
+.dash-user{display:flex;gap:12px;align-items:center;padding:14px 12px;background:#161b1a;border:1px solid #242e2b;position:relative;overflow:hidden}
+.dash-user:after{content:'';position:absolute;top:0;right:0;width:2px;height:100%;background:linear-gradient(180deg,#7ac8a9,#e8eeeb)}
+.dash-avatar{width:38px;height:38px;background:#e6eeeb;color:#111;display:grid;place-items:center;font:12px 'DM Mono';flex:none;border-radius:50%;position:relative}
+.dash-avatar:after{content:'';position:absolute;bottom:-1px;left:-1px;width:9px;height:9px;border-radius:50%;background:#7ac8a9;border:2px solid #161b1a}
 .dash-user b{display:block;font:11px 'DM Mono';direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:148px;color:#e8eeeb}
 .dash-user small{font:9px 'DM Mono';color:#8a9591;letter-spacing:.08em}
+.dashboard.collapsed .dash-user b,.dashboard.collapsed .dash-user small{display:none}
+.dashboard.collapsed .dash-user{justify-content:center;padding:12px 6px}
+.dash-search{position:relative;display:flex;align-items:center}
+.dash-search input{width:100%;background:#101413;border:1px solid #242e2b;color:#e8eeeb;padding:9px 32px 9px 10px;font:11px 'DM Mono';outline:0;transition:.2s;border-radius:4px}
+.dash-search input:focus{border-color:#7ac8a9}
+.dash-search svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);opacity:.55;pointer-events:none}
+.dashboard.collapsed .dash-search{display:none}
 .dash-nav{display:grid;gap:3px}
-.dash-nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#9aa7a3;padding:11px 12px;text-align:right;font-family:Vazirmatn;font-size:13px;cursor:pointer;transition:.2s;border-right:2px solid transparent}
+.dash-nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#9aa7a3;padding:11px 12px;text-align:right;font-family:Vazirmatn;font-size:13px;cursor:pointer;transition:.2s;border-right:2px solid transparent;border-radius:4px;position:relative}
 .dash-nav button.active{background:#1a2120;color:#f0f4f2;border-right-color:#e8eeeb}
+.dash-nav button.active:before{content:'';position:absolute;right:-14px;top:50%;width:4px;height:4px;border-radius:50%;background:#7ac8a9;transform:translateY(-50%)}
 .dash-nav button:hover{background:#1c2421;color:#fff}
-.dash-nav button i{font-style:normal;font:14px 'DM Mono';opacity:.9;direction:ltr}
+.dash-nav button i{font-style:normal;font:14px 'DM Mono';opacity:.9;direction:ltr;width:18px;text-align:center;flex:none}
+.dashboard.collapsed .dash-nav button{justify-content:center;padding:12px 6px}
+.dashboard.collapsed .dash-nav button span:not(.dash-count){display:none}
+.dashboard.collapsed .dash-nav button .dash-count{position:absolute;top:4px;left:4px;margin:0!important;font-size:8px!important;padding:1px 4px!important}
+.dash-count{display:inline-block}
 .dash-foot{margin-top:auto;padding-top:18px;border-top:1px solid #1e2825;display:grid;gap:8px}
 .dash-foot .mono{font-size:9px;color:#6f7d7a;line-height:1.8}
-.dashboard-main{padding:28px clamp(18px,3.2vw,40px) 50px;overflow:hidden}
+.dashboard.collapsed .dash-foot{display:none}
+.dashboard-main{padding:0 0 60px;overflow:visible}
+.dash-header{position:sticky;top:0;z-index:5;background:#0e1110ee;backdrop-filter:blur(10px);border-bottom:1px solid #1e2825;padding:16px clamp(18px,3.2vw,40px);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.dash-breadcrumb{display:flex;align-items:center;gap:8px;font:10px 'DM Mono';color:#8a9591;direction:ltr}
+.dash-breadcrumb b{color:#e8eeeb;font-weight:400}
+.dash-header-actions{display:flex;align-items:center;gap:8px}
+.dash-icon-btn{width:34px;height:34px;border:1px solid #2f3a37;background:transparent;color:#a8b5b0;display:grid;place-items:center;cursor:pointer;transition:.2s;border-radius:4px;position:relative;flex:none}
+.dash-icon-btn:hover{background:#1a2120;color:#fff;border-color:#3d4a46}
+.dash-icon-btn .ping{position:absolute;top:5px;left:5px;width:7px;height:7px;border-radius:50%;background:#e0866b;border:1.5px solid #0e1110;display:none}
+.dash-icon-btn .ping.show{display:block;animation:blink 1.4s infinite}
+.dash-exit{display:flex;align-items:center;gap:6px;border:1px solid #2f3a37;background:transparent;color:#a8b5b0;padding:8px 12px;font:11px Vazirmatn;cursor:pointer;transition:.2s;border-radius:4px}
+.dash-exit:hover{background:#e8eeeb;color:#111;border-color:#e8eeeb}
+.dashboard-main-inner{padding:28px clamp(18px,3.2vw,40px) 10px}
 .dash-topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:32px;flex-wrap:wrap}
 .dash-topbar h2{margin:0;font-size:clamp(26px,3.5vw,40px);font-weight:400;letter-spacing:-.05em;line-height:1.1}
 .dash-topbar p{margin:8px 0 0;color:#9aa7a3;font-size:12px;line-height:1.9;max-width:440px}
@@ -155,17 +194,38 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 .btn-dash:hover{background:#111;color:#fff;border-color:#111}
 .btn-dash.ghost{background:transparent;color:#a8b5b0;border-color:#2f3a37}
 .btn-dash.ghost:hover{background:#1a2120;color:#e8eeeb}
-.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1e2825;border:1px solid #1e2825;margin-bottom:28px}
-.dash-stat{background:#151818;padding:18px 16px}
-.dash-stat b{display:block;font:28px 'DM Mono';font-weight:400;letter-spacing:-.06em;color:#e8eeeb}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1e2825;border:1px solid #1e2825;margin-bottom:22px}
+.dash-stat{background:#151818;padding:18px 16px;position:relative;overflow:hidden;transition:.25s}
+.dash-stat:hover{background:#181e1c}
+.dash-stat-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.dash-stat-icon{width:26px;height:26px;border-radius:6px;background:#1e2825;display:grid;place-items:center;font-size:12px;color:#7ac8a9;flex:none}
+.dash-stat-trend{font:9px 'DM Mono';color:#7ac8a9;direction:ltr}
+.dash-stat-trend.down{color:#e0866b}
+.dash-stat b{display:block;font:28px 'DM Mono';font-weight:400;letter-spacing:-.06em;color:#e8eeeb;margin-top:10px}
 .dash-stat span{font-size:10px;color:#8a9591;display:block;margin-top:6px;line-height:1.8}
-.dash-stat .progress-mini{height:2px;background:#1e2825;margin-top:12px;overflow:hidden}
-.dash-stat .progress-mini i{display:block;height:100%;background:#e8eeeb;width:0;transition:width .7s}
-.dash-panel{display:none;animation:fadeIn .32s ease}
+.dash-stat .progress-mini{height:2px;background:#1e2825;margin-top:12px;overflow:hidden;border-radius:2px}
+.dash-stat .progress-mini i{display:block;height:100%;background:linear-gradient(90deg,#7ac8a9,#e8eeeb);width:0;transition:width .9s cubic-bezier(.16,1,.3,1)}
+.dash-widgets{display:grid;grid-template-columns:1.4fr 1fr;gap:1px;background:#1e2825;border:1px solid #1e2825;margin-bottom:28px}
+.dash-widget{background:#151818;padding:20px}
+.dash-widget-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.dash-widget-head span{font:10px 'DM Mono';color:#8a9591;letter-spacing:.06em}
+.dash-chart{display:flex;align-items:flex-end;gap:6px;height:130px;padding-top:6px}
+.dash-chart i{flex:1;background:linear-gradient(180deg,#7ac8a9,#1e2825);border-radius:3px 3px 0 0;position:relative;min-height:4px;transition:height 1s cubic-bezier(.16,1,.3,1)}
+.dash-chart i:hover:after{content:attr(data-v);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font:8px 'DM Mono';color:#e8eeeb;background:#0e1110;padding:2px 5px;border-radius:3px;white-space:nowrap;margin-bottom:4px;border:1px solid #2f3a37}
+.dash-chart-labels{display:flex;gap:6px;margin-top:8px}
+.dash-chart-labels span{flex:1;text-align:center;font:8px 'DM Mono';color:#5f6b68}
+.dash-activity{display:grid;gap:2px}
+.dash-activity-item{display:flex;gap:10px;align-items:flex-start;padding:9px 4px;border-bottom:1px solid #1e2825}
+.dash-activity-item:last-child{border-bottom:0}
+.dash-activity-dot{width:6px;height:6px;border-radius:50%;background:#7ac8a9;margin-top:5px;flex:none}
+.dash-activity-item p{margin:0;font-size:11px;color:#c3ccc9;line-height:1.7}
+.dash-activity-item small{display:block;font:8px 'DM Mono';color:#6f7d7a;margin-top:3px;direction:ltr}
+.dash-panel{display:none;animation:panelIn .38s cubic-bezier(.16,1,.3,1)}
 .dash-panel.active{display:block}
+@keyframes panelIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:1px;background:#1e2825;border:1px solid #1e2825}
 .project-card{background:#161b1a;padding:18px 16px;display:flex;flex-direction:column;gap:14px;transition:.22s}
-.project-card:hover{background:#1d2421}
+.project-card:hover{background:#1d2421;transform:translateY(-2px)}
 .project-card-top{display:flex;justify-content:space-between;align-items:start;gap:10px}
 .project-card h4{margin:0;font-size:15px;font-weight:400;letter-spacing:-.03em;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .project-badge{font:8px 'DM Mono';padding:4px 6px;border:1px solid #2f3a37;letter-spacing:.08em;color:#b8c4c0;background:#101413;white-space:nowrap}
@@ -174,6 +234,7 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 .project-badge.delivered{border-color:#e8eeeb;color:#111;background:#e8eeeb}
 .project-badge.paused{border-color:#5a6763;color:#5a6763}
 .project-card p{font-size:11px;color:#8f9b98;line-height:1.9;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+
 .project-meta{display:flex;justify-content:space-between;font:9px 'DM Mono';color:#6f7d7a;direction:ltr}
 .project-progress{height:2px;background:#1e2825;overflow:hidden}
 .project-progress i{display:block;height:100%;background:linear-gradient(90deg,#e8eeeb,#8a9e97);width:0;transition:width .7s ease}
@@ -223,23 +284,52 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 .dash-modal-head h3{margin:0;font-size:18px;font-weight:500}
 .dash-modal-body{padding:18px 20px 20px;display:grid;gap:14px}
 @media(max-width:980px){
-  .dashboard-shell{grid-template-columns:1fr}
+  .dashboard.collapsed .dashboard-shell,.dashboard-shell{grid-template-columns:1fr}
   .dashboard-sidebar{position:relative;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 12px}
-  .dash-nav{display:flex;overflow-x:auto;gap:3px;flex-wrap:nowrap;scrollbar-width:none}
+  .dash-collapse-btn{display:none}
+  .dash-search{order:3;flex:1 1 100%}
+  .dash-nav{display:flex;overflow-x:auto;gap:3px;flex-wrap:nowrap;scrollbar-width:none;order:4;flex:1 1 100%}
   .dash-nav::-webkit-scrollbar{display:none}
   .dash-nav button{white-space:nowrap;padding:10px 12px;border-right:0;border-bottom:2px solid transparent}
   .dash-nav button.active{border-right:0;border-bottom-color:#e8eeeb}
   .dash-foot{display:none}
+  .dash-widgets{grid-template-columns:1fr}
   .dash-stats{grid-template-columns:1fr 1fr}
   .tickets-layout{grid-template-columns:1fr;min-height:auto}
   .tickets-list{max-height:320px;min-height:320px}
   .dash-form .row{grid-template-columns:1fr}
 }
 @media(max-width:720px){
-  .dashboard-main{padding:20px 16px 36px}
+  .dashboard-main-inner{padding:20px 16px 10px}
+  .dash-header{padding:12px 16px}
+  .dash-breadcrumb span:first-child{display:none}
+  .dash-exit span{display:none}
   .dash-stats{grid-template-columns:1fr}
   .projects-grid{grid-template-columns:1fr}
   .chat-layout{min-height:70vh}
+}
+
+/* admin support workspace */
+.admin-badge{display:none;margin-top:7px;width:max-content;border:1px solid #7ac8a9;color:#7ac8a9;padding:3px 7px;font:8px 'DM Mono';letter-spacing:.08em;direction:ltr}
+body.is-admin .admin-badge{display:inline-block}
+body.is-admin .dash-nav button[data-dash="neworder"],body.is-admin .dash-nav button[data-dash="edits"]{display:none}
+.chat-layout.admin-mode{grid-template-columns:270px 1fr;grid-template-rows:auto 1fr auto;max-width:none}
+.admin-chat-users{display:none;grid-column:1;grid-row:1/4;background:#111414;border-left:1px solid #1e2825;min-height:580px;overflow-y:auto}
+.chat-layout.admin-mode .admin-chat-users{display:block}
+.chat-layout.admin-mode .chat-head,.chat-layout.admin-mode .chat-messages,.chat-layout.admin-mode .chat-input-row{grid-column:2}
+.admin-chat-users-head{padding:14px;border-bottom:1px solid #1e2825;font:9px 'DM Mono';color:#8a9591;direction:ltr}
+.admin-chat-user{width:100%;border:0;border-bottom:1px solid #1e2825;background:#151818;color:#c7d0cd;padding:12px;text-align:right;cursor:pointer;font-family:Vazirmatn;transition:.2s}
+.admin-chat-user:hover,.admin-chat-user.active{background:#1c2421;color:#fff}
+.admin-chat-user b{display:block;font:10px 'DM Mono';direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-chat-user small{display:block;color:#72807c;font-size:9px;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-owner{font:8px 'DM Mono';color:#7ac8a9;direction:ltr;margin-top:5px;display:block}
+.ticket-admin-note{font-size:10px;color:#7ac8a9;line-height:1.8}
+@media(max-width:720px){
+  .chat-layout.admin-mode{grid-template-columns:1fr;grid-template-rows:auto auto minmax(260px,1fr) auto}
+  .admin-chat-users{grid-column:1;grid-row:1;min-height:0;max-height:180px;border-left:0;border-bottom:1px solid #1e2825}
+  .chat-layout.admin-mode .chat-head{grid-column:1;grid-row:2}
+  .chat-layout.admin-mode .chat-messages{grid-column:1;grid-row:3}
+  .chat-layout.admin-mode .chat-input-row{grid-column:1;grid-row:4}
 }
 
 </style>
@@ -329,34 +419,53 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 
 product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</span>);<span id="cursor">▋</span></pre><div class="terminal-status"><b>BUILD SUCCESSFUL</b><span>latency 32ms / v1.0.0</span></div></div><div class="architecture"><div class="nodes"><svg viewBox="0 0 400 300" preserveAspectRatio="none"><path d="M205 63 L330 150 L205 245 L70 150 Z"/><path d="M205 63 L205 245 M70 150 L330 150"/></svg><span class="node one">PRODUCT</span><span class="node two">API</span><span class="node three">CLOUD</span><span class="node four">CLIENT</span></div><div class="stack"><span>TypeScript</span><span>Next.js</span><span>React Native</span><span>Python</span><span>PostgreSQL</span><span>Docker</span></div></div></div><div class="lab-foot"><span>GIT / MAIN · 148 COMMITS</span><span>CI/CD · AUTOMATED</span><span>UPTIME · 99.99%</span></div></section><section class="runtime"><div class="runtime-top"><div><span class="mono">( 05 — RUNTIME )</span><h2 data-fa="مهندسی، قابل مشاهده." data-en="ENGINEERING, MADE VISIBLE.">مهندسی، قابل مشاهده.</h2></div><span class="live">SYSTEMS NOMINAL</span></div><div class="runtime-grid reveal"><article class="metric"><span class="mono">DEPLOYMENT VELOCITY</span><strong>42<span style="font-size:.38em;letter-spacing:0">/mo</span></strong><p data-fa="انتشارهای کوچک، پیوسته و قابل بازگشت." data-en="Small, continuous and reversible releases.">انتشارهای کوچک، پیوسته و قابل بازگشت.</p></article><article class="metric"><span class="mono">CONTRIBUTION GRAPH</span><div class="heatmap"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p data-fa="هر خانه، یک گام کوچک رو به جلو." data-en="Every cell is one small step forward.">هر خانه، یک گام کوچک رو به جلو.</p></article><article class="metric"><span class="mono">RELEASE NOTES</span><div class="release-line"><div>v1.8 / Performance pass <span>2 DAYS AGO</span></div><div>v1.7 / New client portal <span>8 DAYS AGO</span></div><div>v1.6 / Search index <span>16 DAYS AGO</span></div></div></article></div></section><section class="playground" id="playground"><div class="play-head"><div><span class="mono">( 06 — BUILD PLAYGROUND )</span><h2 data-fa="ترکیبِ مناسب را<br>خودتان امتحان کنید." data-en="TRY THE RIGHT<br>COMBINATION YOURSELF.">ترکیبِ مناسب را<br>خودتان امتحان کنید.</h2></div><p data-fa="یک شبیه‌ساز کوچک از نحوه‌ی فکرکردن ما: پلتفرم را انتخاب کنید و یک انتشار آزمایشی انجام دهید." data-en="A small simulation of how we think: choose a platform, then run a test deployment.">یک شبیه‌ساز کوچک از نحوه‌ی فکرکردن ما: پلتفرم را انتخاب کنید و یک انتشار آزمایشی انجام دهید.</p></div><div class="play-shell reveal"><div class="build-controls"><h3 data-fa="چه چیزی می‌سازیم؟" data-en="WHAT ARE WE BUILDING?">چه چیزی می‌سازیم؟</h3><div class="build-options"><button class="build-option active" data-stack="web"><b data-fa="وب‌اپلیکیشن" data-en="Web app">وب‌اپلیکیشن</b><span>NEXT.JS</span></button><button class="build-option" data-stack="mobile"><b data-fa="اپ موبایل" data-en="Mobile app">اپ موبایل</b><span>RN / iOS</span></button><button class="build-option" data-stack="ai"><b data-fa="هوش مصنوعی" data-en="AI product">هوش مصنوعی</b><span>PYTHON</span></button></div><div class="build-help" data-fa="این یک محیط نمایشی است؛ اما انتخاب‌های معماری دقیقاً از همین پرسش‌ها شروع می‌شوند." data-en="This is a demonstration environment, but architecture decisions start with these very questions.">این یک محیط نمایشی است؛ اما انتخاب‌های معماری دقیقاً از همین پرسش‌ها شروع می‌شوند.</div></div><div class="play-stage"><div class="stage-top"><span>AVENIX / BUILD CONSOLE</span><b id="stack-status">READY</b></div><div class="code-window"><div class="codebar"><i></i><i></i><i></i><span id="file-name">app.config.ts</span></div><pre class="live-code" id="live-code"></pre></div><div class="deploy-row"><button class="deploy-btn" id="deploy-btn" data-fa="اجرای انتشار آزمایشی ↙" data-en="RUN TEST DEPLOY ↙">اجرای انتشار آزمایشی ↙</button><div class="deploy-progress"><i id="deploy-progress"></i></div><span class="deploy-message" id="deploy-message">WAITING FOR CONFIGURATION</span></div><div class="build-orbit"></div></div></div></section><section class="quote reveal"><div class="mark">“</div><blockquote data-fa="آونیکس فقط یک تیم توسعه نبود؛ آن‌ها کمک کردند مسئله‌ای را که واقعاً باید حل می‌کردیم، ببینیم." data-en="AVENIX WAS NOT JUST A DEVELOPMENT TEAM; THEY HELPED US SEE THE PROBLEM WE ACTUALLY NEEDED TO SOLVE.">آونیکس فقط یک تیم توسعه نبود؛ آن‌ها کمک کردند مسئله‌ای را که واقعاً باید حل می‌کردیم، ببینیم.</blockquote><cite>— سارا ک. / مدیر محصول، MyPlatform</cite></section>
 <div class="lower"><section><span class="mono">( 05 — ENGAGEMENT )</span><h2 data-fa="برای هر مرحله، یک شکلِ همکاری." data-en="A WAY TO WORK FOR EVERY STAGE.">برای هر مرحله، یک شکلِ همکاری.</h2><div class="plan"><div><b data-fa="اسپرینت کشف" data-en="Discovery Sprint">اسپرینت کشف</b><small data-fa="۲ تا ۳ هفته" data-en="2—3 weeks">۲ تا ۳ هفته</small></div><span class="price">FROM $—</span></div><div class="plan"><div><b data-fa="ساخت محصول" data-en="Product Build">ساخت محصول</b><small data-fa="پروژه‌ی کامل" data-en="Complete project">پروژه‌ی کامل</small></div><span class="price">CUSTOM</span></div><div class="plan"><div><b data-fa="تیمِ هم‌مسیر" data-en="Embedded Team">تیمِ هم‌مسیر</b><small data-fa="همکاری ماهانه" data-en="Monthly partnership">همکاری ماهانه</small></div><span class="price">MONTHLY</span></div></section><section><span class="mono">( 06 — FAQ )</span><h2 data-fa="پرسش‌های کوتاه." data-en="SHORT QUESTIONS.">پرسش‌های کوتاه.</h2><div class="faq"><details><summary data-fa="روی چه نوع پروژه‌هایی کار می‌کنید؟" data-en="What kind of projects do you take on?">روی چه نوع پروژه‌هایی کار می‌کنید؟</summary><p data-fa="محصولات دیجیتال با مسئله‌ی روشن: از MVPهای تازه تا بازطراحی پلتفرم‌های در حال رشد." data-en="Digital products with a clear challenge: from new MVPs to redesigning growing platforms.">محصولات دیجیتال با مسئله‌ی روشن: از MVPهای تازه تا بازطراحی پلتفرم‌های در حال رشد.</p></details><details><summary data-fa="همکاری از کجا شروع می‌شود؟" data-en="How does an engagement start?">همکاری از کجا شروع می‌شود؟</summary><p data-fa="از یک گفت‌وگوی ۳۰ دقیقه‌ای. سپس در صورت تناسب، جلسه‌ی کشف و یک پیشنهاد شفاف ارائه می‌کنیم." data-en="With a 30-minute conversation. If there is a fit, we move to discovery and a clear proposal.">از یک گفت‌وگوی ۳۰ دقیقه‌ای. سپس در صورت تناسب، جلسه‌ی کشف و یک پیشنهاد شفاف ارائه می‌کنیم.</p></details><details><summary data-fa="آیا بعد از لانچ هم کنار ما هستید؟" data-en="Do you stay after launch?">آیا بعد از لانچ هم کنار ما هستید؟</summary><p data-fa="بله؛ می‌توانیم با برنامه‌ی پشتیبانی و رشد، محصول را بعد از انتشار هم همراهی کنیم." data-en="Yes. With a care-and-growth plan, we can support the product beyond launch.">بله؛ می‌توانیم با برنامه‌ی پشتیبانی و رشد، محصول را بعد از انتشار هم همراهی کنیم.</p></details></div></section></div>
-<section class="scope" id="scope"><div class="scope-head"><div><span class="mono">( 08 — SCOPE CONFIGURATOR )</span><h2 data-fa="یک پروژه‌ی فرضی<br>پیکربندی کنید." data-en="CONFIGURE A<br>HYPOTHETICAL PROJECT.">یک پروژه‌ی فرضی<br>پیکربندی کنید.</h2></div><p data-fa="چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد." data-en="Make a few simple choices to see how a clear scope takes shape.">چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد.</p></div><div class="scope-shell reveal"><div class="scope-inputs"><h3 data-fa="تنظیمات محصول" data-en="PRODUCT SETTINGS">تنظیمات محصول</h3><label><span>PRODUCT TYPE</span><span id="scope-type-value">WEB APP</span></label><select id="scope-type"><option value="web" data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option value="mobile" data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option value="ai" data-fa="محصول هوش مصنوعی" data-en="AI product">محصول هوش مصنوعی</option></select><label><span>AMBITION LEVEL</span><span id="scope-level">04 / 10</span></label><input class="scope-range" id="scope-range" type="range" min="1" max="10" value="4"><label><span>INCLUDED MODULES</span><span id="scope-count">00</span></label><div class="feature-picks"><button class="feature-pick" data-feature="API">API</button><button class="feature-pick" data-feature="AUTH">AUTH</button><button class="feature-pick" data-feature="DASHBOARD">DASHBOARD</button><button class="feature-pick" data-feature="AI">AI</button><button class="feature-pick" data-feature="PAYMENTS">PAYMENTS</button></div></div><div class="scope-result"><span class="mono">AUTOMATIC BRIEF / v0.1</span><div class="scope-stats"><div class="scope-stat"><b id="scope-weeks">08</b><span data-fa="هفته‌ی پیشنهادی" data-en="SUGGESTED WEEKS">هفته‌ی پیشنهادی</span></div><div class="scope-stat"><b id="scope-sprints">04</b><span data-fa="اسپرینت ساخت" data-en="BUILD SPRINTS">اسپرینت ساخت</span></div></div><p class="scope-summary" id="scope-summary" data-fa="یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف." data-en="A focused web application, ready for sharper definition in a discovery session.">یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف.</p><button class="copy-config" id="copy-config" data-fa="کپی تنظیمات پروژه" data-en="COPY PROJECT CONFIG">کپی تنظیمات پروژه</button><span class="scope-toast" id="scope-toast"></span></div></div></section><section class="contact" id="contact"><span class="mono">( 07 — BEGIN )</span><h2 data-fa="بیایید چیزِ مهمی <a href='#project-form'>بسازیم.</a>" data-en="LET'S BUILD <a href='#project-form'>SOMETHING THAT MATTERS.</a>">بیایید چیزِ مهمی <a href="#project-form">بسازیم.</a></h2><div class="contact-grid"><div class="contact-note"><b data-fa="شروعش ساده است." data-en="THE START IS SIMPLE.">شروعش ساده است.</b><br><span data-fa="چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم." data-en="Tell us a little about your project. We usually reply within one business day to find a time for a short conversation.">چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم.</span></div><form class="contact-form" id="project-form"><div class="field"><label>YOUR NAME</label><input required name="name" placeholder="نام شما" data-fa-placeholder="نام شما" data-en-placeholder="Your name"></div><div class="field"><label>EMAIL</label><input required type="email" name="email" placeholder="ایمیل کاری" data-fa-placeholder="ایمیل کاری" data-en-placeholder="Work email"></div><div class="field"><label>PROJECT TYPE</label><select name="type"><option value="" data-fa="نوع پروژه را انتخاب کنید" data-en="Select project type">نوع پروژه را انتخاب کنید</option><option data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option data-fa="طراحی محصول / رابط کاربری" data-en="Product / UX design">طراحی محصول / رابط کاربری</option><option data-fa="هوش مصنوعی و داده" data-en="AI & data">هوش مصنوعی و داده</option></select></div><div class="field"><label>BUDGET RANGE</label><select name="budget"><option value="" data-fa="بودجه‌ی تقریبی" data-en="Approximate budget">بودجه‌ی تقریبی</option><option>+ $5K</option><option>+ $15K</option><option>+ $30K</option><option data-fa="ترجیح می‌دهم گفتگو کنیم" data-en="Let's discuss">ترجیح می‌دهم گفتگو کنیم</option></select></div><div class="field full"><label>ABOUT THE PROJECT</label><textarea required name="message" placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-fa-placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-en-placeholder="What problem are you trying to solve?"></textarea></div><button class="send" type="submit"><span data-fa="ارسال درخواست همکاری" data-en="SEND PROJECT INQUIRY">ارسال درخواست همکاری</span><span>↙</span></button><div class="form-message" aria-live="polite"></div></form></div><div class="contact-bar"><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f9f4fdfdfed1f0e7f4fff8e9bfe2e5e4f5f8fe">[email&#160;protected]</a></span><span data-fa="تهران / از هر جا" data-en="TEHRAN / EVERYWHERE">تهران / از هر جا</span><span>INSTAGRAM · LINKEDIN</span></div></section>
+<section class="scope" id="scope"><div class="scope-head"><div><span class="mono">( 08 — SCOPE CONFIGURATOR )</span><h2 data-fa="یک پروژه‌ی فرضی<br>پیکربندی کنید." data-en="CONFIGURE A<br>HYPOTHETICAL PROJECT.">یک پروژه‌ی فرضی<br>پیکربندی کنید.</h2></div><p data-fa="چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد." data-en="Make a few simple choices to see how a clear scope takes shape.">چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد.</p></div><div class="scope-shell reveal"><div class="scope-inputs"><h3 data-fa="تنظیمات محصول" data-en="PRODUCT SETTINGS">تنظیمات محصول</h3><label><span>PRODUCT TYPE</span><span id="scope-type-value">WEB APP</span></label><select id="scope-type"><option value="web" data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option value="mobile" data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option value="ai" data-fa="محصول هوش مصنوعی" data-en="AI product">محصول هوش مصنوعی</option></select><label><span>AMBITION LEVEL</span><span id="scope-level">04 / 10</span></label><input class="scope-range" id="scope-range" type="range" min="1" max="10" value="4"><label><span>INCLUDED MODULES</span><span id="scope-count">00</span></label><div class="feature-picks"><button class="feature-pick" data-feature="API">API</button><button class="feature-pick" data-feature="AUTH">AUTH</button><button class="feature-pick" data-feature="DASHBOARD">DASHBOARD</button><button class="feature-pick" data-feature="AI">AI</button><button class="feature-pick" data-feature="PAYMENTS">PAYMENTS</button></div></div><div class="scope-result"><span class="mono">AUTOMATIC BRIEF / v0.1</span><div class="scope-stats"><div class="scope-stat"><b id="scope-weeks">08</b><span data-fa="هفته‌ی پیشنهادی" data-en="SUGGESTED WEEKS">هفته‌ی پیشنهادی</span></div><div class="scope-stat"><b id="scope-sprints">04</b><span data-fa="اسپرینت ساخت" data-en="BUILD SPRINTS">اسپرینت ساخت</span></div></div><p class="scope-summary" id="scope-summary" data-fa="یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف." data-en="A focused web application, ready for sharper definition in a discovery session.">یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف.</p><button class="copy-config" id="copy-config" data-fa="کپی تنظیمات پروژه" data-en="COPY PROJECT CONFIG">کپی تنظیمات پروژه</button><span class="scope-toast" id="scope-toast"></span></div></div></section><section class="contact" id="contact"><span class="mono">( 07 — BEGIN )</span><h2 data-fa="بیایید چیزِ مهمی <a href='#project-form'>بسازیم.</a>" data-en="LET'S BUILD <a href='#project-form'>SOMETHING THAT MATTERS.</a>">بیایید چیزِ مهمی <a href="#project-form">بسازیم.</a></h2><div class="contact-grid"><div class="contact-note"><b data-fa="شروعش ساده است." data-en="THE START IS SIMPLE.">شروعش ساده است.</b><br><span data-fa="چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم." data-en="Tell us a little about your project. We usually reply within one business day to find a time for a short conversation.">چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم.</span></div><form class="contact-form" id="project-form"><div class="field"><label>YOUR NAME</label><input required name="name" placeholder="نام شما" data-fa-placeholder="نام شما" data-en-placeholder="Your name"></div><div class="field"><label>EMAIL</label><input required type="email" name="email" placeholder="ایمیل کاری" data-fa-placeholder="ایمیل کاری" data-en-placeholder="Work email"></div><div class="field"><label>PROJECT TYPE</label><select name="type"><option value="" data-fa="نوع پروژه را انتخاب کنید" data-en="Select project type">نوع پروژه را انتخاب کنید</option><option data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option data-fa="طراحی محصول / رابط کاربری" data-en="Product / UX design">طراحی محصول / رابط کاربری</option><option data-fa="هوش مصنوعی و داده" data-en="AI & data">هوش مصنوعی و داده</option></select></div><div class="field"><label>BUDGET RANGE</label><select name="budget"><option value="" data-fa="بودجه‌ی تقریبی" data-en="Approximate budget">بودجه‌ی تقریبی</option><option>+ $5K</option><option>+ $15K</option><option>+ $30K</option><option data-fa="ترجیح می‌دهم گفتگو کنیم" data-en="Let's discuss">ترجیح می‌دهم گفتگو کنیم</option></select></div><div class="field full"><label>ABOUT THE PROJECT</label><textarea required name="message" placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-fa-placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-en-placeholder="What problem are you trying to solve?"></textarea></div><button class="send" type="submit"><span data-fa="ارسال درخواست همکاری" data-en="SEND PROJECT INQUIRY">ارسال درخواست همکاری</span><span>↙</span></button><div class="form-message" aria-live="polite"></div></form></div><div class="contact-bar"><span><a href="/cdn-cgi/l/email-protection#562523262639242216313b373f3a7835393b"><span class="__cf_email__" data-cfemail="4d3e383d3d223f390d2a202c2421632e2220">[email&#160;protected]</span></a></span><span data-fa="تهران / از هر جا" data-en="TEHRAN / EVERYWHERE">تهران / از هر جا</span><span>INSTAGRAM · LINKEDIN</span></div></section>
 
-<section class="dashboard" id="dashboard">
+<section class="dashboard" id="dashboard" role="dialog" aria-modal="true" aria-label="داشبورد Avenix">
+  <div class="dash-loadbar"></div>
   <div class="dashboard-shell">
     <aside class="dashboard-sidebar">
+      <div class="dash-brandrow">
+        <b class="mono">AVENIX / OS</b>
+        <button class="dash-collapse-btn" id="dash-collapse" title="جمع‌کردن نوار کناری" aria-label="جمع‌کردن نوار کناری"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      </div>
       <div class="dash-user">
         <div class="dash-avatar" id="dash-avatar">AV</div>
         <div style="min-width:0">
-          <b id="dash-user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f382a3a2c2b1f3e293a3136277133303c3e33">[email&#160;protected]</a></b>
-          <small id="dash-user-role">CLIENT / AVENIX</small>
+          <b id="dash-user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="03707673736c717743646e626a6f2d606c6e">[email&#160;protected]</a></b>
+          <small id="dash-user-role">CLIENT / AVENIX</small><span class="admin-badge">ADMIN / SUPPORT</span>
         </div>
       </div>
-      <nav class="dash-nav" id="dash-nav">
-        <button data-dash="overview" class="active"><i>◧</i> <span data-fa="نمای کلی" data-en="Overview">نمای کلی</span></button>
-        <button data-dash="projects"><i>◫</i> <span data-fa="پروژه‌ها" data-en="Projects">پروژه‌ها</span><span class="dash-count" id="count-projects" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
-        <button data-dash="neworder"><i>＋</i> <span data-fa="سفارش جدید" data-en="New Order">سفارش جدید</span></button>
-        <button data-dash="tickets"><i>✦</i> <span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span><span class="dash-count" id="count-tickets" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
-        <button data-dash="edits"><i>↻</i> <span data-fa="درخواست ویرایش" data-en="Edits">درخواست ویرایش</span></button>
-        <button data-dash="chat"><i>◍</i> <span data-fa="چت با تیم" data-en="Team Chat">چت با تیم</span><span id="chat-dot" style="display:none;width:6px;height:6px;background:#7ac8a9;border-radius:50%;margin-right:auto"></span></button>
-      </nav>
+      <div class="dash-search">
+        <input type="text" id="dash-search-input" placeholder="جستجو در داشبورد..." autocomplete="off">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </div>
+      <div class="dash-nav" id="dash-nav" role="navigation" aria-label="داشبورد">
+        <button data-dash="overview" data-title="نمای کلی" class="active"><i>◧</i> <span data-fa="نمای کلی" data-en="Overview">نمای کلی</span></button>
+        <button data-dash="projects" data-title="پروژه‌ها"><i>◫</i> <span data-fa="پروژه‌ها" data-en="Projects">پروژه‌ها</span><span class="dash-count" id="count-projects" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
+        <button data-dash="neworder" data-title="سفارش جدید"><i>＋</i> <span data-fa="سفارش جدید" data-en="New Order">سفارش جدید</span></button>
+        <button data-dash="tickets" data-title="تیکت‌ها"><i>✦</i> <span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span><span class="dash-count" id="count-tickets" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
+        <button data-dash="edits" data-title="درخواست ویرایش"><i>↻</i> <span data-fa="درخواست ویرایش" data-en="Edits">درخواست ویرایش</span></button>
+        <button data-dash="chat" data-title="چت با تیم"><i>◍</i> <span data-fa="چت با تیم" data-en="Team Chat">چت با تیم</span><span id="chat-dot" style="display:none;width:6px;height:6px;background:#7ac8a9;border-radius:50%;margin-right:auto"></span></button>
+      </div>
       <div class="dash-foot">
-        <span class="mono">AVENIX DASHBOARD / v2.1</span>
+        <span class="mono">AVENIX DASHBOARD / v3.0</span>
         <span class="mono" style="direction:ltr">AUTH: <span id="dash-auth-status">OFFLINE</span> • <span id="dash-time"></span></span>
-        <span class="mono" style="line-height:1.8">همه چیز در همین فایل ذخیره می‌شود. بدون بک‌اند جدا. داده‌ها در LocalStorage شما + Firebase Auth.</span>
+        <span class="mono" style="line-height:1.8">داده‌ها با Firebase همگام می‌شوند؛ در صورت قطع ارتباط، نسخه محلی مرورگر به‌عنوان پشتیبان حفظ می‌شود.</span>
         <button class="btn-dash ghost" id="dash-close" style="margin-top:10px">بستن داشبورد ✕</button>
       </div>
     </aside>
     <div class="dashboard-main">
+      <div class="dash-header">
+        <div class="dash-breadcrumb"><span>AVENIX /</span> <b id="dash-breadcrumb-title">نمای کلی</b></div>
+        <div class="dash-header-actions">
+          <button class="dash-icon-btn" id="dash-notif-btn" title="اعلان‌ها" aria-label="اعلان‌ها"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg><span class="ping" id="dash-notif-ping"></span></button>
+          <button class="dash-icon-btn" id="dash-lang-btn" title="تغییر زبان" aria-label="تغییر زبان"><span class="mono" style="font-size:9px">EN</span></button>
+          <button class="dash-exit" id="dash-close-top"><span>بازگشت به سایت</span> ✕</button>
+        </div>
+      </div>
+      <div class="dashboard-main-inner">
+
       <!-- OVERVIEW -->
       <div class="dash-panel active" id="panel-overview">
         <div class="dash-topbar">
@@ -370,13 +479,25 @@ product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</s
           </div>
         </div>
         <div class="dash-stats">
-          <div class="dash-stat"><b id="stat-projects">0</b><span data-fa="پروژه فعال" data-en="ACTIVE PROJECTS">پروژه فعال</span><div class="progress-mini"><i id="stat-projects-bar" style="width:0%"></i></div></div>
-          <div class="dash-stat"><b id="stat-tickets">0</b><span data-fa="تیکت باز" data-en="OPEN TICKETS">تیکت باز</span><div class="progress-mini"><i id="stat-tickets-bar" style="width:0%"></i></div></div>
-          <div class="dash-stat"><b id="stat-edits">0</b><span data-fa="درخواست ویرایش" data-en="EDIT REQUESTS">درخواست ویرایش</span><div class="progress-mini"><i id="stat-edits-bar" style="width:0%"></i></div></div>
-          <div class="dash-stat"><b id="stat-progress">0%</b><span data-fa="میانگین پیشرفت" data-en="AVG PROGRESS">میانگین پیشرفت</span><div class="progress-mini"><i id="stat-progress-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><div class="dash-stat-top"><div class="dash-stat-icon">◫</div><span class="dash-stat-trend" id="stat-projects-trend">—</span></div><b id="stat-projects">0</b><span data-fa="پروژه فعال" data-en="ACTIVE PROJECTS">پروژه فعال</span><div class="progress-mini"><i id="stat-projects-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><div class="dash-stat-top"><div class="dash-stat-icon">✦</div><span class="dash-stat-trend" id="stat-tickets-trend">—</span></div><b id="stat-tickets">0</b><span data-fa="تیکت باز" data-en="OPEN TICKETS">تیکت باز</span><div class="progress-mini"><i id="stat-tickets-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><div class="dash-stat-top"><div class="dash-stat-icon">↻</div><span class="dash-stat-trend" id="stat-edits-trend">—</span></div><b id="stat-edits">0</b><span data-fa="درخواست ویرایش" data-en="EDIT REQUESTS">درخواست ویرایش</span><div class="progress-mini"><i id="stat-edits-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><div class="dash-stat-top"><div class="dash-stat-icon">◧</div><span class="dash-stat-trend" id="stat-progress-trend">—</span></div><b id="stat-progress">0%</b><span data-fa="میانگین پیشرفت" data-en="AVG PROGRESS">میانگین پیشرفت</span><div class="progress-mini"><i id="stat-progress-bar" style="width:0%"></i></div></div>
+        </div>
+        <div class="dash-widgets">
+          <div class="dash-widget">
+            <div class="dash-widget-head"><span data-fa="پیشرفت پروژه‌ها / ۷ روز اخیر" data-en="PROJECT PROGRESS / LAST 7 DAYS">پیشرفت پروژه‌ها / ۷ روز اخیر</span><span class="mono" id="chart-total">—</span></div>
+            <div class="dash-chart" id="dash-chart"></div>
+            <div class="dash-chart-labels" id="dash-chart-labels"></div>
+          </div>
+          <div class="dash-widget">
+            <div class="dash-widget-head"><span data-fa="فعالیت اخیر" data-en="RECENT ACTIVITY">فعالیت اخیر</span></div>
+            <div class="dash-activity" id="dash-activity"></div>
+          </div>
         </div>
         <div class="projects-grid" id="overview-projects"></div>
       </div>
+
 
       <!-- PROJECTS -->
       <div class="dash-panel" id="panel-projects">
@@ -434,7 +555,7 @@ product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</s
             <div id="ticket-active" style="display:none;flex-direction:column;gap:16px;flex:1">
               <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:1px solid #1e2825;padding-bottom:12px">
                 <div><b id="ticket-title" style="font-size:15px;font-weight:400"></b><small id="ticket-meta" style="font:9px 'DM Mono';color:#7d8b87;display:block;margin-top:4px"></small></div>
-                <select id="ticket-status" style="background:#101413;border:1px solid #2f3a37;color:#e8eeeb;font:10px 'DM Mono';padding:6px"><option value="open">OPEN</option><option value="answered">ANSWERED</option><option value="closed">CLOSED</option></select>
+                <select id="ticket-status" title="وضعیت توسط ادمین پشتیبانی مدیریت می‌شود" style="background:#101413;border:1px solid #2f3a37;color:#e8eeeb;font:10px 'DM Mono';padding:6px"><option value="open">OPEN</option><option value="answered">ANSWERED</option><option value="closed">CLOSED</option></select>
               </div>
               <div class="ticket-msgs" id="ticket-msgs"></div>
               <div class="chat-input-row" style="margin-top:auto">
@@ -474,13 +595,15 @@ product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</s
             <p data-fa="مستقیم با تیم Avenix حرف بزن. پیام‌ها در همین فایل ذخیره می‌شن و وقتی تیم جواب بده، اینجا می‌بینی." data-en="Talk directly to Avenix team. Messages are stored in this file locally.">مستقیم با تیم Avenix حرف بزن. پیام‌ها در همین فایل ذخیره می‌شن و وقتی تیم جواب بده، اینجا می‌بینی.</p>
           </div>
         </div>
-        <div class="chat-layout">
-          <div class="chat-head"><span class="mono">AVENIX TEAM / LIVE</span><span class="online"><i></i> ONLINE • پاسخگویی معمولاً زیر ۲ ساعت</span></div>
+        <div class="chat-layout" id="chat-layout">
+          <aside class="admin-chat-users" id="admin-chat-users" aria-label="گفتگوهای کاربران"></aside>
+          <div class="chat-head"><span class="mono" id="chat-head-title"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="d88b8d8888978a8c989f95999194f69b9795">[email&#160;protected]</a> / LIVE</span><span class="online" id="chat-head-status"><i></i> ONLINE • پاسخگویی توسط ادمین</span></div>
           <div class="chat-messages" id="chat-messages"></div>
           <div class="chat-input-row"><input id="chat-input" placeholder="پیام خود را بنویسید... (Enter برای ارسال)"><button id="chat-send">ارسال</button></div>
         </div>
       </div>
 
+      </div>
     </div>
   </div>
 </section>
@@ -491,7 +614,7 @@ product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</s
     <div class="dash-modal-head"><h3 data-fa="پروژه جدید" data-en="New Project">پروژه جدید</h3><button class="auth-close" data-close="modal-project">✕</button></div>
     <form class="dash-modal-body" id="form-project-modal">
       <div class="dash-field"><label>نام پروژه</label><input required name="name" placeholder="MyPlatform v2"></div>
-      <div class="row"><div class="dash-field"><label>نوع</label><select name="type"><option value="web">Web App</option><option value="mobile">Mobile</option><option value="ai">AI</option><option value="design">Design</option></select></div><div class="dash-field"><label>وضعیت اولیه</label><select name="status"><option value="review">در حال بررسی</option><option value="building" selected>در حال ساخت</option><option value="delivered">تحویل شده</option><option value="paused">متوقف</option></select></div></div>
+      <div class="row"><div class="dash-field"><label>نوع</label><select name="type"><option value="web">Web App</option><option value="mobile">Mobile</option><option value="ai">AI</option><option value="design">Design</option></select></div><div class="dash-field"><label>وضعیت اولیه</label><select name="status"><option value="review" selected>در حال بررسی</option><option value="building">در حال ساخت</option><option value="delivered">تحویل شده</option><option value="paused">متوقف</option></select></div></div>
       <div class="dash-field"><label>توضیح کوتاه</label><textarea name="desc" placeholder="توضیح..."></textarea></div>
       <button class="btn-dash dark" type="submit">ایجاد پروژه</button>
     </form>
@@ -513,7 +636,7 @@ product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</s
 </main><footer><span>© 2026 AVENIX STUDIO</span><span>BUILT WITH INTENTION</span></footer>
 
 <div class="custom-cursor" aria-hidden="true"><span class="custom-cursor__ring"></span><span class="custom-cursor__dot"></span></div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const loader=document.querySelector('#loader');window.addEventListener('load',()=>setTimeout(()=>document.body.classList.add('ready'),2050));
 const split=document.querySelector('.split-words');split.innerHTML=split.textContent.trim().split(/\s+/).map(w=>`<span class="word">${w}&nbsp;</span>`).join('');
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible'); if(e.target.classList.contains('manifesto')) e.target.querySelectorAll('.word').forEach((w,i)=>setTimeout(()=>w.classList.add('on'),i*65));}}),{threshold:.15});document.querySelectorAll('.reveal,.manifesto').forEach(x=>obs.observe(x));
@@ -579,11 +702,12 @@ const topBtn=document.querySelector('#to-top'),fontToggle=document.querySelector
 })();
 
 document.querySelector('#project-form').addEventListener('submit',e=>{e.preventDefault();const f=e.currentTarget,msg=f.querySelector('.form-message');msg.textContent=en?'Thank you — your inquiry is ready to send. We will be in touch shortly.':'سپاس! درخواست شما ثبت شد. به‌زودی با شما تماس می‌گیریم.';f.reset()});
-</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4a96dcd1d5187',t:'MTc4NDc0NjU0OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1f4b1f6095f5187',t:'MTc4NDc0Njg5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</script>
 <script type="module">
 // Firebase Auth Integration for Avenix
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, doc, collection, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 // =====================================================
 // 1. اینجا تنظیمات Firebase خودت رو بذار
@@ -605,13 +729,94 @@ if(!isConfigured){
 }
 
 // Init
-let app, auth;
+let app, auth, db;
 try {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
+  db = getFirestore(app);
 } catch(e){
   console.error("Firebase init error:", e);
 }
+
+const ADMIN_EMAIL = 'support@gmail.com';
+window.AVENIX_ADMIN_EMAIL = ADMIN_EMAIL;
+
+// Firestore keeps users and support replies synchronized across browsers/devices.
+// LocalStorage remains an offline fallback and fast local cache.
+const CLOUD_BASES = ['projects','tickets','edits','chat'];
+let stopCloudSync = null;
+function cacheKey(email, base){ return 'avenix_' + btoa((email||'guest').toLowerCase()).replace(/=/g,'') + '_' + base; }
+function getSupportRegistry(){
+  try { return JSON.parse(localStorage.getItem('avenix_support_users') || '[]'); }
+  catch(e){ return []; }
+}
+function rememberSupportUser(email, uid){
+  email = (email||'').trim().toLowerCase();
+  if(!email || email===ADMIN_EMAIL) return;
+  const users = getSupportRegistry().map(x=>typeof x==='string'?{email:x}:x);
+  const found = users.find(x=>x.email===email);
+  if(found){ if(uid) found.uid=uid; }
+  else users.push({email,uid:uid||''});
+  localStorage.setItem('avenix_support_users', JSON.stringify(users));
+}
+function mirrorWorkspace(data, uid){
+  const email=(data?.email||'').trim().toLowerCase();
+  if(!email) return;
+  rememberSupportUser(email, uid);
+  CLOUD_BASES.forEach(base=>{
+    if(Array.isArray(data[base])) localStorage.setItem(cacheKey(email,base), JSON.stringify(data[base]));
+  });
+  window.dispatchEvent(new CustomEvent('avenix-data-sync',{detail:{email}}));
+}
+async function startCloudSync(user){
+  if(stopCloudSync){ stopCloudSync(); stopCloudSync=null; }
+  if(!db || !user?.email) return;
+  const email=user.email.trim().toLowerCase();
+  try{
+    if(email===ADMIN_EMAIL){
+      stopCloudSync=onSnapshot(collection(db,'workspaces'), snap=>{
+        snap.forEach(d=>mirrorWorkspace(d.data(),d.id));
+      }, err=>console.warn('Admin Firestore sync unavailable:',err.code||err.message));
+      return;
+    }
+    const ref=doc(db,'workspaces',user.uid);
+    const first=await getDoc(ref);
+    if(first.exists()){
+      mirrorWorkspace(first.data(),user.uid);
+    }else{
+      const initial={email,updatedAt:new Date().toISOString()};
+      CLOUD_BASES.forEach(base=>{
+        try{ initial[base]=JSON.parse(localStorage.getItem(cacheKey(email,base))||'[]'); }
+        catch(e){ initial[base]=[]; }
+      });
+      await setDoc(ref,initial,{merge:true});
+    }
+    rememberSupportUser(email,user.uid);
+    stopCloudSync=onSnapshot(ref,snap=>{
+      if(snap.exists()) mirrorWorkspace(snap.data(),snap.id);
+    },err=>console.warn('Firestore sync unavailable:',err.code||err.message));
+  }catch(err){
+    console.warn('Firestore is not enabled or rules are missing; using local fallback.',err.code||err.message);
+  }
+}
+window.AvenixCloud={
+  async save(email,base,data){
+    email=(email||'').trim().toLowerCase();
+    const user=auth?.currentUser;
+    if(!db || !user || !CLOUD_BASES.includes(base)) return;
+    const me=(user.email||'').trim().toLowerCase();
+    let targetUid=user.uid;
+    if(email!==me){
+      if(me!==ADMIN_EMAIL) return;
+      const target=getSupportRegistry().map(x=>typeof x==='string'?{email:x}:x).find(x=>x.email===email);
+      if(!target?.uid) return;
+      targetUid=target.uid;
+    }
+    try{
+      await setDoc(doc(db,'workspaces',targetUid),{email,[base]:data,updatedAt:new Date().toISOString()},{merge:true});
+    }catch(err){ console.warn('Cloud save failed; local copy was kept.',err.code||err.message); }
+  }
+};
 
 const authModal = document.getElementById('auth-modal');
 const authOpen = document.getElementById('auth-open');
@@ -793,20 +998,24 @@ logoutBtn?.addEventListener('click', async ()=>{
 if(auth){
   onAuthStateChanged(auth, (user)=>{
     if(user){
-      // لاگین است
+      const signedEmail=(user.email||'').trim().toLowerCase();
+      const admin=signedEmail===ADMIN_EMAIL;
       if(authOpen) authOpen.style.display='none';
       if(userChip) userChip.style.display='flex';
       if(userEmailSpan) userEmailSpan.textContent = user.email || user.displayName || 'USER';
-      // می‌تونی اینجا کارهای دیگه بکنی: نمایش داشبورد، فعال‌سازی فرم‌ها
       document.body.classList.add('is-authenticated');
-      // مثال: پر کردن خودکار فرم تماس
+      document.body.classList.toggle('is-admin',admin);
+      rememberSupportUser(signedEmail,user.uid);
+      startCloudSync(user);
       const emailField = document.querySelector('#project-form input[type="email"]');
       if(emailField && !emailField.value) emailField.value = user.email || '';
+      window.dispatchEvent(new CustomEvent('avenix-auth-change',{detail:{email:signedEmail,isAdmin:admin}}));
     }else{
-      // لاگ‌اوت است
+      if(stopCloudSync){ stopCloudSync(); stopCloudSync=null; }
       if(authOpen) authOpen.style.display='inline-block';
       if(userChip) userChip.style.display='none';
-      document.body.classList.remove('is-authenticated');
+      document.body.classList.remove('is-authenticated','is-admin');
+      window.dispatchEvent(new CustomEvent('avenix-auth-change',{detail:{email:'',isAdmin:false}}));
     }
   });
 }
@@ -834,60 +1043,139 @@ if(!isConfigured){
   const dashboard = document.getElementById('dashboard');
   const dashOpenBtn = document.getElementById('dash-open');
   const dashCloseBtn = document.getElementById('dash-close');
+  const dashCloseTopBtn = document.getElementById('dash-close-top');
+  const dashCollapseBtn = document.getElementById('dash-collapse');
+  const dashSearchInput = document.getElementById('dash-search-input');
+  const dashBreadcrumbTitle = document.getElementById('dash-breadcrumb-title');
   const dashNav = document.getElementById('dash-nav');
   const navButtons = dashNav ? dashNav.querySelectorAll('button[data-dash]') : [];
   const panels = document.querySelectorAll('.dash-panel');
   const dashUserEmail = document.getElementById('dash-user-email');
+  const dashUserRole = document.getElementById('dash-user-role');
   const dashAvatar = document.getElementById('dash-avatar');
   const dashAuthStatus = document.getElementById('dash-auth-status');
   const dashTime = document.getElementById('dash-time');
 
-  // Storage helpers - per user
+  // Storage helpers - per user, plus an admin support queue.
+  const ADMIN_EMAIL=(window.AVENIX_ADMIN_EMAIL||'support@gmail.com').toLowerCase();
   function currentUserEmail(){
     const el = document.getElementById('user-email');
-    return (el && el.textContent && el.textContent.includes('@')) ? el.textContent.trim() : 'guest';
+    return (el && el.textContent && el.textContent.includes('@')) ? el.textContent.trim().toLowerCase() : 'guest';
   }
-  function key(base){ return 'avenix_' + btoa(currentUserEmail()).replace(/=/g,'') + '_' + base; }
-  function load(base){ try{ return JSON.parse(localStorage.getItem(key(base))||'[]'); }catch(e){ return []; } }
-  function save(base, data){ localStorage.setItem(key(base), JSON.stringify(data)); }
+  function isAdmin(){ return currentUserEmail()===ADMIN_EMAIL && document.body.classList.contains('is-admin'); }
+  function userKey(email,base){ return 'avenix_' + btoa((email||'guest').toLowerCase()).replace(/=/g,'') + '_' + base; }
+  function key(base){ return userKey(currentUserEmail(),base); }
+  function loadFor(email,base){ try{ return JSON.parse(localStorage.getItem(userKey(email,base))||'[]'); }catch(e){ return []; } }
+  function saveFor(email,base,data){
+    localStorage.setItem(userKey(email,base),JSON.stringify(data));
+    if(window.AvenixCloud) window.AvenixCloud.save(email,base,data);
+  }
+  function load(base){ return loadFor(currentUserEmail(),base); }
+  function save(base,data){ saveFor(currentUserEmail(),base,data); }
+  function supportUsers(){
+    try{
+      const list=JSON.parse(localStorage.getItem('avenix_support_users')||'[]');
+      return list.map(x=>typeof x==='string'?x:x.email).filter(email=>email && email!==ADMIN_EMAIL);
+    }catch(e){ return []; }
+  }
+  function registerCurrentUser(){
+    const email=currentUserEmail();
+    if(email==='guest' || email===ADMIN_EMAIL) return;
+    let list=[];
+    try{ list=JSON.parse(localStorage.getItem('avenix_support_users')||'[]'); }catch(e){}
+    const normalized=list.map(x=>typeof x==='string'?{email:x}:x);
+    if(!normalized.some(x=>x.email===email)) normalized.push({email,uid:''});
+    localStorage.setItem('avenix_support_users',JSON.stringify(normalized));
+  }
+  function allSupportRecords(base){
+    return supportUsers().flatMap(email=>loadFor(email,base).map(item=>({...item,_owner:email})));
+  }
 
   // Time ticker
   setInterval(()=>{ if(dashTime) dashTime.textContent = new Date().toLocaleTimeString('fa-IR'); }, 1000);
 
-  // Open/Close dashboard
+  // Open/Close dashboard — opens as a dedicated full-screen page, no scrolling needed
+  let lastScrollY = 0;
   function openDashboard(panel='overview'){
     if(!document.body.classList.contains('is-authenticated')){
       if(window.openAuth) window.openAuth('login');
       return;
     }
+    lastScrollY = window.scrollY || window.pageYOffset || 0;
     dashboard.classList.add('open');
-    dashboard.scrollIntoView({behavior:'smooth'});
+    document.body.classList.add('dash-locked');
+    dashboard.scrollTop = 0;
     switchPanel(panel);
     refreshAll();
   }
   function closeDashboard(){
     dashboard.classList.remove('open');
-    window.scrollTo({top:0, behavior:'smooth'});
+    document.body.classList.remove('dash-locked');
+    window.scrollTo({top:lastScrollY, behavior:'auto'});
   }
   window.openDashboard = openDashboard;
 
   if(dashOpenBtn) dashOpenBtn.addEventListener('click', ()=>openDashboard('overview'));
   if(dashCloseBtn) dashCloseBtn.addEventListener('click', closeDashboard);
+  if(dashCloseTopBtn) dashCloseTopBtn.addEventListener('click', closeDashboard);
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && dashboard.classList.contains('open')) closeDashboard(); });
   // Also quick go buttons
   document.querySelectorAll('[data-dash-go]').forEach(b=>{
     b.addEventListener('click', ()=>openDashboard(b.getAttribute('data-dash-go')));
   });
 
+  // Collapse / expand sidebar
+  if(dashCollapseBtn){
+    dashCollapseBtn.addEventListener('click', ()=>{
+      dashboard.classList.toggle('collapsed');
+    });
+  }
+
+  // Sidebar search: filters nav items by label
+  if(dashSearchInput){
+    dashSearchInput.addEventListener('input', ()=>{
+      const q = dashSearchInput.value.trim().toLowerCase();
+      navButtons.forEach(btn=>{
+        const label = (btn.getAttribute('data-title')||btn.textContent||'').toLowerCase();
+        btn.style.display = !q || label.includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  // Header: language toggle proxies to the site-wide EN/FA switch
+  const dashLangBtn = document.getElementById('dash-lang-btn');
+  if(dashLangBtn){
+    dashLangBtn.addEventListener('click', ()=>{
+      const siteLangBtn = document.getElementById('lang');
+      if(siteLangBtn) siteLangBtn.click();
+      const span = dashLangBtn.querySelector('span');
+      if(span) span.textContent = document.documentElement.lang==='en' ? 'FA' : 'EN';
+    });
+  }
+
+  // Header: notification bell (demo)
+  const dashNotifBtn = document.getElementById('dash-notif-btn');
+  const dashNotifPing = document.getElementById('dash-notif-ping');
+  if(dashNotifBtn){
+    dashNotifBtn.addEventListener('click', ()=>{
+      if(dashNotifPing) dashNotifPing.classList.remove('show');
+      switchPanel('tickets');
+    });
+  }
+
   // Switch panels
   function switchPanel(name){
     panels.forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
     navButtons.forEach(btn=>btn.classList.toggle('active', btn.dataset.dash===name));
+    const activeBtn = Array.from(navButtons).find(b=>b.dataset.dash===name);
+    if(dashBreadcrumbTitle && activeBtn) dashBreadcrumbTitle.textContent = activeBtn.getAttribute('data-title') || name;
     // lazy refresh per panel
     if(name==='projects') renderProjects();
     if(name==='tickets') renderTickets();
     if(name==='edits') renderEdits();
     if(name==='chat') renderChat();
     if(name==='overview') renderOverview();
+    if(dashboard.classList.contains('open')) dashboard.scrollTop = 0;
   }
   navButtons.forEach(btn=>{
     btn.addEventListener('click', ()=>switchPanel(btn.dataset.dash));
@@ -900,9 +1188,11 @@ if(!isConfigured){
     if(dashAuthStatus) dashAuthStatus.textContent = isAuth ? 'ONLINE' : 'OFFLINE';
     if(isAuth){
       const email = currentUserEmail();
+      registerCurrentUser();
       if(dashUserEmail) dashUserEmail.textContent = email;
-      if(dashAvatar) dashAvatar.textContent = email.slice(0,2).toUpperCase();
-      // hide main landing CTA maybe
+      if(dashAvatar) dashAvatar.textContent = isAdmin() ? 'AD' : email.slice(0,2).toUpperCase();
+      if(dashUserRole) dashUserRole.textContent = isAdmin() ? 'ADMIN / SUPPORT' : 'CLIENT / AVENIX';
+      applyRoleUI();
     } else {
       dashboard.classList.remove('open');
     }
@@ -916,62 +1206,84 @@ if(!isConfigured){
     if(dashOpenBtn) dashOpenBtn.style.display = isAuth ? 'inline-block' : 'none';
     if(isAuth){
       const email = currentUserEmail();
+      registerCurrentUser();
       if(dashUserEmail) dashUserEmail.textContent = email;
-      if(dashAvatar) dashAvatar.textContent = email.slice(0,2).toUpperCase();
+      if(dashAvatar) dashAvatar.textContent = isAdmin() ? 'AD' : email.slice(0,2).toUpperCase();
+      if(dashUserRole) dashUserRole.textContent = isAdmin() ? 'ADMIN / SUPPORT' : 'CLIENT / AVENIX';
+      applyRoleUI();
     }
   }, 800);
 
+  function applyRoleUI(){
+    const admin=isAdmin();
+    const newTicket=document.getElementById('btn-new-ticket');
+    const newProject=document.getElementById('btn-new-project');
+    if(newTicket) newTicket.style.display=admin?'none':'';
+    if(newProject) newProject.style.display=admin?'none':'';
+    const overviewTitle=document.querySelector('#panel-overview .dash-topbar h2');
+    const overviewDesc=document.querySelector('#panel-overview .dash-topbar p');
+    const overviewActions=document.querySelector('#panel-overview .dash-actions');
+    if(overviewTitle) overviewTitle.textContent=admin?'مرکز پشتیبانی Avenix':'سلام، اینجا اتاق فرمان پروژه‌هاته.';
+    if(overviewDesc) overviewDesc.textContent=admin?'پروژه‌های کاربران، تیکت‌های باز و گفتگوهای پشتیبانی را از اینجا مدیریت کن.':'پروژه‌ها، تیکت‌ها، ویرایش‌ها و چت تیم — همه در همین صفحه.';
+    if(overviewActions) overviewActions.style.display=admin?'none':'';
+  }
+  window.addEventListener('avenix-auth-change',()=>setTimeout(()=>{ applyRoleUI(); refreshAll(); },50));
+  window.addEventListener('avenix-data-sync',()=>{ if(document.body.classList.contains('is-authenticated')) refreshAll(); });
+  window.addEventListener('storage',e=>{ if(e.key && e.key.startsWith('avenix_')) refreshAll(); });
+
   // ===== PROJECTS =====
   function uid(){ return Math.random().toString(36).slice(2,9); }
+  function esc(value){ return String(value??'').replace(/[&<>\"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[ch])); }
   function nowFA(){ return new Date().toLocaleDateString('fa-IR'); }
 
   function defaultProjects(){
-    const exist = load('projects');
-    if(exist.length) return exist;
-    // seed with demo
-    const demo = [
-      {id:uid(), name:'MyPlatform - داشبورد سازمانی', type:'web', desc:'پلتفرم یکپارچه مدیریت جریان کار و تیم', budget:'+ $15K', timeline:'2-3 ماه', status:'building', progress:68, createdAt: nowFA(), updatedAt: nowFA()},
-      {id:uid(), name:'Avenix Messenger', type:'mobile', desc:'پیام‌رسان امن و سریع برای تیم‌ها', budget:'+ $8K', timeline:'۱ ماه', status:'review', progress:18, createdAt: nowFA(), updatedAt: nowFA()},
-      {id:uid(), name:'Zeero - کیف پول دیجیتال', type:'design', desc:'طراحی تجربه مالی جدید', budget:'توافقی', timeline:'3-۶ ماه', status:'delivered', progress:100, createdAt: nowFA(), updatedAt: nowFA()}
-    ];
-    save('projects', demo);
-    return demo;
+    // هیچ پروژه‌ی نمایشی ساخته نمی‌شود؛ هر حساب از صفر شروع می‌کند.
+    return load('projects');
   }
+  function removeLegacyDemoProjects(){
+    if(isAdmin() || currentUserEmail()==='guest') return;
+    const legacyNames=new Set(['MyPlatform - داشبورد سازمانی','Avenix Messenger','Zeero - کیف پول دیجیتال']);
+    const projects=load('projects');
+    const clean=projects.filter(p=>!legacyNames.has(p.name));
+    if(clean.length!==projects.length) save('projects',clean);
+  }
+
 
   function renderProjects(){
     const grid = document.getElementById('projects-grid');
     const overviewGrid = document.getElementById('overview-projects');
-    const projects = defaultProjects();
+    const projects = isAdmin() ? allSupportRecords('projects') : defaultProjects();
     const html = projects.map(p=>{
       const badgeClass = p.status;
       const badgeText = {building:'در حال ساخت', review:'در بررسی', delivered:'تحویل شده', paused:'متوقف'}[p.status] || p.status;
-      return `<div class="project-card" data-id="${p.id}">
-        <div class="project-card-top"><h4 title="${p.name}">${p.name}</h4><span class="project-badge ${badgeClass}">${badgeText}</span></div>
-        <p>${p.desc||''}</p>
-        <div class="project-meta"><span>${p.type.toUpperCase()} / ${p.budget}</span><span>${p.progress}%</span></div>
-        <div class="project-progress"><i style="width:${p.progress}%"></i></div>
-        <div class="project-meta"><span>ایجاد: ${p.createdAt}</span><span>بروزرسانی: ${p.updatedAt}</span></div>
-        <div class="project-card-foot">
-          <button data-action="edit" data-id="${p.id}">درخواست ویرایش</button>
-          <button data-action="ticket" data-id="${p.id}">تیکت</button>
-          <button data-action="progress" data-id="${p.id}">＋ پیشرفت</button>
-        </div>
+      const owner = p._owner || currentUserEmail();
+      const adminOwner = isAdmin() ? `<span class="admin-owner">${esc(owner)}</span>` : '';
+      const actions = isAdmin()
+        ? `<button data-action="progress" data-id="${esc(p.id)}" data-owner="${esc(owner)}">＋ پیشرفت</button>`
+        : `<button data-action="edit" data-id="${esc(p.id)}">درخواست ویرایش</button><button data-action="ticket" data-id="${esc(p.id)}">تیکت</button>`;
+      return `<div class="project-card" data-id="${esc(p.id)}">
+        <div class="project-card-top"><div><h4 title="${esc(p.name)}">${esc(p.name)}</h4>${adminOwner}</div><span class="project-badge ${esc(badgeClass)}">${esc(badgeText)}</span></div>
+        <p>${esc(p.desc||'')}</p>
+        <div class="project-meta"><span>${esc((p.type||'').toUpperCase())} / ${esc(p.budget||'')}</span><span>${Number(p.progress)||0}%</span></div>
+        <div class="project-progress"><i style="width:${Math.max(0,Math.min(100,Number(p.progress)||0))}%"></i></div>
+        <div class="project-meta"><span>ایجاد: ${esc(p.createdAt)}</span><span>بروزرسانی: ${esc(p.updatedAt)}</span></div>
+        <div class="project-card-foot">${actions}</div>
       </div>`;
     }).join('');
-    if(grid) grid.innerHTML = html || `<div class="empty-state"><b>هنوز پروژه‌ای نداری</b><span>اولین سفارشت رو ثبت کن.</span></div>`;
+    if(grid) grid.innerHTML = html || `<div class="empty-state"><b>هنوز پروژه‌ای وجود ندارد</b><span>${isAdmin()?'پس از ساخت پروژه توسط کاربران، اینجا نمایش داده می‌شود.':'اولین سفارشت را ثبت کن تا اینجا نمایش داده شود.'}</span></div>`;
     if(overviewGrid) overviewGrid.innerHTML = projects.slice(0,3).map(p=>{
       const badgeText = {building:'ساخت', review:'بررسی', delivered:'تحویل', paused:'پاز'}[p.status] || p.status;
-      return `<div class="project-card"><div class="project-card-top"><h4>${p.name}</h4><span class="project-badge ${p.status}">${badgeText}</span></div><div class="project-progress"><i style="width:${p.progress}%"></i></div><div class="project-meta"><span>${p.progress}% تکمیل</span><span>${p.createdAt}</span></div></div>`;
-    }).join('');
+      const owner=isAdmin()?`<span class="admin-owner">${esc(p._owner||'')}</span>`:'';
+      return `<div class="project-card"><div class="project-card-top"><div><h4>${esc(p.name)}</h4>${owner}</div><span class="project-badge ${esc(p.status)}">${esc(badgeText)}</span></div><div class="project-progress"><i style="width:${Math.max(0,Math.min(100,Number(p.progress)||0))}%"></i></div><div class="project-meta"><span>${Number(p.progress)||0}% تکمیل</span><span>${esc(p.createdAt)}</span></div></div>`;
+    }).join('') || `<div class="empty-state"><b>پروژه‌ها صفر است</b><span>${isAdmin()?'هنوز کاربری پروژه‌ای ثبت نکرده است.':'با دکمه «پروژه جدید» اولین پروژه را بساز.'}</span></div>`;
 
-    // bind actions
     grid && grid.querySelectorAll('button[data-action]').forEach(btn=>{
       btn.onclick = ()=>{
         const id = btn.dataset.id;
         const act = btn.dataset.action;
         if(act==='edit'){ switchPanel('edits'); document.getElementById('edit-project-select').value=id; }
         if(act==='ticket'){ openTicketModal(id); }
-        if(act==='progress'){ bumpProgress(id); }
+        if(act==='progress'){ bumpProgress(id,btn.dataset.owner); }
       };
     });
     updateCounts();
@@ -979,18 +1291,20 @@ if(!isConfigured){
     populateSelects();
   }
 
-  function bumpProgress(id){
-    const projects = load('projects');
+  function bumpProgress(id,ownerEmail){
+    const owner=ownerEmail||currentUserEmail();
+    const projects = loadFor(owner,'projects');
     const p = projects.find(x=>x.id===id);
     if(!p) return;
-    p.progress = Math.min(100, p.progress + 12);
+    p.progress = Math.min(100, (Number(p.progress)||0) + 12);
     if(p.progress===100) p.status='delivered';
-    else if(p.progress>20) p.status='building';
+    else if(p.progress>0) p.status='building';
     p.updatedAt = nowFA();
-    save('projects', projects);
+    saveFor(owner,'projects',projects);
     renderProjects();
     renderOverview();
   }
+
 
   function createProject(data){
     const projects = load('projects');
@@ -1002,7 +1316,7 @@ if(!isConfigured){
       budget: data.budget||'توافقی',
       timeline: data.timeline||'نامشخص',
       status: data.status||'review',
-      progress: data.status==='delivered'?100: data.status==='building'? 24 : 8,
+      progress: data.status==='delivered'?100: data.status==='building'? 10 : 0,
       createdAt: nowFA(),
       updatedAt: nowFA()
     });
@@ -1044,105 +1358,109 @@ if(!isConfigured){
   }
 
   // ===== TICKETS =====
+  function visibleTickets(){ return isAdmin()?allSupportRecords('tickets'):load('tickets'); }
   function renderTickets(){
-    const tickets = load('tickets');
+    const tickets = visibleTickets();
     const listEl = document.getElementById('tickets-items');
     const countHead = document.getElementById('tickets-count-head');
     if(countHead) countHead.textContent = tickets.length + ' TICKETS';
     if(!listEl) return;
     if(!tickets.length){
-      listEl.innerHTML = `<div class="empty-state" style="border:0;padding:24px"><b>تیکتی نیست</b><span style="font-size:11px">اولین تیکت را بساز.</span></div>`;
+      listEl.innerHTML = `<div class="empty-state" style="border:0;padding:24px"><b>تیکتی نیست</b><span style="font-size:11px">${isAdmin()?'هنوز تیکتی از کاربران دریافت نشده است.':'اولین تیکت را بساز.'}</span></div>`;
+      document.getElementById('ticket-empty').style.display='block';
+      document.getElementById('ticket-active').style.display='none';
+      activeTicketId=null;
+      activeTicketOwner=null;
+      updateCounts();
       return;
     }
-    // sort by newest
-    const sorted = [...tickets].sort((a,b)=> b.createdAt.localeCompare(a.createdAt));
+    const sorted=[...tickets].sort((a,b)=>(b.createdTime||0)-(a.createdTime||0));
     listEl.innerHTML = sorted.map(t=>{
-      const proj = t.projectName ? ` • ${t.projectName}` : '';
-      return `<div class="ticket-item" data-id="${t.id}"><b>${t.title}</b><small>${t.status.toUpperCase()} • ${t.priority}${proj} • ${t.createdAt}</small></div>`;
+      const proj=t.projectName?` • ${esc(t.projectName)}`:'';
+      const owner=t._owner||currentUserEmail();
+      const ownerLine=isAdmin()?`<span class="admin-owner">${esc(owner)}</span>`:'';
+      return `<div class="ticket-item" data-id="${esc(t.id)}" data-owner="${esc(owner)}"><b>${esc(t.title)}</b>${ownerLine}<small>${esc((t.status||'open').toUpperCase())} • ${esc(t.priority)}${proj} • ${esc(t.createdAt)}</small></div>`;
     }).join('');
-    // bind click
     listEl.querySelectorAll('.ticket-item').forEach(el=>{
-      el.addEventListener('click', ()=>openTicketDetail(el.dataset.id));
+      el.addEventListener('click',()=>openTicketDetail(el.dataset.id,el.dataset.owner));
     });
-    // open first if none active
-    if(!document.querySelector('.ticket-item.active') && sorted[0]){
-      openTicketDetail(sorted[0].id);
-    }
+    const stillExists=sorted.some(t=>t.id===activeTicketId && (t._owner||currentUserEmail())===activeTicketOwner);
+    if(stillExists) openTicketDetail(activeTicketId,activeTicketOwner);
+    else openTicketDetail(sorted[0].id,sorted[0]._owner||currentUserEmail());
     updateCounts();
   }
 
   let activeTicketId = null;
-  function openTicketDetail(id){
-    const tickets = load('tickets');
-    const t = tickets.find(x=>x.id===id);
+  let activeTicketOwner = null;
+  function openTicketDetail(id,ownerEmail){
+    const owner=ownerEmail||currentUserEmail();
+    const tickets=loadFor(owner,'tickets');
+    const t=tickets.find(x=>x.id===id);
     if(!t) return;
     activeTicketId=id;
-    document.querySelectorAll('.ticket-item').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+    activeTicketOwner=owner;
+    document.querySelectorAll('.ticket-item').forEach(el=>el.classList.toggle('active',el.dataset.id===id && el.dataset.owner===owner));
     document.getElementById('ticket-empty').style.display='none';
     const activeEl=document.getElementById('ticket-active');
     activeEl.style.display='flex';
-    document.getElementById('ticket-title').textContent = t.title;
-    document.getElementById('ticket-meta').textContent = `${t.projectName||'عمومی'} • ${t.type||'سوال'} • ${t.priority} • ${t.createdAt}`;
-    document.getElementById('ticket-status').value = t.status;
+    document.getElementById('ticket-title').textContent=t.title;
+    document.getElementById('ticket-meta').textContent=`${isAdmin()?owner+' • ':''}${t.projectName||'عمومی'} • ${t.type||'سوال'} • ${t.priority} • ${t.createdAt}`;
+    const statusEl=document.getElementById('ticket-status');
+    statusEl.value=t.status||'open';
+    statusEl.disabled=!isAdmin();
+    statusEl.style.opacity=isAdmin()?'1':'.65';
+    const input=document.getElementById('ticket-reply-input');
+    if(input) input.placeholder=isAdmin()?`پاسخ ادمین به ${owner}...`:'پیام تکمیلی خود را بنویسید...';
     const msgsEl=document.getElementById('ticket-msgs');
-    msgsEl.innerHTML = (t.messages||[]).map(m=>{
-      return `<div class="msg ${m.from==='user'?'user':'team'}">${m.text}<small>${m.at} • ${m.from==='user'?'شما':'تیم Avenix'}</small></div>`;
+    msgsEl.innerHTML=(t.messages||[]).map(m=>{
+      const author=m.from==='user'?(isAdmin()?owner:'شما'):`پشتیبانی / ${ADMIN_EMAIL}`;
+      return `<div class="msg ${m.from==='user'?'user':'team'}">${esc(m.text)}<small>${esc(m.at)} • ${esc(author)}</small></div>`;
     }).join('');
-    msgsEl.scrollTop = msgsEl.scrollHeight;
+    msgsEl.scrollTop=msgsEl.scrollHeight;
   }
 
-  // ticket status change
-  const ticketStatusSel = document.getElementById('ticket-status');
+  const ticketStatusSel=document.getElementById('ticket-status');
   if(ticketStatusSel){
-    ticketStatusSel.addEventListener('change', ()=>{
-      if(!activeTicketId) return;
-      const tickets=load('tickets');
+    ticketStatusSel.addEventListener('change',()=>{
+      if(!activeTicketId || !isAdmin()) return;
+      const tickets=loadFor(activeTicketOwner,'tickets');
       const t=tickets.find(x=>x.id===activeTicketId);
-      if(t){ t.status=ticketStatusSel.value; save('tickets', tickets); renderTickets(); }
+      if(t){
+        t.status=ticketStatusSel.value;
+        t.updatedTime=Date.now();
+        saveFor(activeTicketOwner,'tickets',tickets);
+        renderTickets();
+      }
     });
   }
 
-  // ticket reply
-  const ticketReplyInput = document.getElementById('ticket-reply-input');
-  const ticketReplyBtn = document.getElementById('ticket-reply-btn');
+  const ticketReplyInput=document.getElementById('ticket-reply-input');
+  const ticketReplyBtn=document.getElementById('ticket-reply-btn');
   function sendTicketReply(){
     if(!activeTicketId) return;
-    const text = ticketReplyInput.value.trim();
+    const text=ticketReplyInput.value.trim();
     if(!text) return;
-    const tickets=load('tickets');
+    const owner=isAdmin()?activeTicketOwner:currentUserEmail();
+    const tickets=loadFor(owner,'tickets');
     const t=tickets.find(x=>x.id===activeTicketId);
     if(!t) return;
-    t.messages = t.messages||[];
-    t.messages.push({from:'user', text, at: new Date().toLocaleString('fa-IR')});
-    save('tickets', tickets);
+    t.messages=t.messages||[];
+    t.messages.push({from:isAdmin()?'team':'user',text,at:new Date().toLocaleString('fa-IR')});
+    t.status=isAdmin()?'answered':'open';
+    t.updatedTime=Date.now();
+    saveFor(owner,'tickets',tickets);
     ticketReplyInput.value='';
-    openTicketDetail(activeTicketId);
-    // simulate team reply after 1.8s
-    setTimeout(()=>{
-      t.messages.push({from:'team', text: autoReplyTicket(text), at: new Date().toLocaleString('fa-IR')});
-      if(t.status==='open') t.status='answered';
-      save('tickets', tickets);
-      openTicketDetail(activeTicketId);
-    }, 1800);
+    renderTickets();
+    openTicketDetail(activeTicketId,owner);
   }
-  if(ticketReplyBtn) ticketReplyBtn.addEventListener('click', sendTicketReply);
-  if(ticketReplyInput) ticketReplyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') sendTicketReply(); });
+  if(ticketReplyBtn) ticketReplyBtn.addEventListener('click',sendTicketReply);
+  if(ticketReplyInput) ticketReplyInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); sendTicketReply(); } });
 
-  function autoReplyTicket(userText){
-    const replies=[
-      'دریافت شد! تیم بررسی می‌کند و تا ۲ ساعت آینده پاسخ دقیق می‌دهد.',
-      'ممنون از توضیح کاملت. این مورد را به بورد توسعه اضافه کردیم.',
-      'پیام شما ثبت شد. اگر فایل یا اسکرین‌شات داری، در چت بفرست تا سریع‌تر پیش بریم.',
-      'متوجه شدیم. این درخواست در اسپرینت جاری لحاظ می‌شود.'
-    ];
-    return replies[Math.floor(Math.random()*replies.length)];
-  }
-
-  // New ticket modal
-  const modalTicket = document.getElementById('modal-ticket');
-  const btnNewTicket = document.getElementById('btn-new-ticket');
-  const formTicketModal = document.getElementById('form-ticket-modal');
+  const modalTicket=document.getElementById('modal-ticket');
+  const btnNewTicket=document.getElementById('btn-new-ticket');
+  const formTicketModal=document.getElementById('form-ticket-modal');
   function openTicketModal(preselectedProjectId){
+    if(isAdmin()) return;
     modalTicket.classList.add('open');
     populateSelects();
     if(preselectedProjectId){
@@ -1151,41 +1469,30 @@ if(!isConfigured){
     }
   }
   function closeTicketModal(){ modalTicket.classList.remove('open'); }
-  if(btnNewTicket) btnNewTicket.addEventListener('click', ()=>openTicketModal());
-  modalTicket && modalTicket.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', closeTicketModal));
-  modalTicket && modalTicket.addEventListener('click', e=>{ if(e.target===modalTicket) closeTicketModal(); });
+  if(btnNewTicket) btnNewTicket.addEventListener('click',()=>openTicketModal());
+  modalTicket && modalTicket.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeTicketModal));
+  modalTicket && modalTicket.addEventListener('click',e=>{ if(e.target===modalTicket) closeTicketModal(); });
 
   if(formTicketModal){
-    formTicketModal.addEventListener('submit', e=>{
+    formTicketModal.addEventListener('submit',e=>{
       e.preventDefault();
+      if(isAdmin()) return;
       const fd=new FormData(formTicketModal);
       const projectId=fd.get('projectId');
       const projects=load('projects');
       const proj=projects.find(p=>p.id===projectId);
       const tickets=load('tickets');
       tickets.unshift({
-        id: uid(),
-        title: fd.get('title'),
-        projectId: projectId||null,
-        projectName: proj?proj.name:'عمومی',
-        type: 'request',
-        priority: fd.get('priority'),
-        status: 'open',
-        createdAt: nowFA(),
-        messages: [{from:'user', text: fd.get('text'), at: new Date().toLocaleString('fa-IR')}]
+        id:uid(),title:fd.get('title'),projectId:projectId||null,
+        projectName:proj?proj.name:'عمومی',type:'request',priority:fd.get('priority'),status:'open',
+        createdAt:nowFA(),createdTime:Date.now(),updatedTime:Date.now(),
+        messages:[{from:'user',text:fd.get('text'),at:new Date().toLocaleString('fa-IR')}]
       });
-      save('tickets', tickets);
+      save('tickets',tickets);
       closeTicketModal();
       formTicketModal.reset();
       switchPanel('tickets');
       renderTickets();
-      // simulate team reply
-      setTimeout(()=>{
-        const t=tickets[0];
-        t.messages.push({from:'team', text:'تیکت شما ثبت شد. تیم پشتیبانی در حال بررسی است و به زودی پاسخ می‌دهد.', at: new Date().toLocaleString('fa-IR')});
-        save('tickets', tickets);
-        renderTickets();
-      }, 1500);
     });
   }
 
@@ -1221,7 +1528,8 @@ if(!isConfigured){
         text: fd.get('text'),
         priority: fd.get('priority'),
         status: 'در حال بررسی',
-        createdAt: nowFA()
+        createdAt: nowFA(),
+        createdTime: Date.now()
       };
       edits.unshift(newEdit);
       save('edits', edits);
@@ -1236,6 +1544,7 @@ if(!isConfigured){
         priority: fd.get('priority'),
         status:'open',
         createdAt: nowFA(),
+        createdTime: Date.now(),
         messages:[{from:'user', text: fd.get('text'), at: new Date().toLocaleString('fa-IR')}]
       });
       save('tickets', tickets);
@@ -1257,79 +1566,96 @@ if(!isConfigured){
   }
 
   // ===== CHAT =====
-  function renderChat(){
-    const msgs = load('chat');
-    const container=document.getElementById('chat-messages');
-    if(!container) return;
-    if(!msgs.length){
-      // seed greeting
-      const greeting = [
-        {from:'team', text:'سلام! من از تیم Avenix هستم. چطور می‌تونم کمک کنم؟ پروژه‌هات رو دیدی؟', at: new Date().toLocaleString('fa-IR')},
-        {from:'team', text:'اینجا می‌تونی هر سوالی داری بپرسی، فایل بفرستی یا درخواست جلسه بدی.', at: new Date().toLocaleString('fa-IR')}
-      ];
-      save('chat', greeting);
-      return renderChat();
+  let activeChatOwner=null;
+  function renderAdminChatUsers(){
+    const listEl=document.getElementById('admin-chat-users');
+    if(!listEl) return;
+    const users=supportUsers();
+    if(!users.length){
+      activeChatOwner=null;
+      listEl.innerHTML='<div class="admin-chat-users-head">USER CONVERSATIONS / 0</div><div class="empty-state" style="border:0;padding:24px 12px"><b>گفتگویی نیست</b><span style="font-size:10px">پس از ورود کاربران، گفتگوها اینجا می‌آیند.</span></div>';
+      return;
     }
-    container.innerHTML = msgs.map(m=>{
-      return `<div class="msg ${m.from}">${m.text}<small>${m.at} • ${m.from==='user'?'شما':'تیم'}</small></div>`;
+    if(!activeChatOwner || !users.includes(activeChatOwner)) activeChatOwner=users[0];
+    listEl.innerHTML=`<div class="admin-chat-users-head">USER CONVERSATIONS / ${users.length}</div>`+users.map(email=>{
+      const msgs=loadFor(email,'chat');
+      const last=msgs[msgs.length-1];
+      return `<button class="admin-chat-user ${email===activeChatOwner?'active':''}" data-email="${esc(email)}"><b>${esc(email)}</b><small>${last?esc(last.text):'هنوز پیامی ارسال نشده'}</small></button>`;
     }).join('');
-    container.scrollTop = container.scrollHeight;
-    // show dot if unread team messages? simplified
+    listEl.querySelectorAll('.admin-chat-user').forEach(btn=>btn.addEventListener('click',()=>{
+      activeChatOwner=btn.dataset.email;
+      renderChat();
+    }));
+  }
+
+  function renderChat(){
+    const admin=isAdmin();
+    const layout=document.getElementById('chat-layout');
+    const container=document.getElementById('chat-messages');
+    const input=document.getElementById('chat-input');
+    const send=document.getElementById('chat-send');
+    const title=document.getElementById('chat-head-title');
+    const status=document.getElementById('chat-head-status');
+    if(!container || !layout) return;
+    layout.classList.toggle('admin-mode',admin);
+    if(admin) renderAdminChatUsers();
+    const owner=admin?activeChatOwner:currentUserEmail();
+    const msgs=owner?loadFor(owner,'chat'):[];
+    if(title) title.textContent=admin?(owner?`USER / ${owner}`:'SUPPORT INBOX'):`${ADMIN_EMAIL} / LIVE`;
+    if(status) status.innerHTML=admin?'<i></i> ADMIN • پاسخ مستقیم به کاربر':'<i></i> ONLINE • پاسخگویی توسط ادمین';
+    if(input){
+      input.disabled=admin&&!owner;
+      input.placeholder=admin?(owner?`پاسخ ادمین به ${owner}...`:'کاربری برای پاسخ انتخاب نشده'):'پیام خود را برای ادمین بنویسید...';
+    }
+    if(send) send.disabled=admin&&!owner;
+    if(!msgs.length){
+      container.innerHTML=`<div class="empty-state" style="align-self:center"><b>${admin?'هنوز پیامی در این گفتگو نیست':'گفتگو را شروع کن'}</b><span style="font-size:11px">${admin?'پس از پیام کاربر، از کادر پایین مستقیم پاسخ بده.':`پیام شما مستقیماً برای ادمین ${ADMIN_EMAIL} ارسال می‌شود.`}</span></div>`;
+      return;
+    }
+    container.innerHTML=msgs.map(m=>{
+      const author=m.from==='user'?(admin?owner:'شما'):`پشتیبانی / ${ADMIN_EMAIL}`;
+      return `<div class="msg ${m.from==='user'?'user':'team'}">${esc(m.text)}<small>${esc(m.at)} • ${esc(author)}</small></div>`;
+    }).join('');
+    container.scrollTop=container.scrollHeight;
+    const dot=document.getElementById('chat-dot');
+    if(dot && document.getElementById('panel-chat').classList.contains('active')) dot.style.display='none';
   }
 
   function sendChat(){
     const input=document.getElementById('chat-input');
     const text=input.value.trim();
     if(!text) return;
-    const msgs=load('chat');
-    msgs.push({id:uid(), from:'user', text, at: new Date().toLocaleString('fa-IR')});
-    save('chat', msgs);
+    const owner=isAdmin()?activeChatOwner:currentUserEmail();
+    if(!owner) return;
+    const msgs=loadFor(owner,'chat');
+    msgs.push({id:uid(),from:isAdmin()?'team':'user',text,at:new Date().toLocaleString('fa-IR'),createdTime:Date.now()});
+    saveFor(owner,'chat',msgs);
     input.value='';
     renderChat();
-    // simulate typing
-    const dot=document.getElementById('chat-dot');
-    if(dot) dot.style.display='inline-block';
-    setTimeout(()=>{
-      const replies=[
-        'پیامتو گرفتم! بررسی می‌کنم و راه‌حل پیشنهاد می‌دم.',
-        'عالیه، این نکته رو به تسک‌های پروژه اضافه کردم.',
-        'می‌خوای یک جلسه ۱۵ دقیقه‌ای ست کنیم تا دقیق‌تر صحبت کنیم؟',
-        'این مورد را به فرانت‌اند تیم ارجاع دادم، تا امشب آپدیت می‌دم.',
-        'ممنون! فایل یا لینک داری بفرست تا دقیق‌تر ببینم.'
-      ];
-      msgs.push({id:uid(), from:'team', text: replies[Math.floor(Math.random()*replies.length)], at: new Date().toLocaleString('fa-IR')});
-      save('chat', msgs);
-      if(dot) dot.style.display='none';
-      if(document.getElementById('panel-chat').classList.contains('active')){
-        renderChat();
-      } else {
-        // notify
-        if(dot) dot.style.display='inline-block';
-      }
-      // also update stats
-      updateCounts();
-    }, 1400 + Math.random()*1000);
   }
   const chatInput=document.getElementById('chat-input');
   const chatSend=document.getElementById('chat-send');
-  if(chatSend) chatSend.addEventListener('click', sendChat);
-  if(chatInput) chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') sendChat(); });
+  if(chatSend) chatSend.addEventListener('click',sendChat);
+  if(chatInput) chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); sendChat(); } });
 
   // ===== STATS & COUNTS =====
+  function roleRecords(base){ return isAdmin()?allSupportRecords(base):load(base); }
   function updateCounts(){
-    const projects=load('projects');
-    const tickets=load('tickets');
-    const edits=load('edits');
+    const projects=roleRecords('projects');
+    const tickets=roleRecords('tickets');
     const cP=document.getElementById('count-projects');
     const cT=document.getElementById('count-tickets');
     if(cP) cP.textContent=projects.length;
     if(cT) cT.textContent=tickets.filter(t=>t.status==='open').length;
+    const openCount=tickets.filter(t=>t.status==='open').length;
+    const ping=document.getElementById('dash-notif-ping');
+    if(ping) ping.classList.toggle('show',openCount>0);
   }
   function updateStats(){
-    const projects=load('projects');
-    const tickets=load('tickets');
-    const edits=load('edits');
-    const avg = projects.length? Math.round(projects.reduce((s,p)=>s+p.progress,0)/projects.length) : 0;
+    const projects=roleRecords('projects');
+    const tickets=roleRecords('tickets');
+    const edits=roleRecords('edits');
+    const avg=projects.length?Math.round(projects.reduce((sum,p)=>sum+(Number(p.progress)||0),0)/projects.length):0;
     const elP=document.getElementById('stat-projects');
     const elT=document.getElementById('stat-tickets');
     const elE=document.getElementById('stat-edits');
@@ -1342,17 +1668,64 @@ if(!isConfigured){
     if(elT) elT.textContent=tickets.filter(t=>t.status==='open').length;
     if(elE) elE.textContent=edits.length;
     if(elAv) elAv.textContent=avg+'%';
-    if(bP) bP.style.width=Math.min(100, projects.length*18)+'%';
-    if(bT) bT.style.width=Math.min(100, tickets.length*22)+'%';
-    if(bE) bE.style.width=Math.min(100, edits.length*28)+'%';
+    if(bP) bP.style.width=Math.min(100,projects.length*18)+'%';
+    if(bT) bT.style.width=Math.min(100,tickets.length*22)+'%';
+    if(bE) bE.style.width=Math.min(100,edits.length*28)+'%';
     if(bAv) bAv.style.width=avg+'%';
+    const trP=document.getElementById('stat-projects-trend');
+    const trT=document.getElementById('stat-tickets-trend');
+    const trE=document.getElementById('stat-edits-trend');
+    const trAv=document.getElementById('stat-progress-trend');
+    if(trP) trP.textContent=projects.length?'+'+projects.length:'—';
+    if(trT){ const openT=tickets.filter(t=>t.status==='open').length; trT.textContent=openT?('▲ '+openT):'—'; trT.className='dash-stat-trend'+(openT?'':' down'); }
+    if(trE) trE.textContent=edits.length?('+'+edits.length):'—';
+    if(trAv){ trAv.textContent=avg?((avg>=50?'▲ ':'▼ ')+avg+'%'):'—'; trAv.className='dash-stat-trend'+(avg>=50?'':' down'); }
   }
+
+  // ===== OVERVIEW WIDGETS: chart + activity feed =====
+  function renderChart(){
+    const chartEl=document.getElementById('dash-chart');
+    const labelsEl=document.getElementById('dash-chart-labels');
+    const totalEl=document.getElementById('chart-total');
+    if(!chartEl) return;
+    const projects=roleRecords('projects');
+    const days=['شنبه','یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه'];
+    const base=projects.length?Math.round(projects.reduce((sum,p)=>sum+(Number(p.progress)||0),0)/projects.length):0;
+    const values=projects.length?days.map((_,i)=>Math.max(0,Math.min(100,base-18+i*6+(i%2===0?4:-3)))):days.map(()=>0);
+    const max=Math.max(...values,1);
+    chartEl.innerHTML=values.map(v=>`<i style="height:${v?Math.max(4,Math.round(v/max*100)):0}%" data-v="${v}%"></i>`).join('');
+    labelsEl.innerHTML=days.map(d=>`<span>${d.slice(0,3)}</span>`).join('');
+    if(totalEl) totalEl.textContent=base+'% AVG';
+  }
+
+  function renderActivity(){
+    const activityEl=document.getElementById('dash-activity');
+    if(!activityEl) return;
+    const projects=roleRecords('projects');
+    const tickets=roleRecords('tickets');
+    const edits=roleRecords('edits');
+    const events=[];
+    projects.forEach(p=>events.push({t:p.updatedAt,text:`پروژه «${p.name}» به‌روزرسانی شد (${Number(p.progress)||0}%)${isAdmin()&&p._owner?' / '+p._owner:''}`}));
+    tickets.slice(0,4).forEach(t=>events.push({t:t.createdAt,text:`تیکت جدید: ${t.title}${isAdmin()&&t._owner?' / '+t._owner:''}`}));
+    edits.slice(0,4).forEach(e=>events.push({t:e.createdAt,text:`درخواست ویرایش برای ${e.projectName}`}));
+    if(!events.length){
+      activityEl.innerHTML='<div class="dash-activity-item"><div class="dash-activity-dot"></div><p>هنوز فعالیتی ثبت نشده است.</p></div>';
+      return;
+    }
+    activityEl.innerHTML=events.slice(0,6).map(ev=>`<div class="dash-activity-item"><div class="dash-activity-dot"></div><div><p>${esc(ev.text)}</p><small>${esc(ev.t||'')}</small></div></div>`).join('');
+  }
+
   function renderOverview(){
     renderProjects();
     updateStats();
     updateCounts();
+    renderChart();
+    renderActivity();
   }
   function refreshAll(){
+    if(document.body.classList.contains('is-authenticated')) registerCurrentUser();
+    applyRoleUI();
+    removeLegacyDemoProjects();
     defaultProjects();
     renderOverview();
     renderTickets();
@@ -1369,4 +1742,161 @@ if(!isConfigured){
 })();
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1fcb5c6a8b77fa4',t:'MTc4NDgzMDk0MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+<!-- VPN Warning Modal - Matches Site Design -->
+<div id="vpn-warning-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(16,17,18,0.78); backdrop-filter:blur(16px); align-items:center; justify-content:center; padding:20px; font-family:Vazirmatn, Tahoma, sans-serif;">
+  <div style="background:#f7f8f7; color:#101112; max-width:460px; width:100%; border-radius:16px; box-shadow:0 30px 90px rgba(0,0,0,0.18); overflow:hidden; border:1px solid #d9dcdc;">
+    
+    <!-- Header -->
+    <div style="padding:30px 30px 22px; text-align:center; border-bottom:1px solid #d9dcdc;">
+      <div style="margin:0 auto 16px; width:56px; height:56px; background:#101112; border-radius:9999px; display:flex; align-items:center; justify-content:center;">
+        <!-- Shield Icon (matching site style) -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#f7f8f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <h3 style="margin:0 0 8px; font-size:20px; font-weight:600; letter-spacing:-0.3px;">استفاده از فیلترشکن الزامی است</h3>
+      <p style="margin:0; font-size:14.5px; line-height:1.75; color:#555;">
+        برای ورود، ثبت‌نام و استفاده از داشبورد، لطفاً از فیلترشکن (VPN / Proxy) استفاده کنید.
+      </p>
+    </div>
+
+    <!-- Status -->
+    <div style="padding:24px 30px 28px;">
+      <div id="vpn-status-box" style="background:#fff; border:1px solid #d9dcdc; border-radius:12px; padding:16px 18px; display:flex; align-items:center; gap:14px; transition:all .3s ease;">
+        <div id="vpn-status-icon" style="width:38px; height:38px; border-radius:9999px; background:#e5e7e6; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:18px; transition:all .3s;">
+          ⋯
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div id="vpn-status-text" style="font-size:15px; font-weight:600; color:#101112;">در حال بررسی وضعیت...</div>
+          <div id="vpn-status-sub" style="font-size:12.5px; color:#666; margin-top:2px;">لطفاً چند لحظه صبر کنید</div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div style="display:flex; gap:10px; margin-top:20px;">
+        <button onclick="checkVPNStatusAdvanced()" 
+                style="flex:1; background:#101112; color:#f7f8f7; border:0; padding:13px 16px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:Vazirmatn;">
+          بررسی دقیق وضعیت
+        </button>
+        <button onclick="closeVPNWarning()" 
+                style="flex:1; background:#f7f8f7; color:#101112; border:1px solid #d9dcdc; padding:13px 16px; border-radius:10px; font-size:14px; font-weight:600; cursor:pointer; font-family:Vazirmatn;">
+          متوجه شدم
+        </button>
+      </div>
+
+      <div style="margin-top:18px; font-size:12px; color:#777; text-align:center; line-height:1.6;">
+        بدون فیلترشکن، ورود به داشبورد و ثبت‌نام ممکن نیست.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ==================== ADVANCED VPN DETECTION ====================
+  async function checkVPNStatusAdvanced() {
+    const icon = document.getElementById('vpn-status-icon');
+    const text = document.getElementById('vpn-status-text');
+    const sub = document.getElementById('vpn-status-sub');
+    const box = document.getElementById('vpn-status-box');
+
+    if (!icon || !text || !sub || !box) return;
+
+    icon.style.background = '#e5e7e6';
+    icon.innerHTML = '⋯';
+    text.textContent = 'در حال بررسی دقیق...';
+    text.style.color = '#101112';
+    sub.textContent = 'چند منبع مختلف در حال چک شدن هستند';
+    box.style.borderColor = '#d9dcdc';
+
+    try {
+      const [ipapi, ipinfo] = await Promise.all([
+        fetch('https://ipapi.co/json/').then(r => r.json()).catch(() => null),
+        fetch('https://ipinfo.io/json').then(r => r.json()).catch(() => null)
+      ]);
+
+      let isVPN = false;
+      let country = 'نامشخص';
+      let org = '';
+      let ip = '';
+
+      if (ipapi) {
+        ip = ipapi.ip;
+        country = ipapi.country_name || ipapi.country || 'نامشخص';
+        org = ipapi.org || '';
+        if (ipapi.country_code !== 'IR') isVPN = true;
+      }
+      if (ipinfo) {
+        ip = ipinfo.ip || ip;
+        country = ipinfo.country || country;
+        org = ipinfo.org || org;
+        if (ipinfo.country && ipinfo.country !== 'IR') isVPN = true;
+      }
+
+      const isChromeVPN = (org && /vpn|proxy|hosting|cloudflare|datacenter|akamai|fastly|amazon|google/i.test(org));
+
+      if (isVPN || isChromeVPN) {
+        icon.style.background = '#16a34a';
+        icon.innerHTML = '✓';
+        text.textContent = 'فیلترشکن فعال است';
+        text.style.color = '#166534';
+        sub.textContent = `IP: ${ip} • ${country}`;
+        box.style.borderColor = '#bbf7d0';
+      } else {
+        icon.style.background = '#dc2626';
+        icon.innerHTML = '✕';
+        text.textContent = 'فیلترشکن شناسایی نشد';
+        text.style.color = '#991b1b';
+        sub.textContent = `IP: ${ip} • ${country} • VPN را روشن کنید`;
+        box.style.borderColor = '#fecaca';
+      }
+    } catch (e) {
+      icon.style.background = '#f59e0b';
+      icon.innerHTML = '?';
+      text.textContent = 'بررسی ممکن نشد';
+      text.style.color = '#92400e';
+      sub.textContent = 'لطفاً VPN را روشن کرده و دوباره تلاش کنید';
+      box.style.borderColor = '#fed7aa';
+    }
+  }
+
+  function showVPNWarning() {
+    const modal = document.getElementById('vpn-warning-modal');
+    if (!modal) return;
+    modal.style.display = 'flex';
+    setTimeout(() => checkVPNStatusAdvanced(), 700);
+  }
+
+  function closeVPNWarning() {
+    const modal = document.getElementById('vpn-warning-modal');
+    if (modal) modal.style.display = 'none';
+  }
+
+  function initVPNWarning() {
+    // Show every refresh (no sessionStorage)
+    setTimeout(() => {
+      const modal = document.getElementById('vpn-warning-modal');
+      if (modal && !document.body.classList.contains('is-authenticated')) {
+        showVPNWarning();
+      }
+    }, 4200);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initVPNWarning);
+  } else {
+    initVPNWarning();
+  }
+
+  // Also show when clicking login/dashboard buttons
+  document.addEventListener('click', function(e) {
+    const target = e.target;
+    if (target.id === 'auth-open' || target.id === 'dash-open') {
+      const modal = document.getElementById('vpn-warning-modal');
+      if (modal && modal.style.display === 'none') {
+        setTimeout(() => showVPNWarning(), 250);
+      }
+    }
+  });
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a20332093c4292dc',t:'MTc4NDg5ODk0NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
