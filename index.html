@@ -128,13 +128,127 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
   .auth-body{padding:18px 20px 20px}
 }
 
+
+/* --- DASHBOARD (Integrated) --- */
+.dashboard{display:none;background:#0f1211;color:#e8eeeb;border-top:1px solid #1f2826}
+.dashboard.open{display:block;animation:fadeIn .3s ease}
+.dashboard-shell{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.dashboard-sidebar{background:#111414;border-left:1px solid #1e2825;padding:24px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;gap:26px;z-index:2}
+.dash-user{display:flex;gap:12px;align-items:center;padding:14px 12px;background:#161b1a;border:1px solid #242e2b}
+.dash-avatar{width:38px;height:38px;background:#e6eeeb;color:#111;display:grid;place-items:center;font:12px 'DM Mono';flex:none;border-radius:2px}
+.dash-user b{display:block;font:11px 'DM Mono';direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:148px;color:#e8eeeb}
+.dash-user small{font:9px 'DM Mono';color:#8a9591;letter-spacing:.08em}
+.dash-nav{display:grid;gap:3px}
+.dash-nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#9aa7a3;padding:11px 12px;text-align:right;font-family:Vazirmatn;font-size:13px;cursor:pointer;transition:.2s;border-right:2px solid transparent}
+.dash-nav button.active{background:#1a2120;color:#f0f4f2;border-right-color:#e8eeeb}
+.dash-nav button:hover{background:#1c2421;color:#fff}
+.dash-nav button i{font-style:normal;font:14px 'DM Mono';opacity:.9;direction:ltr}
+.dash-foot{margin-top:auto;padding-top:18px;border-top:1px solid #1e2825;display:grid;gap:8px}
+.dash-foot .mono{font-size:9px;color:#6f7d7a;line-height:1.8}
+.dashboard-main{padding:28px clamp(18px,3.2vw,40px) 50px;overflow:hidden}
+.dash-topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:32px;flex-wrap:wrap}
+.dash-topbar h2{margin:0;font-size:clamp(26px,3.5vw,40px);font-weight:400;letter-spacing:-.05em;line-height:1.1}
+.dash-topbar p{margin:8px 0 0;color:#9aa7a3;font-size:12px;line-height:1.9;max-width:440px}
+.dash-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-dash{border:1px solid #2f3a37;background:#e8eeeb;color:#111;padding:10px 14px;font:12px Vazirmatn;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-dash.dark{background:#111;color:#e8eeeb;border-color:#333}
+.btn-dash:hover{background:#111;color:#fff;border-color:#111}
+.btn-dash.ghost{background:transparent;color:#a8b5b0;border-color:#2f3a37}
+.btn-dash.ghost:hover{background:#1a2120;color:#e8eeeb}
+.dash-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1e2825;border:1px solid #1e2825;margin-bottom:28px}
+.dash-stat{background:#151818;padding:18px 16px}
+.dash-stat b{display:block;font:28px 'DM Mono';font-weight:400;letter-spacing:-.06em;color:#e8eeeb}
+.dash-stat span{font-size:10px;color:#8a9591;display:block;margin-top:6px;line-height:1.8}
+.dash-stat .progress-mini{height:2px;background:#1e2825;margin-top:12px;overflow:hidden}
+.dash-stat .progress-mini i{display:block;height:100%;background:#e8eeeb;width:0;transition:width .7s}
+.dash-panel{display:none;animation:fadeIn .32s ease}
+.dash-panel.active{display:block}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(286px,1fr));gap:1px;background:#1e2825;border:1px solid #1e2825}
+.project-card{background:#161b1a;padding:18px 16px;display:flex;flex-direction:column;gap:14px;transition:.22s}
+.project-card:hover{background:#1d2421}
+.project-card-top{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.project-card h4{margin:0;font-size:15px;font-weight:400;letter-spacing:-.03em;max-width:170px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.project-badge{font:8px 'DM Mono';padding:4px 6px;border:1px solid #2f3a37;letter-spacing:.08em;color:#b8c4c0;background:#101413;white-space:nowrap}
+.project-badge.building{border-color:#7ac8a9;color:#7ac8a9}
+.project-badge.review{border-color:#d5c189;color:#d5c189}
+.project-badge.delivered{border-color:#e8eeeb;color:#111;background:#e8eeeb}
+.project-badge.paused{border-color:#5a6763;color:#5a6763}
+.project-card p{font-size:11px;color:#8f9b98;line-height:1.9;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:38px}
+.project-meta{display:flex;justify-content:space-between;font:9px 'DM Mono';color:#6f7d7a;direction:ltr}
+.project-progress{height:2px;background:#1e2825;overflow:hidden}
+.project-progress i{display:block;height:100%;background:linear-gradient(90deg,#e8eeeb,#8a9e97);width:0;transition:width .7s ease}
+.project-card-foot{display:flex;gap:6px}
+.project-card-foot button{flex:1;border:1px solid #2f3a37;background:transparent;color:#a8b5b0;padding:7px 6px;font:10px Vazirmatn;cursor:pointer;transition:.2s}
+.project-card-foot button:hover{background:#e8eeeb;color:#111;border-color:#e8eeeb}
+.empty-state{border:1px dashed #2f3a37;padding:52px 20px;text-align:center;color:#7f8c88;background:#111414}
+.empty-state b{display:block;font-size:18px;color:#e8eeeb;font-weight:400;margin-bottom:10px}
+.dash-form{background:#161b1a;border:1px solid #1e2825;padding:22px;display:grid;gap:16px;max-width:760px}
+.dash-form .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dash-field{display:grid;gap:6px}
+.dash-field label{font:9px 'DM Mono';color:#8a9591;letter-spacing:.07em;text-transform:uppercase}
+.dash-field input,.dash-field select,.dash-field textarea{background:#101413;border:0;border-bottom:1px solid #2f3a37;color:#e8eeeb;padding:11px 0 11px 8px;font-family:Vazirmatn;font-size:13px;outline:0;transition:.2s;border-radius:0;appearance:none}
+.dash-field textarea{min-height:92px;resize:vertical;line-height:1.9;border:1px solid #2f3a37;padding:10px 12px}
+.dash-field input:focus,.dash-field select:focus,.dash-field textarea:focus{border-color:#e8eeeb}
+.dash-form-note{font-size:11px;color:#7d8b87;line-height:1.9}
+.tickets-layout{display:grid;grid-template-columns:360px 1fr;gap:1px;background:#1e2825;border:1px solid #1e2825;min-height:540px}
+.tickets-list{background:#111414;display:flex;flex-direction:column;min-height:540px}
+.tickets-list-head{padding:14px 14px;border-bottom:1px solid #1e2825;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tickets-items{overflow-y:auto;flex:1;display:grid;gap:1px;background:#1e2825;align-content:start}
+.ticket-item{background:#151818;padding:12px 14px;cursor:pointer;transition:.2s;border-right:2px solid transparent}
+.ticket-item.active{background:#1c2421;border-right-color:#e8eeeb}
+.ticket-item:hover{background:#1a2120}
+.ticket-item b{display:block;font-size:12px;font-weight:400;color:#e8eeeb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticket-item small{font:9px 'DM Mono';color:#7d8b87;display:block;margin-top:5px;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ticket-detail{background:#161b1a;padding:18px;display:flex;flex-direction:column;gap:16px;min-height:540px}
+.ticket-msgs{flex:1;overflow-y:auto;display:grid;gap:12px;align-content:start;max-height:420px;padding:2px 6px 2px 2px}
+.msg{max-width:80%;padding:10px 12px;font-size:12px;line-height:1.9;border:1px solid #1e2825}
+.msg.user{background:#e8eeeb;color:#111;justify-self:end;border-color:#e8eeeb}
+.msg.team{background:#101413;color:#b8c4c0;justify-self:start}
+.msg small{display:block;font:8px 'DM Mono';color:#7d8b87;margin-top:6px;direction:ltr}
+.chat-layout{display:grid;grid-template-rows:auto 1fr auto;background:#161b1a;border:1px solid #1e2825;min-height:580px;max-width:960px}
+.chat-head{padding:14px 18px;border-bottom:1px solid #1e2825;display:flex;justify-content:space-between;align-items:center}
+.chat-head .online{font:10px 'DM Mono';color:#7ac8a9;display:flex;align-items:center;gap:6px}
+.chat-head .online i{width:6px;height:6px;border-radius:50%;background:#7ac8a9;display:inline-block;animation:blink 1.2s infinite}
+.chat-messages{padding:18px;display:grid;gap:12px;overflow-y:auto;max-height:460px;align-content:start}
+.chat-input-row{border-top:1px solid #1e2825;padding:12px;display:flex;gap:8px;background:#111414}
+.chat-input-row input{flex:1;background:#101413;border:1px solid #2f3a37;color:#e8eeeb;padding:12px 12px;font-family:Vazirmatn;outline:0;font-size:13px;transition:.2s}
+.chat-input-row input:focus{border-color:#e8eeeb}
+.chat-input-row button{border:0;background:#e8eeeb;color:#111;padding:0 18px;font:12px Vazirmatn;cursor:pointer;transition:.2s}
+.chat-input-row button:hover{background:#fff}
+.dash-modal{position:fixed;z-index:220;inset:0;background:#0a0c0bcc;backdrop-filter:blur(14px);display:grid;place-items:center;padding:16px;opacity:0;visibility:hidden;transition:.25s}
+.dash-modal.open{opacity:1;visibility:visible}
+.dash-modal-card{width:min(560px,100%);background:#f3f5f4;color:#111;border:1px solid #c4cdca;box-shadow:0 30px 80px #000a;transform:translateY(12px);transition:.35s cubic-bezier(.16,1,.3,1)}
+.dash-modal.open .dash-modal-card{transform:none}
+.dash-modal-head{padding:20px 20px 14px;border-bottom:1px solid #c9d1ce;display:flex;justify-content:space-between;align-items:center}
+.dash-modal-head h3{margin:0;font-size:18px;font-weight:500}
+.dash-modal-body{padding:18px 20px 20px;display:grid;gap:14px}
+@media(max-width:980px){
+  .dashboard-shell{grid-template-columns:1fr}
+  .dashboard-sidebar{position:relative;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 12px}
+  .dash-nav{display:flex;overflow-x:auto;gap:3px;flex-wrap:nowrap;scrollbar-width:none}
+  .dash-nav::-webkit-scrollbar{display:none}
+  .dash-nav button{white-space:nowrap;padding:10px 12px;border-right:0;border-bottom:2px solid transparent}
+  .dash-nav button.active{border-right:0;border-bottom-color:#e8eeeb}
+  .dash-foot{display:none}
+  .dash-stats{grid-template-columns:1fr 1fr}
+  .tickets-layout{grid-template-columns:1fr;min-height:auto}
+  .tickets-list{max-height:320px;min-height:320px}
+  .dash-form .row{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .dashboard-main{padding:20px 16px 36px}
+  .dash-stats{grid-template-columns:1fr}
+  .projects-grid{grid-template-columns:1fr}
+  .chat-layout{min-height:70vh}
+}
+
 </style>
 </head>
 <body><a class="skip-link" href="#main-content">پرش به محتوای اصلی</a><aside class="view-tools" aria-label="تنظیمات نمایش"><span class="tool-label">VIEW</span><button id="font-toggle" title="بزرگ‌کردن متن">A+</button><button id="contrast-toggle" title="کنتراست بیشتر">◐</button><button id="motion-toggle" title="کاهش حرکت">≋</button></aside><button class="to-top" id="to-top" aria-label="بازگشت به بالا">↑</button>
 <div id="loader"><div class="loader-line"></div><div class="load-word"><b>AVENIX</b></div><div class="loader-progress"><i></i><span>SYSTEM READY</span></div></div><div class="command-palette" id="command-palette"><div class="command-box"><input class="command-search" id="command-search" placeholder="Search a destination…" autocomplete="off"><div class="command-list"><small>QUICK NAVIGATION</small><button class="command-item" data-go="#top">خانه <kbd>01</kbd></button><button class="command-item" data-go="#services">خدمات <kbd>02</kbd></button><button class="command-item" data-go="#work">نمونه‌کارها <kbd>03</kbd></button><button class="command-item" data-go="#lab">Engineering Lab <kbd>04</kbd></button><button class="command-item" data-go="#contact">شروع همکاری <kbd>05</kbd></button></div></div></div><div class="scroll-progress" aria-hidden="true"><i></i></div>
 <nav><a class="brand" href="#top" aria-label="Avenix"><img src="3.png" alt="Avenix"></a><div class="navlinks"><a href="#method">رویکرد</a><a href="#services">خدمات</a><a href="#work">پروژه‌ها</a><a href="#contact">تماس</a></div><div style="display:flex;gap:8px;align-items:center">
 <div class="nav-auth" id="nav-auth">
-<button class="auth-btn" id="auth-open">ورود / ثبت‌نام</button>
+<button class="auth-btn" id="auth-open">ورود / ثبت‌نام</button><button class="auth-btn outline" id="dash-open" style="display:none">داشبورد</button>
 <div class="user-chip" id="user-chip" style="display:none"><i class="dot"></i><span id="user-email"></span><button class="logout-btn" id="logout-btn">خروج</button></div>
 </div>
 <button class="cmd-open" id="cmd-open">⌘ K</button><button class="lang" id="lang">EN</button></div></nav>
@@ -216,10 +330,190 @@ nav{height:76px;border-bottom:1px solid var(--line);padding:0 clamp(20px,4vw,68p
 product.<span class="key">deploy</span>(<span class="metal">'with-confidence'</span>);<span id="cursor">▋</span></pre><div class="terminal-status"><b>BUILD SUCCESSFUL</b><span>latency 32ms / v1.0.0</span></div></div><div class="architecture"><div class="nodes"><svg viewBox="0 0 400 300" preserveAspectRatio="none"><path d="M205 63 L330 150 L205 245 L70 150 Z"/><path d="M205 63 L205 245 M70 150 L330 150"/></svg><span class="node one">PRODUCT</span><span class="node two">API</span><span class="node three">CLOUD</span><span class="node four">CLIENT</span></div><div class="stack"><span>TypeScript</span><span>Next.js</span><span>React Native</span><span>Python</span><span>PostgreSQL</span><span>Docker</span></div></div></div><div class="lab-foot"><span>GIT / MAIN · 148 COMMITS</span><span>CI/CD · AUTOMATED</span><span>UPTIME · 99.99%</span></div></section><section class="runtime"><div class="runtime-top"><div><span class="mono">( 05 — RUNTIME )</span><h2 data-fa="مهندسی، قابل مشاهده." data-en="ENGINEERING, MADE VISIBLE.">مهندسی، قابل مشاهده.</h2></div><span class="live">SYSTEMS NOMINAL</span></div><div class="runtime-grid reveal"><article class="metric"><span class="mono">DEPLOYMENT VELOCITY</span><strong>42<span style="font-size:.38em;letter-spacing:0">/mo</span></strong><p data-fa="انتشارهای کوچک، پیوسته و قابل بازگشت." data-en="Small, continuous and reversible releases.">انتشارهای کوچک، پیوسته و قابل بازگشت.</p></article><article class="metric"><span class="mono">CONTRIBUTION GRAPH</span><div class="heatmap"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><p data-fa="هر خانه، یک گام کوچک رو به جلو." data-en="Every cell is one small step forward.">هر خانه، یک گام کوچک رو به جلو.</p></article><article class="metric"><span class="mono">RELEASE NOTES</span><div class="release-line"><div>v1.8 / Performance pass <span>2 DAYS AGO</span></div><div>v1.7 / New client portal <span>8 DAYS AGO</span></div><div>v1.6 / Search index <span>16 DAYS AGO</span></div></div></article></div></section><section class="playground" id="playground"><div class="play-head"><div><span class="mono">( 06 — BUILD PLAYGROUND )</span><h2 data-fa="ترکیبِ مناسب را<br>خودتان امتحان کنید." data-en="TRY THE RIGHT<br>COMBINATION YOURSELF.">ترکیبِ مناسب را<br>خودتان امتحان کنید.</h2></div><p data-fa="یک شبیه‌ساز کوچک از نحوه‌ی فکرکردن ما: پلتفرم را انتخاب کنید و یک انتشار آزمایشی انجام دهید." data-en="A small simulation of how we think: choose a platform, then run a test deployment.">یک شبیه‌ساز کوچک از نحوه‌ی فکرکردن ما: پلتفرم را انتخاب کنید و یک انتشار آزمایشی انجام دهید.</p></div><div class="play-shell reveal"><div class="build-controls"><h3 data-fa="چه چیزی می‌سازیم؟" data-en="WHAT ARE WE BUILDING?">چه چیزی می‌سازیم؟</h3><div class="build-options"><button class="build-option active" data-stack="web"><b data-fa="وب‌اپلیکیشن" data-en="Web app">وب‌اپلیکیشن</b><span>NEXT.JS</span></button><button class="build-option" data-stack="mobile"><b data-fa="اپ موبایل" data-en="Mobile app">اپ موبایل</b><span>RN / iOS</span></button><button class="build-option" data-stack="ai"><b data-fa="هوش مصنوعی" data-en="AI product">هوش مصنوعی</b><span>PYTHON</span></button></div><div class="build-help" data-fa="این یک محیط نمایشی است؛ اما انتخاب‌های معماری دقیقاً از همین پرسش‌ها شروع می‌شوند." data-en="This is a demonstration environment, but architecture decisions start with these very questions.">این یک محیط نمایشی است؛ اما انتخاب‌های معماری دقیقاً از همین پرسش‌ها شروع می‌شوند.</div></div><div class="play-stage"><div class="stage-top"><span>AVENIX / BUILD CONSOLE</span><b id="stack-status">READY</b></div><div class="code-window"><div class="codebar"><i></i><i></i><i></i><span id="file-name">app.config.ts</span></div><pre class="live-code" id="live-code"></pre></div><div class="deploy-row"><button class="deploy-btn" id="deploy-btn" data-fa="اجرای انتشار آزمایشی ↙" data-en="RUN TEST DEPLOY ↙">اجرای انتشار آزمایشی ↙</button><div class="deploy-progress"><i id="deploy-progress"></i></div><span class="deploy-message" id="deploy-message">WAITING FOR CONFIGURATION</span></div><div class="build-orbit"></div></div></div></section><section class="quote reveal"><div class="mark">“</div><blockquote data-fa="آونیکس فقط یک تیم توسعه نبود؛ آن‌ها کمک کردند مسئله‌ای را که واقعاً باید حل می‌کردیم، ببینیم." data-en="AVENIX WAS NOT JUST A DEVELOPMENT TEAM; THEY HELPED US SEE THE PROBLEM WE ACTUALLY NEEDED TO SOLVE.">آونیکس فقط یک تیم توسعه نبود؛ آن‌ها کمک کردند مسئله‌ای را که واقعاً باید حل می‌کردیم، ببینیم.</blockquote><cite>— سارا ک. / مدیر محصول، MyPlatform</cite></section>
 <div class="lower"><section><span class="mono">( 05 — ENGAGEMENT )</span><h2 data-fa="برای هر مرحله، یک شکلِ همکاری." data-en="A WAY TO WORK FOR EVERY STAGE.">برای هر مرحله، یک شکلِ همکاری.</h2><div class="plan"><div><b data-fa="اسپرینت کشف" data-en="Discovery Sprint">اسپرینت کشف</b><small data-fa="۲ تا ۳ هفته" data-en="2—3 weeks">۲ تا ۳ هفته</small></div><span class="price">FROM $—</span></div><div class="plan"><div><b data-fa="ساخت محصول" data-en="Product Build">ساخت محصول</b><small data-fa="پروژه‌ی کامل" data-en="Complete project">پروژه‌ی کامل</small></div><span class="price">CUSTOM</span></div><div class="plan"><div><b data-fa="تیمِ هم‌مسیر" data-en="Embedded Team">تیمِ هم‌مسیر</b><small data-fa="همکاری ماهانه" data-en="Monthly partnership">همکاری ماهانه</small></div><span class="price">MONTHLY</span></div></section><section><span class="mono">( 06 — FAQ )</span><h2 data-fa="پرسش‌های کوتاه." data-en="SHORT QUESTIONS.">پرسش‌های کوتاه.</h2><div class="faq"><details><summary data-fa="روی چه نوع پروژه‌هایی کار می‌کنید؟" data-en="What kind of projects do you take on?">روی چه نوع پروژه‌هایی کار می‌کنید؟</summary><p data-fa="محصولات دیجیتال با مسئله‌ی روشن: از MVPهای تازه تا بازطراحی پلتفرم‌های در حال رشد." data-en="Digital products with a clear challenge: from new MVPs to redesigning growing platforms.">محصولات دیجیتال با مسئله‌ی روشن: از MVPهای تازه تا بازطراحی پلتفرم‌های در حال رشد.</p></details><details><summary data-fa="همکاری از کجا شروع می‌شود؟" data-en="How does an engagement start?">همکاری از کجا شروع می‌شود؟</summary><p data-fa="از یک گفت‌وگوی ۳۰ دقیقه‌ای. سپس در صورت تناسب، جلسه‌ی کشف و یک پیشنهاد شفاف ارائه می‌کنیم." data-en="With a 30-minute conversation. If there is a fit, we move to discovery and a clear proposal.">از یک گفت‌وگوی ۳۰ دقیقه‌ای. سپس در صورت تناسب، جلسه‌ی کشف و یک پیشنهاد شفاف ارائه می‌کنیم.</p></details><details><summary data-fa="آیا بعد از لانچ هم کنار ما هستید؟" data-en="Do you stay after launch?">آیا بعد از لانچ هم کنار ما هستید؟</summary><p data-fa="بله؛ می‌توانیم با برنامه‌ی پشتیبانی و رشد، محصول را بعد از انتشار هم همراهی کنیم." data-en="Yes. With a care-and-growth plan, we can support the product beyond launch.">بله؛ می‌توانیم با برنامه‌ی پشتیبانی و رشد، محصول را بعد از انتشار هم همراهی کنیم.</p></details></div></section></div>
 <section class="scope" id="scope"><div class="scope-head"><div><span class="mono">( 08 — SCOPE CONFIGURATOR )</span><h2 data-fa="یک پروژه‌ی فرضی<br>پیکربندی کنید." data-en="CONFIGURE A<br>HYPOTHETICAL PROJECT.">یک پروژه‌ی فرضی<br>پیکربندی کنید.</h2></div><p data-fa="چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد." data-en="Make a few simple choices to see how a clear scope takes shape.">چند انتخاب ساده انجام دهید تا ببینید یک Scope شفاف چگونه شکل می‌گیرد.</p></div><div class="scope-shell reveal"><div class="scope-inputs"><h3 data-fa="تنظیمات محصول" data-en="PRODUCT SETTINGS">تنظیمات محصول</h3><label><span>PRODUCT TYPE</span><span id="scope-type-value">WEB APP</span></label><select id="scope-type"><option value="web" data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option value="mobile" data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option value="ai" data-fa="محصول هوش مصنوعی" data-en="AI product">محصول هوش مصنوعی</option></select><label><span>AMBITION LEVEL</span><span id="scope-level">04 / 10</span></label><input class="scope-range" id="scope-range" type="range" min="1" max="10" value="4"><label><span>INCLUDED MODULES</span><span id="scope-count">00</span></label><div class="feature-picks"><button class="feature-pick" data-feature="API">API</button><button class="feature-pick" data-feature="AUTH">AUTH</button><button class="feature-pick" data-feature="DASHBOARD">DASHBOARD</button><button class="feature-pick" data-feature="AI">AI</button><button class="feature-pick" data-feature="PAYMENTS">PAYMENTS</button></div></div><div class="scope-result"><span class="mono">AUTOMATIC BRIEF / v0.1</span><div class="scope-stats"><div class="scope-stat"><b id="scope-weeks">08</b><span data-fa="هفته‌ی پیشنهادی" data-en="SUGGESTED WEEKS">هفته‌ی پیشنهادی</span></div><div class="scope-stat"><b id="scope-sprints">04</b><span data-fa="اسپرینت ساخت" data-en="BUILD SPRINTS">اسپرینت ساخت</span></div></div><p class="scope-summary" id="scope-summary" data-fa="یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف." data-en="A focused web application, ready for sharper definition in a discovery session.">یک وب‌اپلیکیشن متمرکز؛ آماده برای تعریف دقیق‌تر در جلسه‌ی کشف.</p><button class="copy-config" id="copy-config" data-fa="کپی تنظیمات پروژه" data-en="COPY PROJECT CONFIG">کپی تنظیمات پروژه</button><span class="scope-toast" id="scope-toast"></span></div></div></section><section class="contact" id="contact"><span class="mono">( 07 — BEGIN )</span><h2 data-fa="بیایید چیزِ مهمی <a href='#project-form'>بسازیم.</a>" data-en="LET'S BUILD <a href='#project-form'>SOMETHING THAT MATTERS.</a>">بیایید چیزِ مهمی <a href="#project-form">بسازیم.</a></h2><div class="contact-grid"><div class="contact-note"><b data-fa="شروعش ساده است." data-en="THE START IS SIMPLE.">شروعش ساده است.</b><br><span data-fa="چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم." data-en="Tell us a little about your project. We usually reply within one business day to find a time for a short conversation.">چند خط درباره‌ی پروژه‌تان بنویسید. معمولاً در یک روز کاری پاسخ می‌دهیم تا برای یک گفت‌وگوی کوتاه زمان پیدا کنیم.</span></div><form class="contact-form" id="project-form"><div class="field"><label>YOUR NAME</label><input required name="name" placeholder="نام شما" data-fa-placeholder="نام شما" data-en-placeholder="Your name"></div><div class="field"><label>EMAIL</label><input required type="email" name="email" placeholder="ایمیل کاری" data-fa-placeholder="ایمیل کاری" data-en-placeholder="Work email"></div><div class="field"><label>PROJECT TYPE</label><select name="type"><option value="" data-fa="نوع پروژه را انتخاب کنید" data-en="Select project type">نوع پروژه را انتخاب کنید</option><option data-fa="وب‌اپلیکیشن" data-en="Web application">وب‌اپلیکیشن</option><option data-fa="اپلیکیشن موبایل" data-en="Mobile application">اپلیکیشن موبایل</option><option data-fa="طراحی محصول / رابط کاربری" data-en="Product / UX design">طراحی محصول / رابط کاربری</option><option data-fa="هوش مصنوعی و داده" data-en="AI & data">هوش مصنوعی و داده</option></select></div><div class="field"><label>BUDGET RANGE</label><select name="budget"><option value="" data-fa="بودجه‌ی تقریبی" data-en="Approximate budget">بودجه‌ی تقریبی</option><option>+ $5K</option><option>+ $15K</option><option>+ $30K</option><option data-fa="ترجیح می‌دهم گفتگو کنیم" data-en="Let's discuss">ترجیح می‌دهم گفتگو کنیم</option></select></div><div class="field full"><label>ABOUT THE PROJECT</label><textarea required name="message" placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-fa-placeholder="چه مسئله‌ای را می‌خواهید حل کنید؟" data-en-placeholder="What problem are you trying to solve?"></textarea></div><button class="send" type="submit"><span data-fa="ارسال درخواست همکاری" data-en="SEND PROJECT INQUIRY">ارسال درخواست همکاری</span><span>↙</span></button><div class="form-message" aria-live="polite"></div></form></div><div class="contact-bar"><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f9f4fdfdfed1f0e7f4fff8e9bfe2e5e4f5f8fe">[email&#160;protected]</a></span><span data-fa="تهران / از هر جا" data-en="TEHRAN / EVERYWHERE">تهران / از هر جا</span><span>INSTAGRAM · LINKEDIN</span></div></section>
+
+<section class="dashboard" id="dashboard">
+  <div class="dashboard-shell">
+    <aside class="dashboard-sidebar">
+      <div class="dash-user">
+        <div class="dash-avatar" id="dash-avatar">AV</div>
+        <div style="min-width:0">
+          <b id="dash-user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5f382a3a2c2b1f3e293a3136277133303c3e33">[email&#160;protected]</a></b>
+          <small id="dash-user-role">CLIENT / AVENIX</small>
+        </div>
+      </div>
+      <nav class="dash-nav" id="dash-nav">
+        <button data-dash="overview" class="active"><i>◧</i> <span data-fa="نمای کلی" data-en="Overview">نمای کلی</span></button>
+        <button data-dash="projects"><i>◫</i> <span data-fa="پروژه‌ها" data-en="Projects">پروژه‌ها</span><span class="dash-count" id="count-projects" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
+        <button data-dash="neworder"><i>＋</i> <span data-fa="سفارش جدید" data-en="New Order">سفارش جدید</span></button>
+        <button data-dash="tickets"><i>✦</i> <span data-fa="تیکت‌ها" data-en="Tickets">تیکت‌ها</span><span class="dash-count" id="count-tickets" style="margin-right:auto;font:9px 'DM Mono';background:#1e2825;padding:2px 5px">0</span></button>
+        <button data-dash="edits"><i>↻</i> <span data-fa="درخواست ویرایش" data-en="Edits">درخواست ویرایش</span></button>
+        <button data-dash="chat"><i>◍</i> <span data-fa="چت با تیم" data-en="Team Chat">چت با تیم</span><span id="chat-dot" style="display:none;width:6px;height:6px;background:#7ac8a9;border-radius:50%;margin-right:auto"></span></button>
+      </nav>
+      <div class="dash-foot">
+        <span class="mono">AVENIX DASHBOARD / v2.1</span>
+        <span class="mono" style="direction:ltr">AUTH: <span id="dash-auth-status">OFFLINE</span> • <span id="dash-time"></span></span>
+        <span class="mono" style="line-height:1.8">همه چیز در همین فایل ذخیره می‌شود. بدون بک‌اند جدا. داده‌ها در LocalStorage شما + Firebase Auth.</span>
+        <button class="btn-dash ghost" id="dash-close" style="margin-top:10px">بستن داشبورد ✕</button>
+      </div>
+    </aside>
+    <div class="dashboard-main">
+      <!-- OVERVIEW -->
+      <div class="dash-panel active" id="panel-overview">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="سلام، اینجا اتاق فرمان پروژه‌هاته." data-en="Hey, this is your project command center.">سلام، اینجا اتاق فرمان پروژه‌هاته.</h2>
+            <p data-fa="پروژه‌ها، تیکت‌ها، ویرایش‌ها و چت تیم — همه در همین صفحه، بدون نیاز به فایل جدا." data-en="Projects, tickets, edits and team chat — all in this single file, no separate backend needed.">پروژه‌ها، تیکت‌ها، ویرایش‌ها و چت تیم — همه در همین صفحه، بدون نیاز به فایل جدا.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn-dash" data-dash-go="neworder" data-fa="＋ سفارش پروژه جدید" data-en="＋ New Project Order">＋ سفارش پروژه جدید</button>
+            <button class="btn-dash dark" data-dash-go="chat" data-fa="گفتگو با تیم →" data-en="Chat with team →">گفتگو با تیم →</button>
+          </div>
+        </div>
+        <div class="dash-stats">
+          <div class="dash-stat"><b id="stat-projects">0</b><span data-fa="پروژه فعال" data-en="ACTIVE PROJECTS">پروژه فعال</span><div class="progress-mini"><i id="stat-projects-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><b id="stat-tickets">0</b><span data-fa="تیکت باز" data-en="OPEN TICKETS">تیکت باز</span><div class="progress-mini"><i id="stat-tickets-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><b id="stat-edits">0</b><span data-fa="درخواست ویرایش" data-en="EDIT REQUESTS">درخواست ویرایش</span><div class="progress-mini"><i id="stat-edits-bar" style="width:0%"></i></div></div>
+          <div class="dash-stat"><b id="stat-progress">0%</b><span data-fa="میانگین پیشرفت" data-en="AVG PROGRESS">میانگین پیشرفت</span><div class="progress-mini"><i id="stat-progress-bar" style="width:0%"></i></div></div>
+        </div>
+        <div class="projects-grid" id="overview-projects"></div>
+      </div>
+
+      <!-- PROJECTS -->
+      <div class="dash-panel" id="panel-projects">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="پروژه‌های شما" data-en="Your Projects">پروژه‌های شما</h2>
+            <p data-fa="هر پروژه یک مسیر جدا دارد. وضعیت، درصد پیشرفت و درخواست ویرایش را از اینجا مدیریت کن." data-en="Each project has its own track. Manage status, progress and edits from here.">هر پروژه یک مسیر جدا دارد. وضعیت، درصد پیشرفت و درخواست ویرایش را از اینجا مدیریت کن.</p>
+          </div>
+          <div class="dash-actions">
+            <button class="btn-dash" id="btn-new-project">＋ پروژه جدید</button>
+          </div>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+
+      <!-- NEW ORDER -->
+      <div class="dash-panel" id="panel-neworder">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="ثبت سفارش / پروژه جدید" data-en="Create New Order / Project">ثبت سفارش / پروژه جدید</h2>
+            <p data-fa="فرم زیر را پر کن، سفارش به عنوان پروژه جدید با وضعیت 'در حال بررسی' ثبت می‌شود." data-en="Fill the form, it will be added as a new project with 'review' status.">فرم زیر را پر کن، سفارش به عنوان پروژه جدید با وضعیت 'در حال بررسی' ثبت می‌شود.</p>
+          </div>
+        </div>
+        <form class="dash-form" id="form-neworder">
+          <div class="row">
+            <div class="dash-field"><label>نام پروژه</label><input required name="name" placeholder="مثلاً: وب‌اپلیکیشن فروشگاه"></div>
+            <div class="dash-field"><label>نوع پروژه</label><select name="type"><option value="web">وب‌اپلیکیشن</option><option value="mobile">اپلیکیشن موبایل</option><option value="ai">هوش مصنوعی / داده</option><option value="design">طراحی محصول</option></select></div>
+          </div>
+          <div class="dash-field"><label>توضیح کوتاه / مسئله‌ای که می‌خواهی حل کنی</label><textarea required name="desc" placeholder="چه مسئله‌ای داری؟ چه کاربری؟ چه نتیجه‌ای می‌خواهی؟"></textarea></div>
+          <div class="row">
+            <div class="dash-field"><label>بودجه تقریبی</label><select name="budget"><option>+ $3K</option><option>+ $8K</option><option>+ $15K</option><option>توافقی</option></select></div>
+            <div class="dash-field"><label>زمان مورد نظر</label><select name="timeline"><option>۱ ماه</option><option>۲-۳ ماه</option><option>۳-۶ ماه</option><option>عجله‌ای نیست</option></select></div>
+          </div>
+          <div class="dash-form-note" id="neworder-msg"></div>
+          <button class="btn-dash dark" type="submit" style="justify-self:start;padding-inline:22px">ثبت سفارش و ساخت پروژه ↗</button>
+        </form>
+      </div>
+
+      <!-- TICKETS -->
+      <div class="dash-panel" id="panel-tickets">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="تیکت‌ها و پشتیبانی" data-en="Tickets & Support">تیکت‌ها و پشتیبانی</h2>
+            <p data-fa="هر سوال، باگ یا درخواست را تیکت کن. تیم ما داخل همین داشبورد جواب می‌دهد." data-en="Ticket any question or bug. Our team replies inside this dashboard.">هر سوال، باگ یا درخواست را تیکت کن. تیم ما داخل همین داشبورد جواب می‌دهد.</p>
+          </div>
+          <div class="dash-actions"><button class="btn-dash" id="btn-new-ticket">＋ تیکت جدید</button></div>
+        </div>
+        <div class="tickets-layout">
+          <div class="tickets-list">
+            <div class="tickets-list-head"><span class="mono" style="font-size:10px">INBOX / TICKETS</span><span class="mono" id="tickets-count-head" style="font-size:9px">0</span></div>
+            <div class="tickets-items" id="tickets-items"></div>
+          </div>
+          <div class="ticket-detail" id="ticket-detail">
+            <div class="empty-state" id="ticket-empty"><b>تیکتی انتخاب نشده</b><span style="font-size:12px">از لیست سمت راست یک تیکت را باز کن یا تیکت جدید بساز.</span></div>
+            <div id="ticket-active" style="display:none;flex-direction:column;gap:16px;flex:1">
+              <div style="display:flex;justify-content:space-between;align-items:start;gap:12px;border-bottom:1px solid #1e2825;padding-bottom:12px">
+                <div><b id="ticket-title" style="font-size:15px;font-weight:400"></b><small id="ticket-meta" style="font:9px 'DM Mono';color:#7d8b87;display:block;margin-top:4px"></small></div>
+                <select id="ticket-status" style="background:#101413;border:1px solid #2f3a37;color:#e8eeeb;font:10px 'DM Mono';padding:6px"><option value="open">OPEN</option><option value="answered">ANSWERED</option><option value="closed">CLOSED</option></select>
+              </div>
+              <div class="ticket-msgs" id="ticket-msgs"></div>
+              <div class="chat-input-row" style="margin-top:auto">
+                <input id="ticket-reply-input" placeholder="پاسخ خود را بنویسید...">
+                <button id="ticket-reply-btn">ارسال</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDITS -->
+      <div class="dash-panel" id="panel-edits">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="درخواست ویرایش / تغییر" data-en="Request Edit / Change">درخواست ویرایش / تغییر</h2>
+            <p data-fa="برای هر پروژه می‌تونی درخواست ویرایش بفرستی. این‌ها به عنوان تیکت مخصوص ثبت می‌شن و تیم فوری می‌بینه." data-en="Send edit requests per project. They are logged as special tickets.">برای هر پروژه می‌تونی درخواست ویرایش بفرستی. این‌ها به عنوان تیکت مخصوص ثبت می‌شن و تیم فوری می‌بینه.</p>
+          </div>
+        </div>
+        <form class="dash-form" id="form-edit">
+          <div class="row">
+            <div class="dash-field"><label>پروژه مربوطه</label><select id="edit-project-select" required></select></div>
+            <div class="dash-field"><label>اولویت</label><select name="priority"><option value="low">معمولی</option><option value="medium">مهم</option><option value="high">فوری</option></select></div>
+          </div>
+          <div class="dash-field"><label>چه چیزی باید ویرایش شود؟</label><textarea required name="text" placeholder="مثلاً: رنگ دکمه‌ها، متن صفحه اصلی، افزودن بخش وبلاگ..."></textarea></div>
+          <div class="dash-form-note" id="edit-msg"></div>
+          <button class="btn-dash dark" type="submit">ارسال درخواست ویرایش ↗</button>
+        </form>
+        <div style="margin-top:24px"><h3 style="font-size:16px;font-weight:400;margin:0 0 12px">تاریخچه ویرایش‌ها</h3><div class="projects-grid" id="edits-history"></div></div>
+      </div>
+
+      <!-- CHAT -->
+      <div class="dash-panel" id="panel-chat">
+        <div class="dash-topbar">
+          <div>
+            <h2 data-fa="چت آنلاین با تیم سازنده" data-en="Live Chat with Builders">چت آنلاین با تیم سازنده</h2>
+            <p data-fa="مستقیم با تیم Avenix حرف بزن. پیام‌ها در همین فایل ذخیره می‌شن و وقتی تیم جواب بده، اینجا می‌بینی." data-en="Talk directly to Avenix team. Messages are stored in this file locally.">مستقیم با تیم Avenix حرف بزن. پیام‌ها در همین فایل ذخیره می‌شن و وقتی تیم جواب بده، اینجا می‌بینی.</p>
+          </div>
+        </div>
+        <div class="chat-layout">
+          <div class="chat-head"><span class="mono">AVENIX TEAM / LIVE</span><span class="online"><i></i> ONLINE • پاسخگویی معمولاً زیر ۲ ساعت</span></div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-input-row"><input id="chat-input" placeholder="پیام خود را بنویسید... (Enter برای ارسال)"><button id="chat-send">ارسال</button></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Dash Modals -->
+<div class="dash-modal" id="modal-project">
+  <div class="dash-modal-card">
+    <div class="dash-modal-head"><h3 data-fa="پروژه جدید" data-en="New Project">پروژه جدید</h3><button class="auth-close" data-close="modal-project">✕</button></div>
+    <form class="dash-modal-body" id="form-project-modal">
+      <div class="dash-field"><label>نام پروژه</label><input required name="name" placeholder="MyPlatform v2"></div>
+      <div class="row"><div class="dash-field"><label>نوع</label><select name="type"><option value="web">Web App</option><option value="mobile">Mobile</option><option value="ai">AI</option><option value="design">Design</option></select></div><div class="dash-field"><label>وضعیت اولیه</label><select name="status"><option value="review">در حال بررسی</option><option value="building" selected>در حال ساخت</option><option value="delivered">تحویل شده</option><option value="paused">متوقف</option></select></div></div>
+      <div class="dash-field"><label>توضیح کوتاه</label><textarea name="desc" placeholder="توضیح..."></textarea></div>
+      <button class="btn-dash dark" type="submit">ایجاد پروژه</button>
+    </form>
+  </div>
+</div>
+
+<div class="dash-modal" id="modal-ticket">
+  <div class="dash-modal-card">
+    <div class="dash-modal-head"><h3 data-fa="تیکت جدید" data-en="New Ticket">تیکت جدید</h3><button class="auth-close" data-close="modal-ticket">✕</button></div>
+    <form class="dash-modal-body" id="form-ticket-modal">
+      <div class="dash-field"><label>عنوان تیکت</label><input required name="title" placeholder="مثلاً: باگ در صفحه لاگین"></div>
+      <div class="row"><div class="dash-field"><label>مربوط به پروژه</label><select id="ticket-project-select" name="projectId"></select></div><div class="dash-field"><label>اولویت</label><select name="priority"><option value="low">کم</option><option value="medium" selected>متوسط</option><option value="high">زیاد</option></select></div></div>
+      <div class="dash-field"><label>توضیح</label><textarea required name="text" placeholder="مشکل یا درخواست را کامل توضیح بده..."></textarea></div>
+      <button class="btn-dash dark" type="submit">ثبت تیکت</button>
+    </form>
+  </div>
+</div>
+
 </main><footer><span>© 2026 AVENIX STUDIO</span><span>BUILT WITH INTENTION</span></footer>
 
 <div class="custom-cursor" aria-hidden="true"><span class="custom-cursor__ring"></span><span class="custom-cursor__dot"></span></div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const loader=document.querySelector('#loader');window.addEventListener('load',()=>setTimeout(()=>document.body.classList.add('ready'),2050));
 const split=document.querySelector('.split-words');split.innerHTML=split.textContent.trim().split(/\s+/).map(w=>`<span class="word">${w}&nbsp;</span>`).join('');
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible'); if(e.target.classList.contains('manifesto')) e.target.querySelectorAll('.word').forEach((w,i)=>setTimeout(()=>w.classList.add('on'),i*65));}}),{threshold:.15});document.querySelectorAll('.reveal,.manifesto').forEach(x=>obs.observe(x));
@@ -303,6 +597,7 @@ const firebaseConfig = {
   messagingSenderId: "75406978772",
   appId: "1:75406978772:web:eba453991d70a3123d9541"
 };
+
 // چک: اگر کانفیگ پر نشده، هشدار بده
 const isConfigured = !firebaseConfig.apiKey.includes("YOUR_");
 if(!isConfigured){
@@ -532,4 +827,546 @@ if(!isConfigured){
 }
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1fc252adc9b6c71',t:'MTc4NDgyNTAxOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
+
+<script>
+// ===== AVENIX DASHBOARD - Integrated Single File Logic =====
+(function(){
+  const dashboard = document.getElementById('dashboard');
+  const dashOpenBtn = document.getElementById('dash-open');
+  const dashCloseBtn = document.getElementById('dash-close');
+  const dashNav = document.getElementById('dash-nav');
+  const navButtons = dashNav ? dashNav.querySelectorAll('button[data-dash]') : [];
+  const panels = document.querySelectorAll('.dash-panel');
+  const dashUserEmail = document.getElementById('dash-user-email');
+  const dashAvatar = document.getElementById('dash-avatar');
+  const dashAuthStatus = document.getElementById('dash-auth-status');
+  const dashTime = document.getElementById('dash-time');
+
+  // Storage helpers - per user
+  function currentUserEmail(){
+    const el = document.getElementById('user-email');
+    return (el && el.textContent && el.textContent.includes('@')) ? el.textContent.trim() : 'guest';
+  }
+  function key(base){ return 'avenix_' + btoa(currentUserEmail()).replace(/=/g,'') + '_' + base; }
+  function load(base){ try{ return JSON.parse(localStorage.getItem(key(base))||'[]'); }catch(e){ return []; } }
+  function save(base, data){ localStorage.setItem(key(base), JSON.stringify(data)); }
+
+  // Time ticker
+  setInterval(()=>{ if(dashTime) dashTime.textContent = new Date().toLocaleTimeString('fa-IR'); }, 1000);
+
+  // Open/Close dashboard
+  function openDashboard(panel='overview'){
+    if(!document.body.classList.contains('is-authenticated')){
+      if(window.openAuth) window.openAuth('login');
+      return;
+    }
+    dashboard.classList.add('open');
+    dashboard.scrollIntoView({behavior:'smooth'});
+    switchPanel(panel);
+    refreshAll();
+  }
+  function closeDashboard(){
+    dashboard.classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  window.openDashboard = openDashboard;
+
+  if(dashOpenBtn) dashOpenBtn.addEventListener('click', ()=>openDashboard('overview'));
+  if(dashCloseBtn) dashCloseBtn.addEventListener('click', closeDashboard);
+  // Also quick go buttons
+  document.querySelectorAll('[data-dash-go]').forEach(b=>{
+    b.addEventListener('click', ()=>openDashboard(b.getAttribute('data-dash-go')));
+  });
+
+  // Switch panels
+  function switchPanel(name){
+    panels.forEach(p=>p.classList.toggle('active', p.id==='panel-'+name));
+    navButtons.forEach(btn=>btn.classList.toggle('active', btn.dataset.dash===name));
+    // lazy refresh per panel
+    if(name==='projects') renderProjects();
+    if(name==='tickets') renderTickets();
+    if(name==='edits') renderEdits();
+    if(name==='chat') renderChat();
+    if(name==='overview') renderOverview();
+  }
+  navButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>switchPanel(btn.dataset.dash));
+  });
+
+  // Observe auth to update UI
+  const authObserver = new MutationObserver(()=>{
+    const isAuth = document.body.classList.contains('is-authenticated');
+    if(dashOpenBtn) dashOpenBtn.style.display = isAuth ? 'inline-block' : 'none';
+    if(dashAuthStatus) dashAuthStatus.textContent = isAuth ? 'ONLINE' : 'OFFLINE';
+    if(isAuth){
+      const email = currentUserEmail();
+      if(dashUserEmail) dashUserEmail.textContent = email;
+      if(dashAvatar) dashAvatar.textContent = email.slice(0,2).toUpperCase();
+      // hide main landing CTA maybe
+    } else {
+      dashboard.classList.remove('open');
+    }
+    // when user changes, refresh keys
+    if(isAuth) setTimeout(refreshAll, 200);
+  });
+  authObserver.observe(document.body, {attributes:true, attributeFilter:['class']});
+  // initial check after load
+  setTimeout(()=>{
+    const isAuth = document.body.classList.contains('is-authenticated');
+    if(dashOpenBtn) dashOpenBtn.style.display = isAuth ? 'inline-block' : 'none';
+    if(isAuth){
+      const email = currentUserEmail();
+      if(dashUserEmail) dashUserEmail.textContent = email;
+      if(dashAvatar) dashAvatar.textContent = email.slice(0,2).toUpperCase();
+    }
+  }, 800);
+
+  // ===== PROJECTS =====
+  function uid(){ return Math.random().toString(36).slice(2,9); }
+  function nowFA(){ return new Date().toLocaleDateString('fa-IR'); }
+
+  function defaultProjects(){
+    const exist = load('projects');
+    if(exist.length) return exist;
+    // seed with demo
+    const demo = [
+      {id:uid(), name:'MyPlatform - داشبورد سازمانی', type:'web', desc:'پلتفرم یکپارچه مدیریت جریان کار و تیم', budget:'+ $15K', timeline:'2-3 ماه', status:'building', progress:68, createdAt: nowFA(), updatedAt: nowFA()},
+      {id:uid(), name:'Avenix Messenger', type:'mobile', desc:'پیام‌رسان امن و سریع برای تیم‌ها', budget:'+ $8K', timeline:'۱ ماه', status:'review', progress:18, createdAt: nowFA(), updatedAt: nowFA()},
+      {id:uid(), name:'Zeero - کیف پول دیجیتال', type:'design', desc:'طراحی تجربه مالی جدید', budget:'توافقی', timeline:'3-۶ ماه', status:'delivered', progress:100, createdAt: nowFA(), updatedAt: nowFA()}
+    ];
+    save('projects', demo);
+    return demo;
+  }
+
+  function renderProjects(){
+    const grid = document.getElementById('projects-grid');
+    const overviewGrid = document.getElementById('overview-projects');
+    const projects = defaultProjects();
+    const html = projects.map(p=>{
+      const badgeClass = p.status;
+      const badgeText = {building:'در حال ساخت', review:'در بررسی', delivered:'تحویل شده', paused:'متوقف'}[p.status] || p.status;
+      return `<div class="project-card" data-id="${p.id}">
+        <div class="project-card-top"><h4 title="${p.name}">${p.name}</h4><span class="project-badge ${badgeClass}">${badgeText}</span></div>
+        <p>${p.desc||''}</p>
+        <div class="project-meta"><span>${p.type.toUpperCase()} / ${p.budget}</span><span>${p.progress}%</span></div>
+        <div class="project-progress"><i style="width:${p.progress}%"></i></div>
+        <div class="project-meta"><span>ایجاد: ${p.createdAt}</span><span>بروزرسانی: ${p.updatedAt}</span></div>
+        <div class="project-card-foot">
+          <button data-action="edit" data-id="${p.id}">درخواست ویرایش</button>
+          <button data-action="ticket" data-id="${p.id}">تیکت</button>
+          <button data-action="progress" data-id="${p.id}">＋ پیشرفت</button>
+        </div>
+      </div>`;
+    }).join('');
+    if(grid) grid.innerHTML = html || `<div class="empty-state"><b>هنوز پروژه‌ای نداری</b><span>اولین سفارشت رو ثبت کن.</span></div>`;
+    if(overviewGrid) overviewGrid.innerHTML = projects.slice(0,3).map(p=>{
+      const badgeText = {building:'ساخت', review:'بررسی', delivered:'تحویل', paused:'پاز'}[p.status] || p.status;
+      return `<div class="project-card"><div class="project-card-top"><h4>${p.name}</h4><span class="project-badge ${p.status}">${badgeText}</span></div><div class="project-progress"><i style="width:${p.progress}%"></i></div><div class="project-meta"><span>${p.progress}% تکمیل</span><span>${p.createdAt}</span></div></div>`;
+    }).join('');
+
+    // bind actions
+    grid && grid.querySelectorAll('button[data-action]').forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.dataset.id;
+        const act = btn.dataset.action;
+        if(act==='edit'){ switchPanel('edits'); document.getElementById('edit-project-select').value=id; }
+        if(act==='ticket'){ openTicketModal(id); }
+        if(act==='progress'){ bumpProgress(id); }
+      };
+    });
+    updateCounts();
+    updateStats();
+    populateSelects();
+  }
+
+  function bumpProgress(id){
+    const projects = load('projects');
+    const p = projects.find(x=>x.id===id);
+    if(!p) return;
+    p.progress = Math.min(100, p.progress + 12);
+    if(p.progress===100) p.status='delivered';
+    else if(p.progress>20) p.status='building';
+    p.updatedAt = nowFA();
+    save('projects', projects);
+    renderProjects();
+    renderOverview();
+  }
+
+  function createProject(data){
+    const projects = load('projects');
+    projects.unshift({
+      id: uid(),
+      name: data.name,
+      type: data.type,
+      desc: data.desc||'بدون توضیح',
+      budget: data.budget||'توافقی',
+      timeline: data.timeline||'نامشخص',
+      status: data.status||'review',
+      progress: data.status==='delivered'?100: data.status==='building'? 24 : 8,
+      createdAt: nowFA(),
+      updatedAt: nowFA()
+    });
+    save('projects', projects);
+    renderProjects();
+  }
+
+  // New order form
+  const formNewOrder = document.getElementById('form-neworder');
+  if(formNewOrder){
+    formNewOrder.addEventListener('submit', e=>{
+      e.preventDefault();
+      const fd = new FormData(formNewOrder);
+      createProject({name:fd.get('name'), type:fd.get('type'), desc:fd.get('desc'), budget:fd.get('budget'), timeline:fd.get('timeline'), status:'review'});
+      document.getElementById('neworder-msg').textContent='✓ سفارش ثبت شد و به پروژه‌ها اضافه شد.';
+      formNewOrder.reset();
+      setTimeout(()=>switchPanel('projects'), 900);
+    });
+  }
+
+  // Project modal
+  const modalProject = document.getElementById('modal-project');
+  const btnNewProject = document.getElementById('btn-new-project');
+  const formProjectModal = document.getElementById('form-project-modal');
+  function openProjectModal(){ modalProject.classList.add('open'); }
+  function closeProjectModal(){ modalProject.classList.remove('open'); }
+  if(btnNewProject) btnNewProject.addEventListener('click', openProjectModal);
+  modalProject && modalProject.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', closeProjectModal));
+  modalProject && modalProject.addEventListener('click', e=>{ if(e.target===modalProject) closeProjectModal(); });
+  if(formProjectModal){
+    formProjectModal.addEventListener('submit', e=>{
+      e.preventDefault();
+      const fd=new FormData(formProjectModal);
+      createProject({name:fd.get('name'), type:fd.get('type'), desc:fd.get('desc'), status:fd.get('status')});
+      closeProjectModal();
+      formProjectModal.reset();
+      switchPanel('projects');
+    });
+  }
+
+  // ===== TICKETS =====
+  function renderTickets(){
+    const tickets = load('tickets');
+    const listEl = document.getElementById('tickets-items');
+    const countHead = document.getElementById('tickets-count-head');
+    if(countHead) countHead.textContent = tickets.length + ' TICKETS';
+    if(!listEl) return;
+    if(!tickets.length){
+      listEl.innerHTML = `<div class="empty-state" style="border:0;padding:24px"><b>تیکتی نیست</b><span style="font-size:11px">اولین تیکت را بساز.</span></div>`;
+      return;
+    }
+    // sort by newest
+    const sorted = [...tickets].sort((a,b)=> b.createdAt.localeCompare(a.createdAt));
+    listEl.innerHTML = sorted.map(t=>{
+      const proj = t.projectName ? ` • ${t.projectName}` : '';
+      return `<div class="ticket-item" data-id="${t.id}"><b>${t.title}</b><small>${t.status.toUpperCase()} • ${t.priority}${proj} • ${t.createdAt}</small></div>`;
+    }).join('');
+    // bind click
+    listEl.querySelectorAll('.ticket-item').forEach(el=>{
+      el.addEventListener('click', ()=>openTicketDetail(el.dataset.id));
+    });
+    // open first if none active
+    if(!document.querySelector('.ticket-item.active') && sorted[0]){
+      openTicketDetail(sorted[0].id);
+    }
+    updateCounts();
+  }
+
+  let activeTicketId = null;
+  function openTicketDetail(id){
+    const tickets = load('tickets');
+    const t = tickets.find(x=>x.id===id);
+    if(!t) return;
+    activeTicketId=id;
+    document.querySelectorAll('.ticket-item').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+    document.getElementById('ticket-empty').style.display='none';
+    const activeEl=document.getElementById('ticket-active');
+    activeEl.style.display='flex';
+    document.getElementById('ticket-title').textContent = t.title;
+    document.getElementById('ticket-meta').textContent = `${t.projectName||'عمومی'} • ${t.type||'سوال'} • ${t.priority} • ${t.createdAt}`;
+    document.getElementById('ticket-status').value = t.status;
+    const msgsEl=document.getElementById('ticket-msgs');
+    msgsEl.innerHTML = (t.messages||[]).map(m=>{
+      return `<div class="msg ${m.from==='user'?'user':'team'}">${m.text}<small>${m.at} • ${m.from==='user'?'شما':'تیم Avenix'}</small></div>`;
+    }).join('');
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+  }
+
+  // ticket status change
+  const ticketStatusSel = document.getElementById('ticket-status');
+  if(ticketStatusSel){
+    ticketStatusSel.addEventListener('change', ()=>{
+      if(!activeTicketId) return;
+      const tickets=load('tickets');
+      const t=tickets.find(x=>x.id===activeTicketId);
+      if(t){ t.status=ticketStatusSel.value; save('tickets', tickets); renderTickets(); }
+    });
+  }
+
+  // ticket reply
+  const ticketReplyInput = document.getElementById('ticket-reply-input');
+  const ticketReplyBtn = document.getElementById('ticket-reply-btn');
+  function sendTicketReply(){
+    if(!activeTicketId) return;
+    const text = ticketReplyInput.value.trim();
+    if(!text) return;
+    const tickets=load('tickets');
+    const t=tickets.find(x=>x.id===activeTicketId);
+    if(!t) return;
+    t.messages = t.messages||[];
+    t.messages.push({from:'user', text, at: new Date().toLocaleString('fa-IR')});
+    save('tickets', tickets);
+    ticketReplyInput.value='';
+    openTicketDetail(activeTicketId);
+    // simulate team reply after 1.8s
+    setTimeout(()=>{
+      t.messages.push({from:'team', text: autoReplyTicket(text), at: new Date().toLocaleString('fa-IR')});
+      if(t.status==='open') t.status='answered';
+      save('tickets', tickets);
+      openTicketDetail(activeTicketId);
+    }, 1800);
+  }
+  if(ticketReplyBtn) ticketReplyBtn.addEventListener('click', sendTicketReply);
+  if(ticketReplyInput) ticketReplyInput.addEventListener('keydown', e=>{ if(e.key==='Enter') sendTicketReply(); });
+
+  function autoReplyTicket(userText){
+    const replies=[
+      'دریافت شد! تیم بررسی می‌کند و تا ۲ ساعت آینده پاسخ دقیق می‌دهد.',
+      'ممنون از توضیح کاملت. این مورد را به بورد توسعه اضافه کردیم.',
+      'پیام شما ثبت شد. اگر فایل یا اسکرین‌شات داری، در چت بفرست تا سریع‌تر پیش بریم.',
+      'متوجه شدیم. این درخواست در اسپرینت جاری لحاظ می‌شود.'
+    ];
+    return replies[Math.floor(Math.random()*replies.length)];
+  }
+
+  // New ticket modal
+  const modalTicket = document.getElementById('modal-ticket');
+  const btnNewTicket = document.getElementById('btn-new-ticket');
+  const formTicketModal = document.getElementById('form-ticket-modal');
+  function openTicketModal(preselectedProjectId){
+    modalTicket.classList.add('open');
+    populateSelects();
+    if(preselectedProjectId){
+      const sel=document.getElementById('ticket-project-select');
+      if(sel) sel.value=preselectedProjectId;
+    }
+  }
+  function closeTicketModal(){ modalTicket.classList.remove('open'); }
+  if(btnNewTicket) btnNewTicket.addEventListener('click', ()=>openTicketModal());
+  modalTicket && modalTicket.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', closeTicketModal));
+  modalTicket && modalTicket.addEventListener('click', e=>{ if(e.target===modalTicket) closeTicketModal(); });
+
+  if(formTicketModal){
+    formTicketModal.addEventListener('submit', e=>{
+      e.preventDefault();
+      const fd=new FormData(formTicketModal);
+      const projectId=fd.get('projectId');
+      const projects=load('projects');
+      const proj=projects.find(p=>p.id===projectId);
+      const tickets=load('tickets');
+      tickets.unshift({
+        id: uid(),
+        title: fd.get('title'),
+        projectId: projectId||null,
+        projectName: proj?proj.name:'عمومی',
+        type: 'request',
+        priority: fd.get('priority'),
+        status: 'open',
+        createdAt: nowFA(),
+        messages: [{from:'user', text: fd.get('text'), at: new Date().toLocaleString('fa-IR')}]
+      });
+      save('tickets', tickets);
+      closeTicketModal();
+      formTicketModal.reset();
+      switchPanel('tickets');
+      renderTickets();
+      // simulate team reply
+      setTimeout(()=>{
+        const t=tickets[0];
+        t.messages.push({from:'team', text:'تیکت شما ثبت شد. تیم پشتیبانی در حال بررسی است و به زودی پاسخ می‌دهد.', at: new Date().toLocaleString('fa-IR')});
+        save('tickets', tickets);
+        renderTickets();
+      }, 1500);
+    });
+  }
+
+  // ===== EDITS =====
+  function renderEdits(){
+    const edits = load('edits');
+    const historyEl=document.getElementById('edits-history');
+    const selectEl=document.getElementById('edit-project-select');
+    populateSelects();
+    if(historyEl){
+      if(!edits.length){
+        historyEl.innerHTML = `<div class="empty-state"><b>درخواستی ثبت نشده</b><span>فرم بالا را پر کن.</span></div>`;
+      } else {
+        historyEl.innerHTML = edits.map(ed=>{
+          return `<div class="project-card"><div class="project-card-top"><h4>${ed.projectName}</h4><span class="project-badge ${ed.priority==='high'?'review':''}">${ed.priority}</span></div><p>${ed.text}</p><div class="project-meta"><span>${ed.createdAt}</span><span>${ed.status}</span></div></div>`;
+        }).join('');
+      }
+    }
+  }
+  const formEdit = document.getElementById('form-edit');
+  if(formEdit){
+    formEdit.addEventListener('submit', e=>{
+      e.preventDefault();
+      const fd=new FormData(formEdit);
+      const projectId=document.getElementById('edit-project-select').value;
+      const projects=load('projects');
+      const proj=projects.find(p=>p.id===projectId);
+      const edits=load('edits');
+      const newEdit={
+        id:uid(),
+        projectId,
+        projectName: proj?proj.name:'نامشخص',
+        text: fd.get('text'),
+        priority: fd.get('priority'),
+        status: 'در حال بررسی',
+        createdAt: nowFA()
+      };
+      edits.unshift(newEdit);
+      save('edits', edits);
+      // also create a ticket for visibility
+      const tickets=load('tickets');
+      tickets.unshift({
+        id:uid(),
+        title:`درخواست ویرایش: ${proj?proj.name:''}`,
+        projectId,
+        projectName: proj?proj.name:'عمومی',
+        type:'edit',
+        priority: fd.get('priority'),
+        status:'open',
+        createdAt: nowFA(),
+        messages:[{from:'user', text: fd.get('text'), at: new Date().toLocaleString('fa-IR')}]
+      });
+      save('tickets', tickets);
+      document.getElementById('edit-msg').textContent='✓ درخواست ویرایش ثبت شد و به تیکت‌ها اضافه شد.';
+      formEdit.reset();
+      renderEdits();
+      renderTickets();
+    });
+  }
+
+  // Populate project selects
+  function populateSelects(){
+    const projects=load('projects');
+    const options = projects.map(p=>`<option value="${p.id}">${p.name}</option>`).join('') || '<option value="">پروژه‌ای نیست</option>';
+    const editSel=document.getElementById('edit-project-select');
+    const ticketSel=document.getElementById('ticket-project-select');
+    if(editSel) editSel.innerHTML = options;
+    if(ticketSel) ticketSel.innerHTML = `<option value="">عمومی / بدون پروژه</option>`+options;
+  }
+
+  // ===== CHAT =====
+  function renderChat(){
+    const msgs = load('chat');
+    const container=document.getElementById('chat-messages');
+    if(!container) return;
+    if(!msgs.length){
+      // seed greeting
+      const greeting = [
+        {from:'team', text:'سلام! من از تیم Avenix هستم. چطور می‌تونم کمک کنم؟ پروژه‌هات رو دیدی؟', at: new Date().toLocaleString('fa-IR')},
+        {from:'team', text:'اینجا می‌تونی هر سوالی داری بپرسی، فایل بفرستی یا درخواست جلسه بدی.', at: new Date().toLocaleString('fa-IR')}
+      ];
+      save('chat', greeting);
+      return renderChat();
+    }
+    container.innerHTML = msgs.map(m=>{
+      return `<div class="msg ${m.from}">${m.text}<small>${m.at} • ${m.from==='user'?'شما':'تیم'}</small></div>`;
+    }).join('');
+    container.scrollTop = container.scrollHeight;
+    // show dot if unread team messages? simplified
+  }
+
+  function sendChat(){
+    const input=document.getElementById('chat-input');
+    const text=input.value.trim();
+    if(!text) return;
+    const msgs=load('chat');
+    msgs.push({id:uid(), from:'user', text, at: new Date().toLocaleString('fa-IR')});
+    save('chat', msgs);
+    input.value='';
+    renderChat();
+    // simulate typing
+    const dot=document.getElementById('chat-dot');
+    if(dot) dot.style.display='inline-block';
+    setTimeout(()=>{
+      const replies=[
+        'پیامتو گرفتم! بررسی می‌کنم و راه‌حل پیشنهاد می‌دم.',
+        'عالیه، این نکته رو به تسک‌های پروژه اضافه کردم.',
+        'می‌خوای یک جلسه ۱۵ دقیقه‌ای ست کنیم تا دقیق‌تر صحبت کنیم؟',
+        'این مورد را به فرانت‌اند تیم ارجاع دادم، تا امشب آپدیت می‌دم.',
+        'ممنون! فایل یا لینک داری بفرست تا دقیق‌تر ببینم.'
+      ];
+      msgs.push({id:uid(), from:'team', text: replies[Math.floor(Math.random()*replies.length)], at: new Date().toLocaleString('fa-IR')});
+      save('chat', msgs);
+      if(dot) dot.style.display='none';
+      if(document.getElementById('panel-chat').classList.contains('active')){
+        renderChat();
+      } else {
+        // notify
+        if(dot) dot.style.display='inline-block';
+      }
+      // also update stats
+      updateCounts();
+    }, 1400 + Math.random()*1000);
+  }
+  const chatInput=document.getElementById('chat-input');
+  const chatSend=document.getElementById('chat-send');
+  if(chatSend) chatSend.addEventListener('click', sendChat);
+  if(chatInput) chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') sendChat(); });
+
+  // ===== STATS & COUNTS =====
+  function updateCounts(){
+    const projects=load('projects');
+    const tickets=load('tickets');
+    const edits=load('edits');
+    const cP=document.getElementById('count-projects');
+    const cT=document.getElementById('count-tickets');
+    if(cP) cP.textContent=projects.length;
+    if(cT) cT.textContent=tickets.filter(t=>t.status==='open').length;
+  }
+  function updateStats(){
+    const projects=load('projects');
+    const tickets=load('tickets');
+    const edits=load('edits');
+    const avg = projects.length? Math.round(projects.reduce((s,p)=>s+p.progress,0)/projects.length) : 0;
+    const elP=document.getElementById('stat-projects');
+    const elT=document.getElementById('stat-tickets');
+    const elE=document.getElementById('stat-edits');
+    const elAv=document.getElementById('stat-progress');
+    const bP=document.getElementById('stat-projects-bar');
+    const bT=document.getElementById('stat-tickets-bar');
+    const bE=document.getElementById('stat-edits-bar');
+    const bAv=document.getElementById('stat-progress-bar');
+    if(elP) elP.textContent=projects.length;
+    if(elT) elT.textContent=tickets.filter(t=>t.status==='open').length;
+    if(elE) elE.textContent=edits.length;
+    if(elAv) elAv.textContent=avg+'%';
+    if(bP) bP.style.width=Math.min(100, projects.length*18)+'%';
+    if(bT) bT.style.width=Math.min(100, tickets.length*22)+'%';
+    if(bE) bE.style.width=Math.min(100, edits.length*28)+'%';
+    if(bAv) bAv.style.width=avg+'%';
+  }
+  function renderOverview(){
+    renderProjects();
+    updateStats();
+    updateCounts();
+  }
+  function refreshAll(){
+    defaultProjects();
+    renderOverview();
+    renderTickets();
+    renderEdits();
+    renderChat();
+    populateSelects();
+  }
+
+  // Initial
+  setTimeout(refreshAll, 600);
+
+  // Expose for debugging
+  window.AvenixDash = {refreshAll, openDashboard, load, save, key};
+})();
+</script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1fcb5c6a8b77fa4',t:'MTc4NDgzMDk0MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body></html>
